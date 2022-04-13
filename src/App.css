@@ -1,38 +1,115 @@
-.App {
-  text-align: center;
-}
-
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+} */
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex-direction: row;
+  flex-wrap:wrap;
+  justify-content: space-between;
+  
+  font-size: 1.5rem;
   color: white;
+}
+
+.address {
+  font-family: best-choice,mono;
+font-weight: 500;
+font-style: normal;
+text-overflow: ellipsis;
+max-width:20em;
+overflow:hidden;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-header h1 {
+  padding: 0 1rem 0 1rem;
+  background: linear-gradient(0deg, #0b2f7c, #00afff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.App nav a {
+  display: block;
+  text-decoration: none;
+}
+
+.App nav ul.external-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+
+.App nav ul li {
+  display: block;
+
+}
+
+
+.App nav ul li a {
+  display: block;
+  text-decoration:none;
+
+}
+
+.button, button {
+  background-color:red;
+  border-radius:0.5em;
+  padding:1em;
+  display:block;
+  color:white;
+  font-family: co-text, sans-serif;
+font-weight: 700;
+font-style: normal;
+}
+
+.App nav a.button {
+  max-width:10em;
+  margin:1rem;
+  text-align: center;
+}
+
+.App-header .address {
+  font-size: 1em;
+  margin:0.5em;
+  text-decoration: none;
+  color: #00afff;
+
+}
+
+.App-header button {
+  margin:0.5em;
+  height:3em;
+}
+
+a.icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+  min-height:64px;
+  min-width:64px;
+  height:100%;
+  width:auto;
+}
+
+a.icon.twitter.jb, a.icon.twitter.jj {
+  background-image: url('./icons/icon-twitter-jb.png'); 
+}
+
+a.icon.replit {
+  background-image: url('./icons/icon-replit.png'); 
+}
+
+a.icon.github {
+  background-image: url('./icons/icon-github.png'); 
+}
+
+a.icon.opensea {
+  background-image: url('./icons/icon-opensea.png'); 
 }
