@@ -29,21 +29,21 @@ export default function Header() {
         console.log("logged out");
     }
 
-    useEffect(() => {
-        const fetchEns = async (options: {address: string}) => {
-            // get ENS domain of an address
-            return await Web3Api.resolve.resolveAddress(options);
-        };
+    // useEffect(() => { // Moralis typescript types bug , disabling for now
+    //     const fetchEns = async (options: {address: string}) => {
+    //         // get ENS domain of an address
+    //         return await Web3Api.resolve.resolveAddress(options);
+    //     };
 
-        (async () => {
-            if (user !== null) {
-                setWalletAddress(user!.get("ethAddress"));
-                const ensName = await fetchEns({address: walletAddress});
-                setEnsName(ensName.name);
-            }
-        })();
+    //     (async () => {
+    //         if (user !== null) {
+    //             setWalletAddress(user!.get("ethAddress"));
+    //             const ensName = await fetchEns({address: walletAddress});
+    //             setEnsName(ensName.name);
+    //         }
+    //     })();
         
-    }, [user, Web3Api, ensName, walletAddress]);
+    // }, [user, Web3Api, ensName, walletAddress]);
 
     return <><header className="App-header">
         <h1>BlockChain Battle Arena</h1>
