@@ -6,7 +6,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import LaunchGame from './components/game/LaunchGame';
+import LaunchGame from './game/LaunchGame';
 import Home from './components/Home';
 import About from './components/About';
 import { MoralisProvider } from "react-moralis";
@@ -19,7 +19,6 @@ function UserProfile() {
 function Mint() {
   return <h1>Minting page</h1>
 }
-
 
 function NotFound() {
   return <h1>not found!</h1>
