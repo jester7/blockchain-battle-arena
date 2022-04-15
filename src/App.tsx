@@ -4,13 +4,10 @@ import LaunchGame from "./game/LaunchGame";
 import Home from "./components/Home";
 import About from "./components/About";
 import { MoralisProvider } from "react-moralis";
+import Mint from "./components/Mint";
 
 function UserProfile() {
   return <h1>User Profile! shows your NFTs here</h1>;
-}
-
-function Mint() {
-  return <h1>Minting page</h1>;
 }
 
 function NotFound() {

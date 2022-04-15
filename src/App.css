@@ -4,8 +4,21 @@
   pointer-events: none;
 } */
 
+.App {
+  min-width:1100px;
+
+}
+
+.bcba {
+  font-family: good-times,sans-serif;
+font-weight: 900;
+font-style: normal;
+color:pink;
+}
+
 .App-header {
   /* min-height: 100vh; */
+  
   display: flex;
   flex-direction: row;
   flex-wrap:wrap;
@@ -13,6 +26,12 @@
   
   font-size: 1.5rem;
   color: white;
+  /* margin:0.5em 0.5em; */
+  border-radius:1.5em;
+  background-color:#0c2757;
+  /* border:1px solid white; */
+  padding:0;
+  box-shadow:0px 0px 0.33em rgba(200,200,200,0.5);
 }
 
 .address {
@@ -20,7 +39,7 @@
 font-weight: 500;
 font-style: normal;
 text-overflow: ellipsis;
-max-width:20em;
+max-width:12em;
 overflow:hidden;
 }
 
@@ -28,32 +47,53 @@ overflow:hidden;
   color: #61dafb;
 }
 
-.App-header h1 {
+/* .App-header h1 {
   padding: 0 1rem 0 1rem;
   background: linear-gradient(0deg, #0b2f7c, #00afff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+} */
+
+.App main .logo {
+  background-image:url('../public/bcba-logo.png');
+  float:left;
+  clear:right;
+  background-size:cover;
+  background-repeat: no-repeat;
+  width:640px;
+  height:223px;
+  margin:16px auto 0 auto;
+  margin-bottom:64px;
+}
+
+.App nav {
+  margin-top:16px;
+  float:left;
+  width:30%;
+  margin-right:1em;
+  
 }
 
 .App nav a {
   display: block;
   text-decoration: none;
+  height:auto;
 }
 
-.App nav ul.external-links {
+.App ul.external-links {
   display: flex;
   flex-direction: row;
   flex-wrap:wrap;
+
 }
 
-.App nav ul li {
+.App ul.external-links li {
   display: block;
-
 }
 
 
-.App nav ul li a {
+.App ul.external-links li a {
   display: block;
   text-decoration:none;
 
@@ -61,8 +101,8 @@ overflow:hidden;
 
 .button, button {
   background-color:red;
-  border-radius:0.5em;
-  padding:1em;
+  border-radius:1.5em;
+  padding:0.5em;
   display:block;
   color:white;
   font-family: co-text, sans-serif;
@@ -71,7 +111,6 @@ font-style: normal;
 }
 
 .App nav a.button {
-  max-width:10em;
   margin:1rem;
   text-align: center;
 }
@@ -85,16 +124,16 @@ font-style: normal;
 }
 
 .App-header button {
-  margin:0.5em;
-  height:3em;
+  margin:0.5em 2em;
+  height:auto;
 }
 
 a.icon {
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  min-height:64px;
-  min-width:64px;
-  height:100%;
+  min-height:1em;
+  min-width:1em;
+  margin-right:1em;
   width:auto;
 }
 
@@ -112,4 +151,62 @@ a.icon.github {
 
 a.icon.opensea {
   background-image: url('./icons/icon-opensea.png'); 
+}
+
+
+main {
+  padding: 1em 2em;
+  float:left;
+  clear:both;
+}
+
+main .container {
+  float:left;
+  clear:both;
+  width:100%;
+}
+
+.items-container {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.character-image, .accessory-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  width:200px;
+  height:200px;
+}
+
+
+
+#character1 {
+  background-image:url('./game/sprites/character_idea_1.png');
+}
+
+
+#character2 {
+  background-image:url('./game/sprites/character_idea_2.png');
+}
+
+
+#character3 {
+  background-image:url('./game/sprites/character_idea_3.png');
+}
+
+
+
+#eyelenser {
+  background-image:url('./game/sprites/eye_lenser.png');
+}
+
+
+#hat {
+  background-image:url('./game/sprites/hat.png');
+}
+
+
+#cigarette {
+  background-image:url('./game/sprites/cigarette.png');
 }
