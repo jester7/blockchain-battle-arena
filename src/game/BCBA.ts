@@ -1,9 +1,7 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
 import mergeImages from "./util/mergeImages";
 
-// import sprite_mech_red from "./sprites/mech_fighter_red.png";
-// import sprite_mech_blue from "./sprites/mech_fighter_blue.png";
-import sprite_bg from "./sprites/bgarena.jpg";
+import sprite_bg from "./sprites/background.jpg";
 import sprite_explosion from "./sprites/explosion.png";
 import sprite_character1 from "./sprites/character_idea_1.png";
 import sprite_character1_head from "./sprites/character_idea_1_head.png";
@@ -176,7 +174,7 @@ export default class BCBA {
   private async initSprites() {
     this.log("adding sprites to game context...");
 
-    this.addSprite("bg1");
+    this.addSprite("bg1", 0.5);
     //let merged = await mergeImages([sprite_character1_head, sprite_mech_red]);
     //this.k.loadSprite("merged_red", merged);
   }
@@ -187,11 +185,11 @@ export default class BCBA {
       new MechPlayer(
         this.k,
         "player 1",
-        "blue",
-        "smallgun",
+        "red",
+        "biggun",
         PlayerDirection.RIGHT,
         [C.TAG_PLAYER, C.TAG_MAIN_PLAYER],
-        100,
+        500,
         0
       )
     );
@@ -204,7 +202,7 @@ export default class BCBA {
         "smallgun",
         PlayerDirection.LEFT,
         [C.TAG_PLAYER, C.TAG_OPPONENT],
-        500,//800
+        900,//800
         0
       )
     );
@@ -215,8 +213,8 @@ export default class BCBA {
 
   private initArenaBoundaries() {
     const floor = this.k.add([
-      this.k.rect(this.k.width(), 0),
-      this.k.pos(0, 710),
+      this.k.rect(1682/2, 0),
+      this.k.pos(452/2, 1122/2),
       this.k.color(0, 255, 0),
       this.k.solid(),
       this.k.area(),
@@ -224,8 +222,8 @@ export default class BCBA {
     ]);
 
     const wallLeft = this.k.add([
-      this.k.rect(0, this.k.height()),
-      this.k.pos(18, 0),
+      this.k.rect(0, this.k.height()*1.5),
+      this.k.pos(0, 0),
       this.k.color(0, 255, 0),
       this.k.solid(),
       this.k.area(),
@@ -233,8 +231,8 @@ export default class BCBA {
     ]);
 
     const wallRight = this.k.add([
-      this.k.rect(0, this.k.height()),
-      this.k.pos(this.k.width() - 10, 0),
+      this.k.rect(0, this.k.height()*1.5),
+      this.k.pos(2560/2, 0),
       this.k.color(0, 255, 0),
       this.k.solid(),
       this.k.area(),

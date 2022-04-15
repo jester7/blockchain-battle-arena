@@ -22,7 +22,7 @@ export default class MechPlayer extends Player {
 
     const obj = k.add([
       k.sprite("mech", { flipX: flip, anim: mechSprite }),
-      k.scale(0.4),
+      k.scale(0.2),
       k.pos(startPosX, startPosY),
       k.body(),
       k.area(),

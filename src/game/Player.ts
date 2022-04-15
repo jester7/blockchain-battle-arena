@@ -34,6 +34,10 @@ export default abstract class Player {
     this._facing = facing;
     this.onUpdate(() => {
       this.checkFacingDirection();
+      //this.k.camPos(this.obj.pos.scale(this.obj.pos.dist(this._opponent?.pos)));
+      //if (this.isFacingRight()){this.k.camPos(this.obj.pos.sub(100,0));}
+     // if (this.isFacingLeft()){this.k.camPos(this.obj.pos.add(100,0));}
+
     });
   }
 
@@ -59,8 +63,8 @@ export default abstract class Player {
       let projectile = this.k.add([
         this.k.sprite(this._projectileSpriteName),
         this.isFacingRight()
-          ? this.k.pos(this.pos().add(220, 180))
-          : this.k.pos(this.pos().add(-20, 180)),
+          ? this.k.pos(this.pos().add(220/2, 180/2))
+          : this.k.pos(this.pos().add(-20/2, 180/2)),
         this.k.area(),
         this.k.move(
           0,
@@ -69,7 +73,7 @@ export default abstract class Player {
             : C.DEFAULT_PROJECTILE_SPEED
         ),
         this.k.cleanup(),
-        this.k.scale(0.2),
+        this.k.scale(0.2/2),
         C.TAG_PROJECTILE,
         projectileTag,
       ]);
@@ -95,10 +99,10 @@ export default abstract class Player {
   public addExplosion(p: Vec2) {
     this.k.add([
       this.k.sprite("explosion"),
-      this.k.scale(0.6),
+      this.k.scale(0.6/2),
       this.isFacingRight()
-        ? this.k.pos(p.add(40, -60))
-        : this.k.pos(p.add(-80, -60)),
+        ? this.k.pos(p.add(40/2, -60/2))
+        : this.k.pos(p.add(-80/2, -60/2)),
       this.k.lifespan(0.5, { fade: 0.5 }),
     ]);
   }
