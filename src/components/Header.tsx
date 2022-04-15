@@ -9,8 +9,7 @@ function ExternalLinks() {
             <li><a href="https://github.com/jester7/blockchain-battle-arena" className="icon group github"> </a></li>
             <li><a href="https://replit.com/@jovanjester/Blockchain-Battle-Arena" className="icon group replit"> </a></li>
             <li><a href="https://testnets.opensea.io/collection/stick-figure-developers-test-taidwbxjlq" className="icon group opensea"> </a></li>
-            <li><a href="https://twitter.com/JackBohmArt" className="icon group twitter jb"> </a></li>
-            <li><a href="https://twitter.com/JovanJester" className="icon group twitter jj"> </a></li>
+            
         </ul>
     </>);
 }
