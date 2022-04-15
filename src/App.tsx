@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import { MoralisProvider } from "react-moralis";
 import Mint from "./components/Mint";
+import Game from "./game/Game";
 
 function UserProfile() {
   return <h1>User Profile! shows your NFTs here</h1>;
@@ -27,7 +28,9 @@ function App() {
             <Route path="/about-team" element={<About />} />
             <Route path="profiles/:address" element={<UserProfile />} />
             <Route path="/mint" element={<Mint />} />
-            <Route path="game" element={<LaunchGame />} />
+            <Route path="launch-game" element={<LaunchGame />} />
+            <Route path="game" element={<Game />} />
+
             <Route path="/NotFound" element={<NotFound />} />
             <Route path="*" element={<Navigate replace to="/NotFound" />} />
           </Routes>

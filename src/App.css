@@ -179,20 +179,33 @@ main .container {
   height:200px;
 }
 
+.App .image {
+  /* padding:4px; */
+  border-radius:16px;
+  background-color:rgb(74, 143, 199);
+}
+
+.App .image:hover {
+  cursor: pointer;
+  /* border:4px dotted red; */
+  border-radius:16px;
+  padding:0px;
+  box-shadow: 0px 0px 18px rgba(255,255,255,0.75);
+}
 
 
 #character1 {
-  background-image:url('./game/sprites/character_idea_1.png');
+  background-image:url('./game/sprites/character_idea_1_bg.png');
 }
 
 
 #character2 {
-  background-image:url('./game/sprites/character_idea_2.png');
+  background-image:url('./game/sprites/character_idea_2_bg.png');
 }
 
 
 #character3 {
-  background-image:url('./game/sprites/character_idea_3.png');
+  background-image:url('./game/sprites/character_idea_3_bg.png');
 }
 
 
@@ -209,4 +222,17 @@ main .container {
 
 #cigarette {
   background-image:url('./game/sprites/cigarette.png');
+}
+
+.premint.container h2{
+margin-top:2em;
+}
+
+.aftermint.container {
+  display: none;
+}
+
+
+.aftermint.container.minting {
+  display: block;
 }
