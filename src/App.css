@@ -179,13 +179,13 @@ main .container {
   height:200px;
 }
 
-.App .image {
+.App .image, .App .character-image {
   /* padding:4px; */
   border-radius:16px;
   background-color:rgb(74, 143, 199);
 }
 
-.App .image:hover {
+.App .image:hover,.App .character-image:hover {
   cursor: pointer;
   /* border:4px dotted red; */
   border-radius:16px;
