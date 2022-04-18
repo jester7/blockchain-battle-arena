@@ -1,42 +1,41 @@
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import LaunchGame from "./game/LaunchGame";
 import Home from "./components/Home";
 import About from "./components/About";
 import { MoralisProvider } from "react-moralis";
 import Mint from "./components/Mint";
 import Game from "./game/Game";
-
-function UserProfile() {
-  return <h1>User Profile! shows your NFTs here</h1>;
-}
+import SectionLoader from "./components/SectionLoader";
 
 function NotFound() {
   return <h1>not found!</h1>;
 }
 
 function App() {
+
   return (
-    <BrowserRouter>
+    <Router>
       <MoralisProvider
-        serverUrl="https://u4usrl90abnw.usemoralis.com:2053/server"
-        appId="pO4GGOpd6Qu3ampCQ5f4r2nS8WadcC8bv9q9V3PG"
+        serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL as string}
+        appId={process.env.REACT_APP_MORALIS_APP_ID as string}
       >
         <div className="App">
+          <div className="container">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about-team" element={<About />} />
-            <Route path="profiles/:address" element={<UserProfile />} />
-            <Route path="/mint" element={<Mint />} />
-            <Route path="launch-game" element={<LaunchGame />} />
-            <Route path="game" element={<Game />} />
+            <Route path="/" element={<SectionLoader />} />
+            <Route path="/about" element={<SectionLoader />} />
+            <Route path="/mint" element={<SectionLoader />} />
+            <Route path="/launch-game" element={<SectionLoader />} />
+            <Route path="/game" element={<Game />} /> {/*characterNum={characterChoices.characterNum} mechColor={characterChoices.mechColor} gunName={characterChoices.gunName}  */}
 
             <Route path="/NotFound" element={<NotFound />} />
             <Route path="*" element={<Navigate replace to="/NotFound" />} />
           </Routes>
+          </div>
         </div>
       </MoralisProvider>
-    </BrowserRouter>
+    </Router>
   );
 }
 
