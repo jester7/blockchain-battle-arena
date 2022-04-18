@@ -8,13 +8,16 @@ export const PLAYER_TILT_ANGLE = 3;
 export const TAG_MAIN_PLAYER = "player1";
 export const TAG_OPPONENT = "opponent";
 
-export const TAG_PLAYER = "player";
+export const TAG_PLAYER = "mechtag";
 export const TAG_FLOOR = "floor";
 export const TAG_ARENA_BOUNDARY = "wall";
 export const TAG_PROJECTILE = "projectile";
 
 export const MAX_PLAYERS = 2;
 export const DEFAULT_PROJECTILE_SPEED = 500;
+export const PLAYER_JUMP_FORCE = 1000;
+export const PLAYER_AIR_JUMP_FORCE = 600;
+
 export const MAX_HEALTH = 100;
 export const DEFAULT_PROJECTILE_DAMAGE = 10;
 export const DEFAULT_HIT_DAMAGE = 7;

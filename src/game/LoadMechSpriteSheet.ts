@@ -1,5 +1,5 @@
 import { KaboomCtx } from "kaboom";
-import mech_sprites from "./sprites/all-mechs.png";
+import mech_sprites from "./sprites/all-mechs-medium.png";
 
 
 export default function LoadMechSpriteSheet(k: KaboomCtx) {
