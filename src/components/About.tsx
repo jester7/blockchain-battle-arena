@@ -9,7 +9,7 @@ export default function About() {
     <div className="home section visible">
       <h1 className="main-heading">About</h1>
       <ul>
-        <li>Jack Bohm</li>
+        <li>StrictlyKappa</li>
         <li>Jovan Jester</li>
       </ul>
       <p>
