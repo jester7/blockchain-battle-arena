@@ -4,7 +4,7 @@ This is an NFT minting web app and battle game created for the OpenSea/Replit He
 
 ### About
 
-Artwork by Jack Bohm. Web and Solidity development by Jovan Jester. Sound FX were not created by us but were obtained under a creative commons license. 
+Artwork by StrictlyKappa. Web and Solidity development by Jovan Jester. Sound FX were not created by us but were obtained under a creative commons license. 
 
 ### Live Demo
 [![Netlify Status](https://api.netlify.com/api/v1/badges/08939b09-838c-4192-8c72-2f5bc5a1704e/deploy-status)](https://app.netlify.com/sites/blockchain-battle-arena/deploys)
