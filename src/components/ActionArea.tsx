@@ -4,12 +4,13 @@ export type ActionAreaProps = {
     message: string,
     label: string,
     showLabel: boolean,
+    isError?: boolean,
     showButton: boolean,
     disableButton: boolean,
     smallButton: boolean,
     isLoading: boolean,
     loadingLabel: string,
-    action: () => void
+    action?: () => void
 }
 
 export default function ActionArea(
@@ -27,14 +28,14 @@ const LoadingIndicator = () => {
       return <></>;
     }
   };
-
+  const isError = props.isError || false;
   return (
     <>
       <div className="section action-container">
         <h4 className={props.heading === "" ? "hidden" : "action-heading"}>{props.heading}</h4>
 
         <LoadingIndicator />
-        <span className={(!props.showLabel || props.message === "") ? "hidden" : "action-message"}>{props.message}</span>
+        <span className={((!props.showLabel || props.message === "") ? "hidden" : "action-message")+(isError ? " error" : "")}>{props.message}</span>
         <button
           className={props.showButton ? "action-button" : "action-button hidden"}
           onClick={props.action}
