@@ -1,27 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Contract, ethers, getDefaultProvider } from "ethers";
+import { Contract, ethers } from "ethers";
 import { CONTRACT_ADDRESS } from "../game/constants";
 import BattleArenaNFT from "../game/util/BattleArenaNFT.json";
-
-import Header from "./Header";
-import Navbar from "./Navbar";
 import ActionArea from "./ActionArea";
-import { useMoralis, useMoralisWeb3Api } from "react-moralis";
 
-export default function Mint() {
-  const [walletAddress, setWalletAddress] = useState("");
-  const [ensName, setEnsName] = useState("");
+export type MintProps = {
+  walletAddress: string,
+  ensName: string,
+}
 
-  const {
-    authenticate,
-    isAuthenticated,
-    isAuthenticating,
-    user,
-    account,
-    logout,
-  } = useMoralis();
-  const Web3Api = useMoralisWeb3Api();
+export default function Mint(props: MintProps) {
+  const walletAddress = props.walletAddress;
+  const ensName = props.ensName;
 
   const [mintContract, setMintContract] = useState<Contract>();
   const [lastTokenId, setLastTokenId] = useState<number>(0);
@@ -30,10 +21,15 @@ export default function Mint() {
   const [isMinting, setIsMinting] = useState(false);
   const [isMintComplete, setIsMintComplete] = useState(false);
 
+  const [lastAccessoryIndex, setLastAccessoryIndex] = useState(0);
+
   const navigate = useNavigate();
 
   const ShowMintedNFT = () => {
     let imgUrl: string = "";
+    let accImgUrl: string = "";
+    // setLastIndex(1);
+    // setLastAccessoryIndex(6);
     if (lastIndex !== 0) {
       switch (lastIndex) {
         case 1:
@@ -48,22 +44,38 @@ export default function Mint() {
           imgUrl =
             "https://ipfs.io/ipfs/QmS5CKakuvy14oFBNGKS2Asyx7d7by7NEpyVxBu98debuB/character_idea_3_bg.png";
           break;
+        // case 4:
+        //   imgUrl =
+        //     "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/cigarette.png";
+        //   break;
+        // case 5:
+        //   imgUrl =
+        //     "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/eye_lenser.png";
+        //   break;
+        // case 6:
+        //   imgUrl =
+        //     "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/hat.png";
+        //   break;
+      }
+    }
+
+    if (lastAccessoryIndex !== 0) {
+      switch (lastAccessoryIndex) {
         case 4:
-          imgUrl =
-            "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/cigarette.png";
+          accImgUrl = "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/cigarette.png";
           break;
         case 5:
-          imgUrl =
-            "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/eye_lenser.png";
+          accImgUrl = "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/eye_lenser.png";
           break;
         case 6:
-          imgUrl =
-            "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/hat.png";
+          accImgUrl = "https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/hat.png";
           break;
       }
     }
     return (<>
-         <img alt="Blockchain Battle Arena NFT Character" className="minted character" src={imgUrl} />
+         <div className="minted character" style={{backgroundImage:"url('"+imgUrl+"')"}}>
+          <div className={"minted accessory accessory"+lastAccessoryIndex} style={{backgroundImage:"url('"+accImgUrl+"')"}}></div>
+         </div>
         <h3>Mint an accessory</h3>
         <p>Click on an accessory to mint it.</p>
 
@@ -117,6 +129,9 @@ export default function Mint() {
         );
         await mintTxn.wait();
         console.log("mintAccessory successful: ", mintTxn);
+          setLastAccessoryIndex(accessoryIndex);
+
+
         setIsMinting(false);
       }
     } catch (error) {
@@ -126,6 +141,7 @@ export default function Mint() {
   };
 
   function getOpenSeaLink() {
+    if (lastIndex === 0) return <> </>;
     return (
       !isMinting && mintContract && (
         <p>
@@ -159,25 +175,6 @@ export default function Mint() {
     );
   }
 
-  useEffect(() => {
-    const mainnetProvider = getDefaultProvider(); // Moralis typescript types bug, switched to using ethers
-    if (walletAddress) {
-      mainnetProvider.lookupAddress(walletAddress).then((name) => {
-      if (typeof name === "string") {
-        setEnsName(name);
-        // update to actual ENS name if found
-      }
-    });
-    }
-
-    (async () => {
-      if (user !== null) {
-        setWalletAddress(user!.get("ethAddress"));
-        //const ensName = await fetchEns({address: walletAddress});
-        //setEnsName(ensName.name);
-      }
-    })();
-  }, [user, Web3Api, ensName, walletAddress]);
   useEffect(() => {
     const onCharacterMint = async (
       sender: string,
@@ -242,6 +239,8 @@ export default function Mint() {
           
           {getOpenSeaLink()}
           {isMintComplete && <ShowMintedNFT />}
+          {/* <ShowMintedNFT /> */}
+
           {/* {getGameLaunchButton()} */}
         </div>
       </div>
