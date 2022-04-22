@@ -237,7 +237,8 @@ a.icon.opensea {
   margin-top: 0;
 }
 
-.main-container h3, .main-container h4 {
+.main-container h3,
+.main-container h4 {
   font-size: 1.25em;
   font-family: good-times, sans-serif;
   font-weight: 900;
@@ -252,12 +253,12 @@ a.icon.opensea {
 }
 
 h4.action-heading {
-  margin-top:-0.5em;
+  margin-top: -0.5em;
   font-size: 1em;
 }
 
 .action-container span.action-message {
-  margin:0.25em 0em 0.5em 0em;
+  margin: 0.25em 0em 0.5em 0em;
 }
 
 .action-container .hidden {
@@ -668,17 +669,43 @@ a:hover {
 
 .aftermint.container {
   display: flex;
-  flex-flow:column;
-  flex-grow:1;
+  flex-flow: column;
+  flex-grow: 1;
   justify-content: flex-start;
 }
 
 .character.minted {
-  width:50%;
-  max-width:50%;
-  height:auto;
+  height: 600px;
+  width: 600px;
+  min-height: 600px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
   border-radius: 16px;
-  margin-bottom:1em;
+  margin-bottom: 1em;
+}
+
+.accessory.minted {
+  height: 297px;
+  width: 346px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+}
+
+.accessory.minted.accessory4 {
+  left: 260px;
+  top: 165px;
+}
+
+.accessory.minted.accessory5 {
+  left: 100px;
+  top: 75px;
+}
+
+.accessory.minted.accessory6 {
+  left: 160px;
+  top: -50px;
 }
 
 .nft-container {
@@ -776,7 +803,6 @@ a:hover {
 #cigarette {
   background-image: url("./game/sprites/cigarette.png");
 }
-
 
 @-webkit-keyframes gradient-animation {
   0% {
