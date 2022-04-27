@@ -25,11 +25,6 @@ import * as C from "./constants";
 import Player, { PlayerDirection } from "./Player";
 import MechPlayer from "./MechPlayer";
 import LoadMechSpriteSheet from "./LoadMechSpriteSheet";
-import { GameCharacter } from "./Game";
-
-interface ISpriteHash {
-  [name: string]: string;
-}
 
 export default class BCBA {
   private static instance: BCBA | undefined = undefined;
@@ -61,7 +56,7 @@ export default class BCBA {
 
   public static init(
     canvasRef: any,
-    characterChoices: GameCharacter,
+    characterChoices: IGameCharacter,
     debug: boolean = false
   ): BCBA {
     const k = kaboom({
@@ -81,7 +76,7 @@ export default class BCBA {
 
   private constructor(
     kaboomCtx: KaboomCtx,
-    characterChoices: GameCharacter,
+    characterChoices: IGameCharacter,
     debug: boolean = false
   ) {
     this.DEBUG = debug;
@@ -233,7 +228,7 @@ export default class BCBA {
     //this.k.loadSprite("merged_red", merged);
   }
 
-  private initPlayers(charChoices: GameCharacter) {
+  private initPlayers(charChoices: IGameCharacter) {
     console.log("initPlayers");
     console.log(charChoices);
     this.setPlayer(
