@@ -1,42 +1,35 @@
-import "./App.css";
-import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
-import LaunchGame from "./game/LaunchGame";
-import Home from "./components/Home";
-import About from "./components/About";
-import { MoralisProvider } from "react-moralis";
-import Mint from "./components/Mint";
-import Game from "./game/Game";
-import SectionLoader from "./components/SectionLoader";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from 'react-router-dom'
+import { AboutView } from './views/AboutView'
+import { HomeView } from './views/HomeView'
+import { LaunchView } from './views/LaunchView'
+import { MintView } from './views/MintView'
+import { NotFoundView } from './views/NotFoundView'
+import { GameView } from './views/GameView'
 
-function NotFound() {
-  return <h1>not found!</h1>;
-}
+import './App.css'
+
 
 function App() {
-
   return (
-    <Router>
-      <MoralisProvider
-        serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL as string}
-        appId={process.env.REACT_APP_MORALIS_APP_ID as string}
-      >
-        <div className="App">
-          <div className="container">
+    <div className='App'>
+      <div className='container'>
+        <Router>
           <Routes>
-            <Route path="/" element={<SectionLoader />} />
-            <Route path="/about" element={<SectionLoader />} />
-            <Route path="/mint" element={<SectionLoader />} />
-            <Route path="/launch-game" element={<SectionLoader />} />
-            <Route path="/game" element={<Game />} /> {/*characterNum={characterChoices.characterNum} mechColor={characterChoices.mechColor} gunName={characterChoices.gunName}  */}
-
-            <Route path="/NotFound" element={<NotFound />} />
-            <Route path="*" element={<Navigate replace to="/NotFound" />} />
+            <Route path='/' element={<HomeView />} />
+            <Route path='/about' element={<AboutView />} />
+            <Route path='/mint' element={<MintView />} />
+            <Route path='/launch-game' element={<LaunchView />} />
+            <Route path='/game' element={<GameView />} />{' '}
+            <Route path='*' element={<NotFoundView />} />
           </Routes>
-          </div>
-        </div>
-      </MoralisProvider>
-    </Router>
-  );
+        </Router>
+      </div>
+    </div>
+  )
 }
 
-export default App;
+export default App
