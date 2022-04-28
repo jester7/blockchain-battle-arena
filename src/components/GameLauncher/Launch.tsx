@@ -1,4 +1,3 @@
-import { ProgressLoader } from '../shared'
 import { useEffect } from 'react'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { useNavigate } from 'react-router-dom'
@@ -105,10 +104,8 @@ export const Launch = () => {
           ></div>
         </div>
       </div>
-      {/* <ActionAreaMain message={""} label={"Start Game"} disableButton={false} isLoading={false} loadingLabel={""} action={() => { launchGame(); }} /> */}
       <>
         <div className='section action-container'>
-          <ProgressLoader />
           <span className={true ? 'hidden' : 'action-message'}>
             Make your selection above then click the button to play.
           </span>
