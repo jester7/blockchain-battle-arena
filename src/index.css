@@ -18,11 +18,11 @@ code {
     monospace;
 }
 
-h1, h2, h3, h4, h5 {
+/* h1, h2, h3, h4, h5 {
   font-family: good-times,sans-serif;
 font-weight: 900;
 font-style: normal;
-}
+} */
 
 h1 .weathered {
   font-family: good-times-bad-times,sans-serif;

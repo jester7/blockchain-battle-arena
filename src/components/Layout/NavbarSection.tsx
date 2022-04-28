@@ -1,4 +1,4 @@
-import { COLORS } from '../../styles'
+import { COLORS, SPACING } from '../../styles'
 import { ImGithub } from 'react-icons/im'
 import { Link, useLocation } from 'react-router-dom'
 import OpenSea from '../../icons/icon-opensea.png'
@@ -11,7 +11,7 @@ const NavBar = styled.ul`
   padding: 1.6em;
   background-color: ${COLORS.greyDarkAlpha};
   flex-flow: row;
-  border-radius: 2em;
+  border-radius: ${SPACING.smallRadius};
   box-shadow: 0px 0px 8px ${COLORS.blueLightAlpha};
   justify-content: space-evenly;
   align-items: center;
