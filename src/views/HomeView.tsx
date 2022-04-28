@@ -5,7 +5,7 @@ import { COLORS, SPACING, SIZES } from '../styles'
 const HomeSectionContainer = styled.div`
   all: revert;
   display: flex;
-  flex-grow: 1;
+  // flex-grow: 1;
   font-family: good-times, sans-serif;
   flex-direction: column;
   justify-content: flex-start;
