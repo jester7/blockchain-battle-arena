@@ -1,7 +1,7 @@
 import { ConnectionFooter } from '../Connection'
 import { ErrorDisplay } from '../shared/ErrorDisplay'
 import { LeftCharacterSection } from './LeftCharacterSection'
-import NavigationSection from './NavigationSection'
+import {NavbarSection} from './NavbarSection'
 
 export const MainLayout = ({ children }: IProps) => {
   return (
@@ -10,7 +10,7 @@ export const MainLayout = ({ children }: IProps) => {
       <main className='main-container'>
         <>
           <ErrorDisplay />
-          <NavigationSection />
+          <NavbarSection />
           {children}
           <ConnectionFooter />
         </>

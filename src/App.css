@@ -111,7 +111,7 @@
   scrollbar-color: var(--color-blue-medium) var(--color-blue-dark-alpha);
   scrollbar-width: thin;
 }
-/* 
+/*
 .main-container .section.collection {
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -123,75 +123,75 @@
 }
 
 a.icon {
-  width: 1.75em;
+  /* width: 1.75em;
   height: 1.75em;
   background-size: contain;
   background-repeat: no-repeat;
-  display: block;
+  display: block; */
 }
 
 a.icon.github {
-  background-image: url("./icons/icon-github.png");
+  /* background-image: url("./icons/icon-github.png"); */
 }
 
 a.icon.opensea {
-  background-image: url("./icons/icon-opensea.png");
+  /* background-image: url("./icons/icon-opensea.png"); */
 }
 
 .navbar.section {
-  margin: 24px 0px 24px 0px;
+  /* margin: 24px 0px 24px 0px;
   padding: 0.75em;
   background-color: var(--color-gray-dark-alpha);
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
-  flex: none; /*prevent navbar from growing vertically*/
+  flex: none;
   border-radius: 2em;
   box-shadow: var(--box-shadow-light-blue);
-  justify-content: space-evenly;
+  justify-content: space-evenly; */
 }
 
 .navbar li {
-  position: relative;
+  /* position: relative;
   text-align: center;
   padding: 0.25em 1.25em;
   display: block;
   border-radius: 2em;
   flex-grow: 0;
-  margin: 0px 0.5em 0px 0px;
+  margin: 0px 0.5em 0px 0px; */
 }
 
 .navbar li a {
-  display: inline-block;
+  /* display: inline-block;
   margin-top: 0.5em;
-  margin-bottom: -0.3em;
+  margin-bottom: -0.3em; */
 }
 .navbar li a.icon {
-  margin-top: 0em;
+  /* margin-top: 0em; */
 }
 
 .navbar li:hover {
-  background-color: var(--color-blue-medium);
+  /* background-color: var(--color-blue-medium); */
 }
 
 .navbar li:last-child {
-  margin: 0;
+  /* margin: 0; */
 }
 
 .navbar li.selected {
-  background-color: var(--color-blue-medium);
+  /* background-color: var(--color-blue-medium); */
 }
 
 .navbar li.selected a {
-  color: var(--color-red-pink);
+  /* color: var(--color-red-pink); */
 }
 
 .navbar-item.icon {
-  padding-left: 2.5em;
+  /* padding-left: 2.5em; */
 }
 
 .navbar-item a.icon::before {
-  content: "";
+  /* content: "";
   display: block;
   width: 1.75em;
   height: 1.75em;
@@ -201,16 +201,16 @@ a.icon.opensea {
   background-repeat: no-repeat;
   filter: saturate(0%) brightness(140%);
   top: 0.44em;
-  left: 14px;
+  left: 14px; */
 }
 
 .navbar-item.twitter a::before {
   /* background-image: url("./assets/twitter-logo.svg"); */
 }
 .navbar-item.github a::before {
-  width: 1.3em;
+  /* width: 1.3em;
   height: 1.3em;
-  top: 0.5em;
+  top: 0.5em; */
   /* background-image: url("./assets/GitHub-Mark-Light-64px.png"); */
 }
 .main-container .section p {
@@ -370,7 +370,7 @@ button:hover {
   box-shadow: none;
   animation: pulsating-animation 2.5s ease-in-out infinite;
 }
-/* 
+/*
 .action-button {
   margin-left: 10px;
 } */
@@ -405,10 +405,10 @@ a {
   text-shadow: 1px 1px 4px rgba(34, 34, 34, 0.8);
 }
 
-a:hover {
+/* a:hover {
   color: #fff;
   text-shadow: 0px 0px 4px rgba(95, 222, 245, 0.8);
-}
+} */
 
 .section p a {
   color: var(--color-blue-medium);
