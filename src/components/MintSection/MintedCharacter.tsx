@@ -1,4 +1,4 @@
-import { ACESSORIES, CHARACTERS } from "./nfts"
+import { ACESSORIES, CHARACTERS } from "./sprites"
 import { Link } from 'react-router-dom'
 import { useMint } from "./MintProvider"
 

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useMoralis } from 'react-moralis'
 import { useAuthentication } from '../../providers'
 import { ProgressLoader } from '../shared'
-import { FlashingButton } from './FlashingButton'
+import { FlashingButton } from '../shared/FlashingButton'
 
 export const ConnectButton = () => {
   const [loading, setLoading] = useState<boolean>(false)

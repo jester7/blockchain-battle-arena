@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { COLORS, SIZES, FONTS, SPACING } from '../styles'
 import { SectionContainer } from '../components/shared/SectionContainer'
 import { Paragraph } from '../components/shared/Paragraph'
+import { HeaderText } from '../components/shared/HeaderText'
+import { SubHeading } from '../components/shared/SubHeading'
 
 const HomeSectionContainer = styled(SectionContainer)`
   text-align: left;
@@ -10,16 +12,7 @@ const HomeSectionContainer = styled(SectionContainer)`
   margin: ${SPACING.primary} 0;
 `
 
-const HomeHeading = styled.h1`
-  all: revert;
-  margin: 0;
-  line-height: 3.2rem;
-  font-family: ${FONTS.heading};
-  font-size: ${SIZES.medium};
-  color: ${COLORS.redPink};
-  text-shadow: 0.3rem 0.3rem 0.5rem ${COLORS.redDeep};
-  border-bottom: 2px dotted ${COLORS.blueMedium};
-`
+
 const TextContainer = styled.div`
   margin: 0;
 `
@@ -28,18 +21,6 @@ const EmphasisText = styled.span`
   all: revert;
   font-family: ${FONTS.heading};
   font-weight: 900;
-`
-
-
-const SubHeading = styled.h3`
-  revert: all;
-  font-family: ${FONTS.heading};
-  color: ${COLORS.redPink};
-  font-size: 1.3rem;
-  margin: ${SPACING.primary} 0;
-  padding: 0;
-  line-height: 2.5rem;
-  border-bottom: 2px dotted ${COLORS.blueMedium};
 `
 
 const UnorderedList = styled.ul`
@@ -66,7 +47,7 @@ export const HomeView = () => {
     <MainLayout>
       <>
         <HomeSectionContainer>
-          <HomeHeading>Welcome</HomeHeading>
+          <HeaderText>Welcome</HeaderText>
           <TextContainer>
             <Paragraph>
               <EmphasisText>Blockchain Battle Arena </EmphasisText>
