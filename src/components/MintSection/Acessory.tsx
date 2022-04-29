@@ -1,11 +1,6 @@
-import styled from "styled-components"
-import { COLORS } from "../../styles"
-
-interface IAcessoryProps {
-  id: string
-  img: any
-  handleSelect: (id: string) => void
-}
+import styled from 'styled-components'
+import { COLORS } from '../../styles'
+import type { IAcessory } from './sprites'
 
 const AcessoryWrapper = styled.div`
   cursor: pointer;
@@ -24,10 +19,19 @@ const AcessoryImage = styled((props) => <div {...props} />)`
   height: 200px;
 `
 
-export const Acessory = ({ id, img, handleSelect }: IAcessoryProps) => {
+export const Acessory = ({
+  acessory,
+  handleSelect,
+}: {
+  acessory: IAcessory
+  handleSelect: (acessory: IAcessory) => void
+}) => {
   return (
     <AcessoryWrapper>
-      <AcessoryImage onClick={() => handleSelect(id)} image={img} />
+      <AcessoryImage
+        onClick={() => handleSelect(acessory)}
+        image={acessory.img}
+      />
     </AcessoryWrapper>
   )
 }

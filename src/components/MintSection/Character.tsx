@@ -1,11 +1,6 @@
-import styled from "styled-components"
-import { COLORS } from "../../styles"
-
-interface ICharacterProps {
-  id: string
-  img: any
-  handleSelect: (id: string) => void
-}
+import styled from 'styled-components'
+import { COLORS } from '../../styles'
+import type { ICharacter } from './sprites'
 
 const CharacterWrapper = styled.div`
   cursor: pointer;
@@ -17,17 +12,21 @@ const CharacterWrapper = styled.div`
 `
 
 const CharacterImage = styled((props) => <div {...props} />)`
-  background-image: url('${props => props.image}');
+  background-image: url('${(props) => props.image}');
   background-repeat: no-repeat;
   background-size: cover;
   width: 200px;
   height: 200px;
 `
 
-export const Character = ({ id, img, handleSelect }: ICharacterProps) => {
+interface ICharacterProps extends ICharacter {
+  handleSelect: (name: string) => void
+}
+
+export const Character = ({ img, name, handleSelect }: ICharacterProps) => {
   return (
     <CharacterWrapper>
-      <CharacterImage onClick={() => handleSelect(id)} image={img} />
+      <CharacterImage onClick={() => handleSelect(name)} image={img} />
     </CharacterWrapper>
   )
 }

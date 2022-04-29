@@ -1,5 +1,5 @@
 import { Acessory } from "./Acessory"
-import { ACESSORIES } from "./sprites"
+import { ACESSORIES, IAcessory } from "./sprites"
 import styled from 'styled-components'
 
 const AcessorySelectContainer = styled.div`
@@ -8,13 +8,13 @@ const AcessorySelectContainer = styled.div`
 `
 
 export const AcessorySelection = () => {
-  const handleAcessorySelect = (id: string) => {
+  const handleSelect = (acessory: IAcessory) => {
   }
   return (
     <>
       <AcessorySelectContainer>
         {ACESSORIES?.map((acessory, i) => (
-          <Acessory key={i} {...acessory} handleSelect={handleAcessorySelect} />
+          <Acessory key={i} acessory={acessory} handleSelect={handleSelect} />
         ))}
       </AcessorySelectContainer>
     </>

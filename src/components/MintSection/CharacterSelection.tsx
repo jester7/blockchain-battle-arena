@@ -8,14 +8,14 @@ const CharacterSelectContainer = styled.div`
 `
 
 export const CharacterSelection = () => {
-  const handleCharacterSelect = () => {}
+  const handleSelect = (name: string) => {}
   return (
     <CharacterSelectContainer>
       {CHARACTERS?.map((character, i) => (
         <Character
           key={i}
           {...character}
-          handleSelect={handleCharacterSelect}
+          handleSelect={handleSelect}
         />
       ))}
     </CharacterSelectContainer>
