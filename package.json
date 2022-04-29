@@ -12,6 +12,7 @@
     "dotenv": "^16.0.0",
     "kaboom": "^2000.2.9",
     "moralis": "^1.5.9",
+    "normalize.css": "^8.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-icons": "^4.3.1",

@@ -8,8 +8,7 @@ import {
   NetworkProvider,
   ErrorProvider,
 } from './providers'
-
-import './index.css'
+import 'normalize.css'
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 

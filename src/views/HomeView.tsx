@@ -1,28 +1,20 @@
 import { MainLayout } from '../components/Layout/MainLayout'
 import styled from 'styled-components'
-import { COLORS, SPACING, SIZES } from '../styles'
+import { COLORS, SIZES, FONTS, SPACING } from '../styles'
+import { SectionContainer } from '../components/shared/SectionContainer'
+import { Paragraph } from '../components/shared/Paragraph'
 
-const HomeSectionContainer = styled.div`
-  all: revert;
-  display: flex;
-  // flex-grow: 1;
-  font-family: good-times, sans-serif;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-color: ${COLORS.blueMedium} ${COLORS.blueDarkAlpha};
-  scrollbar-width: thin;
+const HomeSectionContainer = styled(SectionContainer)`
   text-align: left;
-  padding: 0.8rem ${SPACING.large};
-  border-radius: ${SPACING.smallRadius};
-  background-color: ${COLORS.greyDarkAlpha};
-  box-shadow: ${COLORS.shadowBlueLight};
+  padding: ${SPACING.medium} ${SPACING.medium} ${SPACING.large};
+  margin: ${SPACING.primary} 0;
 `
+
 const HomeHeading = styled.h1`
   all: revert;
   margin: 0;
   line-height: 3.2rem;
+  font-family: ${FONTS.heading};
   font-size: ${SIZES.medium};
   color: ${COLORS.redPink};
   text-shadow: 0.3rem 0.3rem 0.5rem ${COLORS.redDeep};
@@ -34,25 +26,20 @@ const TextContainer = styled.div`
 
 const EmphasisText = styled.span`
   all: revert;
-  font-family: good-times, sans-serif;
+  font-family: ${FONTS.heading};
   font-weight: 900;
 `
 
-const Paragraph = styled.p`
-  all: revert;
-  font-family: co-text, sans-serif;
-  font-size: ${SIZES.p};
-  line-height: 1.8rem;
-  margin: 0;
-  padding: 0.7rem 0;
-  color: ${COLORS.highlight};
-`
 
 const SubHeading = styled.h3`
   revert: all;
-  margin: 0;
+  font-family: ${FONTS.heading};
+  color: ${COLORS.redPink};
+  font-size: 1.3rem;
+  margin: ${SPACING.primary} 0;
   padding: 0;
   line-height: 2.5rem;
+  border-bottom: 2px dotted ${COLORS.blueMedium};
 `
 
 const UnorderedList = styled.ul`
@@ -64,9 +51,9 @@ const UnorderedList = styled.ul`
 `
 
 const LineItem = styled.li`
-  padding-bottom: 0.3rem;
-  font-size: ${SIZES.p};
-
+  margin: ${SPACING.primary} 0;
+  font-size: ${SIZES.paragraph};
+  line-height: 1.6rem;
   &:before {
     content: '> ';
     color: ${COLORS.redPink};

@@ -1,34 +1,39 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from 'react-router-dom'
 import { AboutView } from './views/AboutView'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { GameView } from './views/GameView'
 import { HomeView } from './views/HomeView'
 import { LaunchView } from './views/LaunchView'
 import { MintView } from './views/MintView'
 import { NotFoundView } from './views/NotFoundView'
-import { GameView } from './views/GameView'
+import Background from './assets/home-background.jpg'
+import styled from 'styled-components'
 
-import './App.css'
+import { COLORS } from './styles'
 
+const AppWrapper = styled.div`
+  height: 100vh;
+  background-color: ${COLORS.greyDark};
+  background-image: url('${Background}');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center left;
+  color: ${COLORS.highlight};
+`
 
 function App() {
   return (
-    <div className='App'>
-      <div className='container'>
-        <Router>
-          <Routes>
-            <Route path='/' element={<HomeView />} />
-            <Route path='/about' element={<AboutView />} />
-            <Route path='/mint' element={<MintView />} />
-            <Route path='/launch-game' element={<LaunchView />} />
-            <Route path='/game' element={<GameView />} />{' '}
-            <Route path='*' element={<NotFoundView />} />
-          </Routes>
-        </Router>
-      </div>
-    </div>
+    <AppWrapper>
+      <Router>
+        <Routes>
+          <Route path='/' element={<HomeView />} />
+          <Route path='/about' element={<AboutView />} />
+          <Route path='/mint' element={<MintView />} />
+          <Route path='/launch-game' element={<LaunchView />} />
+          <Route path='/game' element={<GameView />} />{' '}
+          <Route path='*' element={<NotFoundView />} />
+        </Routes>
+      </Router>
+    </AppWrapper>
   )
 }
 

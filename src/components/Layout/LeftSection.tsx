@@ -1,5 +1,5 @@
 import { SIZES } from '../../styles'
-import BCBALogo from '../../bcba-logo.png'
+import BCBALogo from '../../assets/bcba-logo.png'
 import SampleCharacter from '../../sample-character-nft.png'
 import SampleCharacterSuit from '../../mech-fighter-red-large.png'
 import styled, { keyframes } from 'styled-components'

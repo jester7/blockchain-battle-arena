@@ -6,10 +6,9 @@ import { RightSection } from './RightSection'
 import styled from 'styled-components'
 
 const MainContainer = styled.div`
-  all: revert;
   display: grid;
+  height: 100vh;
   grid-template-columns: 40% auto;
-  grid-template-rows: 100%;
 `
 
 export const MainLayout = ({ children }: IProps) => {

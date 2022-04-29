@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useMoralis } from 'react-moralis'
 import { useAuthentication } from '../../providers'
-import { ActionButton, ActionHeading, ProgressLoader } from '../shared'
+import { ProgressLoader } from '../shared'
+import { FlashingButton } from './FlashingButton'
 
 export const ConnectButton = () => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -23,9 +24,8 @@ export const ConnectButton = () => {
   }
 
   return !isConnected ? (
-    <div>
-      <ActionHeading text='Connect your wallet' />
-      <ActionButton disabled={loading} text='Connect' onClick={connectWallet} />
-    </div>
+    <FlashingButton disabled={loading} onClick={connectWallet}>
+      Connect Wallet
+    </FlashingButton>
   ) : null
 }

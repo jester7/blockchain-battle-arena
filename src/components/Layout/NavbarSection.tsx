@@ -1,20 +1,14 @@
-import { COLORS, SPACING } from '../../styles'
+import { COLORS, FONTS } from '../../styles'
 import { ImGithub } from 'react-icons/im'
 import { Link, useLocation } from 'react-router-dom'
+import { SectionContainer } from '../shared/SectionContainer'
 import OpenSea from '../../icons/icon-opensea.png'
 import styled from 'styled-components'
 
-const NavBar = styled.ul`
-  display: flex;
-  list-style-type: none;
-  margin: 1rem 0;
-  padding: 1.6em;
-  background-color: ${COLORS.greyDarkAlpha};
-  flex-flow: row;
-  border-radius: ${SPACING.smallRadius};
-  box-shadow: 0px 0px 8px ${COLORS.blueLightAlpha};
+const Navbar = styled(SectionContainer)`
+  flex-direction: row;
   justify-content: space-evenly;
-  align-items: center;
+  padding: 1.7rem;
 `
 
 const OpenSeaIcon = styled.div`
@@ -37,11 +31,13 @@ interface INavItem {
 }
 
 const NavItemLink = styled((props) => <Link {...props} />)`
-  font-size: 1.2em;
+  font-family: ${FONTS.primary};
+  font-size: 1.5rem;
+  text-decoration: none;
   color: ${(props) => (props.selected ? COLORS.redPink : COLORS.blueLight)};
   &:hover {
-    color: #fff;
-    text-shadow: 0px 0px 4px rgba(95, 222, 245, 0.8);
+    color: ${COLORS.highlight};
+    text-shadow: 5px 5px 5px ${COLORS.greyDarkAlpha};
   }
 `
 
@@ -75,13 +71,13 @@ const GithubLink = () => {
 
 export const NavbarSection = () => {
   return (
-    <NavBar>
+    <Navbar>
       <NavItem text='Home' path='/' />
       <NavItem text='Mint' path='/mint' />
       <NavItem text='Launch Game' path='/launch-game' />
       <NavItem text='About' path='/about' />
       <GithubLink />
       <OpenSeaLink />
-    </NavBar>
+    </Navbar>
   )
 }
