@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { useNavigate } from 'react-router-dom'
-
+import { SectionContainer } from '../shared/SectionContainer'
+import { SubHeading } from '../shared/SubHeading'
+import { Paragraph } from '../shared/Paragraph'
 import './launch.css'
 
 export const Launch = () => {
@@ -19,8 +21,8 @@ export const Launch = () => {
 
   return (
     <>
-      <div className='home section'>
-        <h3>Keyboard Controls</h3>
+      <SectionContainer>
+        <SubHeading>Keyboard Controls</SubHeading>
         <ul>
           <li>Move with left and right arrow keys</li>
           <li>Jump with the space bar</li>
@@ -28,8 +30,8 @@ export const Launch = () => {
           <li>Activate shield with either shift key</li>
         </ul>
 
-        <h3>Choose one of your NFTs for battle</h3>
-        <p>Click on a character to pick it.</p>
+        <SubHeading>Choose one of your NFTs for battle</SubHeading>
+        <Paragraph>Click on a character to pick it.</Paragraph>
         <div className='nft-container nfts'>
           <div
             className={
@@ -59,7 +61,7 @@ export const Launch = () => {
             }}
           ></div>
         </div>
-        <h3>Choose a Mech</h3>
+        <SubHeading>Choose a Mech</SubHeading>
         <p></p>
         <div className='nft-container mechs'>
           <div
@@ -81,8 +83,7 @@ export const Launch = () => {
             }}
           ></div>
         </div>
-        <h3>Choose a Gun</h3>
-        <p></p>
+        <SubHeading>Choose a Gun</SubHeading>
         <div className='nft-container guns'>
           <div
             className={
@@ -103,21 +104,19 @@ export const Launch = () => {
             }}
           ></div>
         </div>
-      </div>
-      <>
-        <div className='section action-container'>
-          <span className={true ? 'hidden' : 'action-message'}>
-            Make your selection above then click the button to play.
-          </span>
-          <button
-            className={true ? 'action-button' : 'action-button hidden'}
-            onClick={launchGame}
-            disabled={false}
-          >
-            Start Game
-          </button>
-        </div>
-      </>
+      </SectionContainer>
+      <SectionContainer>
+        <span className={true ? 'hidden' : 'action-message'}>
+          Make your selection above then click the button to play.
+        </span>
+        <button
+          className={true ? 'action-button' : 'action-button hidden'}
+          onClick={launchGame}
+          disabled={false}
+        >
+          Start Game
+        </button>
+      </SectionContainer>
     </>
   )
 }

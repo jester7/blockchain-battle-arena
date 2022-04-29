@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { useEnsAddress, useMoralis } from 'react-moralis'
 import styled from 'styled-components'
 import { FlashingButton } from '../shared/FlashingButton'
 

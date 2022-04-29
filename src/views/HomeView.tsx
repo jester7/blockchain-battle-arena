@@ -1,10 +1,11 @@
 import { MainLayout } from '../components/Layout/MainLayout'
 import styled from 'styled-components'
-import { COLORS, SIZES, FONTS, SPACING } from '../styles'
+import { FONTS, SPACING } from '../styles'
 import { SectionContainer } from '../components/shared/SectionContainer'
 import { Paragraph } from '../components/shared/Paragraph'
 import { HeaderText } from '../components/shared/HeaderText'
 import { SubHeading } from '../components/shared/SubHeading'
+import { UnorderedList, LineItem } from '../components/shared/Lists'
 
 const HomeSectionContainer = styled(SectionContainer)`
   text-align: left;
@@ -21,25 +22,6 @@ const EmphasisText = styled.span`
   all: revert;
   font-family: ${FONTS.heading};
   font-weight: 900;
-`
-
-const UnorderedList = styled.ul`
-  revert: all;
-  margin: 0;
-  padding: 0;
-  font-family: co-text, sans-serif;
-  list-style: none;
-`
-
-const LineItem = styled.li`
-  margin: ${SPACING.primary} 0;
-  font-size: ${SIZES.paragraph};
-  line-height: 1.6rem;
-  &:before {
-    content: '> ';
-    color: ${COLORS.redPink};
-    font-weight: bold;
-  }
 `
 
 export const HomeView = () => {
