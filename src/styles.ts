@@ -15,6 +15,7 @@ export const COLORS = {
   greyDarkAlpha: 'rgba(29, 29, 29, 0.85)',
   gradientBlue:
     'linear-gradient(45deg, rgba(8,64,100,1) 0%, rgba(235,235,235,1) 100%)',
+  gradientRed: 'linear-gradient(45deg, #640808 0%, #fb2940 100%)',
 }
 
 export const FONTS = {

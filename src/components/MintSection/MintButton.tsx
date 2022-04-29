@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { FlashingButton } from '../shared/FlashingButton'
+import { useMint } from './MintProvider'
 
 const MintButtonContainer = styled.div`
   display: flex;
@@ -8,10 +9,11 @@ const MintButtonContainer = styled.div`
   margin: 0 0 1rem 0;
 `
 
-export const MintButtonSection = () => {
+export const MintButton = () => {
+  const { handleMint } = useMint()
   return (
     <MintButtonContainer>
-      <FlashingButton>Mint</FlashingButton>
+      <FlashingButton onClick={handleMint}>Mint</FlashingButton>
     </MintButtonContainer>
   )
 }

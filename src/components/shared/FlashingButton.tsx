@@ -17,7 +17,7 @@ const pulsate = keyframes`
   }
 `
 
-export const FlashingButton = styled.button`
+export const FlashingButton = styled(props => <button {...props}/>)`
   font-family: ${FONTS.heading};
   font-size: 1.6rem;
   color: ${COLORS.highlight};

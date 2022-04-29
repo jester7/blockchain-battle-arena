@@ -7,7 +7,7 @@ import { FlashingButton } from '../shared/FlashingButton'
 export const ConnectButton = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const { authenticate } = useMoralis()
-  const { isConnected } = useAuthentication()
+  const { isConnecting } = useAuthentication()
 
   const renderLoadingBar = () => {
     return <ProgressLoader />
@@ -23,9 +23,11 @@ export const ConnectButton = () => {
     return renderLoadingBar()
   }
 
-  return !isConnected ? (
+  return isConnecting ? (
+    <ProgressLoader />
+  ) : (
     <FlashingButton disabled={loading} onClick={connectWallet}>
       Connect Wallet
     </FlashingButton>
-  ) : null
+  )
 }

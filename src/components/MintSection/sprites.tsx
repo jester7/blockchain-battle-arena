@@ -8,56 +8,69 @@ import Character3Bg from '../../assets/character_3_bg.png'
 import Cigarette from '../../assets/cigarette.png'
 import EyeLenser from '../../assets/eye_lenser.png'
 import Hat from '../../assets/hat.png'
-
-export interface ICharacter {
+interface IBaseNft {
   name: string
+  type: string
   tokenId: number
-  img: any
+  image: any
   imageUrl: string
 }
 
-export interface IAcessory extends ICharacter {}
+export type IMintable = ICharacter | IAcessory
+export interface ICharacter extends IBaseNft {}
+export interface IAcessory extends IBaseNft {}
 
 export const CHARACTERS: ICharacter[] = [
   {
     name: 'character1',
+    type: 'character',
     tokenId: 1,
-    img: Character1Bg,
+    image: Character1Bg,
     imageUrl:
       'https://ipfs.io/ipfs/QmS5CKakuvy14oFBNGKS2Asyx7d7by7NEpyVxBu98debuB/character_idea_1_bg.png',
   },
   {
     name: 'character2',
+    type: 'character',
+
     tokenId: 2,
-    img: Character2Bg,
+    image: Character2Bg,
     imageUrl:
       'https://ipfs.io/ipfs/QmS5CKakuvy14oFBNGKS2Asyx7d7by7NEpyVxBu98debuB/character_idea_2_bg.png',
   },
   {
     name: 'character3',
+    type: 'character',
+
     tokenId: 3,
-    img: Character3Bg,
+    image: Character3Bg,
     imageUrl:
       'https://ipfs.io/ipfs/QmS5CKakuvy14oFBNGKS2Asyx7d7by7NEpyVxBu98debuB/character_idea_3_bg.png',
   },
   {
-    name: 'character1',
+    name: 'character4',
+    type: 'character',
+
     tokenId: 1,
-    img: Character1,
+    image: Character1,
     imageUrl:
       'https://ipfs.io/ipfs/QmS5CKakuvy14oFBNGKS2Asyx7d7by7NEpyVxBu98debuB/character_idea_1_bg.png',
   },
   {
-    name: 'character2',
+    name: 'character5',
+    type: 'character',
+
     tokenId: 2,
-    img: Character2,
+    image: Character2,
     imageUrl:
       'https://ipfs.io/ipfs/QmS5CKakuvy14oFBNGKS2Asyx7d7by7NEpyVxBu98debuB/character_idea_2_bg.png',
   },
   {
-    name: 'character3',
+    name: 'character6',
+    type: 'character',
+
     tokenId: 3,
-    img: Character3,
+    image: Character3,
     imageUrl:
       'https://ipfs.io/ipfs/QmS5CKakuvy14oFBNGKS2Asyx7d7by7NEpyVxBu98debuB/character_idea_3_bg.png',
   },
@@ -66,22 +79,26 @@ export const CHARACTERS: ICharacter[] = [
 export const ACESSORIES: IAcessory[] = [
   {
     name: 'cigarette',
+    type: 'acessory',
+
     tokenId: 1,
-    img: Cigarette,
+    image: Cigarette,
     imageUrl:
       'https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/cigarette.png',
   },
   {
     name: 'eye-lenser',
+    type: 'acessory',
     tokenId: 2,
-    img: EyeLenser,
+    image: EyeLenser,
     imageUrl:
       'https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/eye_lenser.png',
   },
   {
     name: 'hat',
+    type: 'acessory',
     tokenId: 3,
-    img: Hat,
+    image: Hat,
     imageUrl:
       'https://ipfs.io/ipfs/QmQ46GzbeaZwu986aPF6MgMbbVK1jFhSbuXk2VLLV4eTRW/hat.png',
   },
