@@ -1,7 +1,7 @@
 import { MainLayout } from '../components/Layout/MainLayout'
 import { HeaderText } from '../components/shared/HeaderText'
 import { SectionContainer } from '../components/shared/SectionContainer'
-import { UnorderedList, LineItem } from '../components/shared/Lists'
+import { UnorderedList, ListItem } from '../components/shared/Lists'
 import { SubHeading } from '../components/shared/SubHeading'
 import { Paragraph } from '../components/shared/Paragraph'
 
@@ -15,20 +15,20 @@ export const AboutView = () => {
         </Paragraph>
         <SubHeading>Contributors</SubHeading>
         <UnorderedList>
-          <LineItem>StrictlyKappa</LineItem>
-          <LineItem>Jovan Jester</LineItem>
-          <LineItem>Rimraf</LineItem>
+          <ListItem>StrictlyKappa</ListItem>
+          <ListItem>Jovan Jester</ListItem>
+          <ListItem>Rimraf</ListItem>
         </UnorderedList>
         <SubHeading>Tech Stack</SubHeading>
         <UnorderedList>
-          <LineItem>React/TypeScript</LineItem>
-          <LineItem>Kaboom game engine</LineItem>
-          <LineItem>Solidity on Rinkeby</LineItem>
+          <ListItem>React/TypeScript</ListItem>
+          <ListItem>Kaboom game engine</ListItem>
+          <ListItem>Solidity on Rinkeby</ListItem>
         </UnorderedList>
         <SubHeading>Coming Soon</SubHeading>
         <UnorderedList>
-          <LineItem>Multiplayer</LineItem>
-          <LineItem>Use your NFTs on the Ethereum mainnet</LineItem>
+          <ListItem>Multiplayer</ListItem>
+          <ListItem>Use your NFTs on the Ethereum mainnet</ListItem>
         </UnorderedList>
       </SectionContainer>
     </MainLayout>

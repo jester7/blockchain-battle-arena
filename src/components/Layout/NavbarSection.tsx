@@ -1,14 +1,21 @@
-import { COLORS, FONTS } from '../../styles'
+import { COLORS, FONTS, SPACING } from '../../styles'
 import { ImGithub } from 'react-icons/im'
 import { Link, useLocation } from 'react-router-dom'
 import { SectionContainer } from '../shared/SectionContainer'
 import OpenSea from '../../icons/icon-opensea.png'
 import styled from 'styled-components'
 
-const Navbar = styled(SectionContainer)`
+const Section = styled(SectionContainer)`
+  margin-top: ${SPACING.small};
+  margin-right: ${SPACING.primary};
+`
+
+const Navbar = styled.div`
+  display: flex;
+  height: 100%;
   flex-direction: row;
   justify-content: space-evenly;
-  padding: 1.7rem;
+  align-items: center;
 `
 
 const OpenSeaIcon = styled.div`
@@ -71,13 +78,15 @@ const GithubLink = () => {
 
 export const NavbarSection = () => {
   return (
-    <Navbar>
-      <NavItem text='Home' path='/' />
-      <NavItem text='Mint' path='/mint' />
-      <NavItem text='Launch Game' path='/launch-game' />
-      <NavItem text='About' path='/about' />
-      <GithubLink />
-      <OpenSeaLink />
-    </Navbar>
+    <Section>
+      <Navbar>
+        <NavItem text='Home' path='/' />
+        <NavItem text='Mint' path='/mint' />
+        <NavItem text='Launch Game' path='/launch-game' />
+        <NavItem text='About' path='/about' />
+        <GithubLink />
+        <OpenSeaLink />
+      </Navbar>
+    </Section>
   )
 }

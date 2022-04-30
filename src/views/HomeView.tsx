@@ -5,7 +5,7 @@ import { SectionContainer } from '../components/shared/SectionContainer'
 import { Paragraph } from '../components/shared/Paragraph'
 import { HeaderText } from '../components/shared/HeaderText'
 import { SubHeading } from '../components/shared/SubHeading'
-import { UnorderedList, LineItem } from '../components/shared/Lists'
+import { UnorderedList, ListItem } from '../components/shared/Lists'
 
 const HomeSectionContainer = styled(SectionContainer)`
   text-align: left;
@@ -44,26 +44,26 @@ export const HomeView = () => {
           </Paragraph>
         </TextContainer>
         <UnorderedList>
-          <LineItem>
+          <ListItem>
             Accessories are separate NFTs that can be equipped on a character
             NFT
-          </LineItem>
-          <LineItem>
+          </ListItem>
+          <ListItem>
             The child/accesory NFTs can be attached to another NFT as long as
             you are the owner or they can be listed on OpenSea in their own
             right. Transferring or selling an accessory NFT will detach it from
             its parent NFT.
-          </LineItem>
-          <LineItem>
+          </ListItem>
+          <ListItem>
             This parent NFT can store positioning metadata onchain for all
             accessory NFTs, thus allowing more flexibility in sharing
             accessories between different styles of NFT collections
-          </LineItem>
-          <LineItem>
+          </ListItem>
+          <ListItem>
             Finally, our proposal includes a method on the NFT smart contract to
             get the token URI for a background free version of the NFT character
             image, allowing drop in use in games or other web3 applications
-          </LineItem>
+          </ListItem>
         </UnorderedList>
       </HomeSectionContainer>
     </MainLayout>

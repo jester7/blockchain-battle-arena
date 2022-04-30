@@ -2,18 +2,18 @@ import { CHARACTERS, ACESSORIES } from './sprites'
 import { HeaderText } from '../shared/HeaderText'
 import { ItemsGrid } from './ItemsGrid'
 import { MintButton } from './MintButton'
-import { MintProvider } from './MintProvider'
+import { MintProvider } from '../../providers/MintProvider'
 import { Paragraph } from '../shared/Paragraph'
 import { SectionContainer } from '../shared/SectionContainer'
 import styled from 'styled-components'
-import { useAuthentication } from '../../providers'
+import { useConnection } from '../../providers'
 
 const MintSection = styled(SectionContainer)`
   max-height: 700px;
 `
 
 export const Mint = () => {
-  const { isConnected } = useAuthentication()
+  const { isConnected } = useConnection()
   return (
     <MintProvider>
       <MintSection>

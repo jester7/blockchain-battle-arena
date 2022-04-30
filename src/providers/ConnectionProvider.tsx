@@ -17,7 +17,7 @@ const defaultAuthenticationContext: IConnectionContext = {
 
 const AuthenticationContext = createContext(defaultAuthenticationContext)
 
-const AuthenticationProvider = ({ children }: IProps) => {
+const ConnectionProvider = ({ children }: IProps) => {
   const {
     isAuthenticated,
     isWeb3Enabled,
@@ -43,7 +43,8 @@ const AuthenticationProvider = ({ children }: IProps) => {
   }
 
   useEffect(() => {
-    const shouldEnableWeb3 = isAuthenticated && !isWeb3Enabled
+    const shouldEnableWeb3 = isAuthenticated && !isWeb3Enabled && !account
+
     if (shouldEnableWeb3) {
       enableWeb3()
     }
@@ -83,6 +84,6 @@ const AuthenticationProvider = ({ children }: IProps) => {
   )
 }
 
-const useAuthentication = () => useContext(AuthenticationContext)
+const useConnection = () => useContext(AuthenticationContext)
 
-export { useAuthentication, AuthenticationProvider }
+export { useConnection, ConnectionProvider }

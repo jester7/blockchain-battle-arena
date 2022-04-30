@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components"
 import { COLORS } from "../../styles"
-
+import { Paragraph } from "./Paragraph"
 const anim = keyframes`
   0% {
     background-position: 0% 50%;
@@ -27,7 +27,7 @@ const LoadingIndicator = styled.div`
   font-size: 2rem;
 `
 
-const LoadText = styled.h1`
+const LoadText = styled(Paragraph)`
   position: relative;
   font-size: 2rem;
   margin: 0.5rem 0 0 0;

@@ -1,4 +1,5 @@
-export * from './AuthenticationProvider'
+export * from './ConnectionProvider'
 export * from './LoadingProvider'
 export * from './NetworkProvider'
 export * from './ErrorProvider'
+export * from './GameProvider'

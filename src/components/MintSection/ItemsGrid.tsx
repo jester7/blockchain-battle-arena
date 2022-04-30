@@ -1,5 +1,5 @@
 import { IMintable } from './sprites'
-import { MintableItem } from './MintableItem'
+import { GameItem } from './MintableItem'
 import styled from 'styled-components'
 
 const ItemGrid = styled.div`
@@ -15,7 +15,7 @@ export const ItemsGrid = ({ items }: IItemsProps) => {
   return (
     <ItemGrid>
       {items?.map((item, i) => (
-        <MintableItem key={i} {...item} />
+        <GameItem key={i} {...item} />
       ))}
     </ItemGrid>
   )

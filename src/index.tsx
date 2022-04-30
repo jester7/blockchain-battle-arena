@@ -3,12 +3,15 @@ import { MoralisProvider } from 'react-moralis'
 import App from './App'
 import React from 'react'
 import {
-  AuthenticationProvider,
+  ConnectionProvider,
   LoadingProvider,
   NetworkProvider,
   ErrorProvider,
+  GameProvider
 } from './providers'
+
 import 'normalize.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 
@@ -23,15 +26,17 @@ root.render(
       serverUrl={REACT_APP_MORALIS_SERVER_URL}
       appId={REACT_APP_MORALIS_APP_ID}
     >
-      <AuthenticationProvider>
+      <ConnectionProvider>
         <NetworkProvider>
           <LoadingProvider>
             <ErrorProvider>
-              <App />
+              <GameProvider>
+                <App />
+              </GameProvider>
             </ErrorProvider>
           </LoadingProvider>
         </NetworkProvider>
-      </AuthenticationProvider>
+      </ConnectionProvider>
     </MoralisProvider>
   </React.StrictMode>
 )

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { useAuthentication } from '../../providers'
-import { useMint } from './MintProvider'
+import { useConnection } from '../../providers'
+import { useMint } from '../../providers/MintProvider'
 import type { IMintable } from './sprites'
 
 const ItemWrapper = styled((props) => <div {...props} />)`
@@ -61,11 +61,11 @@ const SelectedCheck = styled((props) => <div {...props} />)`
   }
 `
 
-export const MintableItem = (character: IMintable) => {
+export const GameItem = (character: IMintable) => {
   const { selections, handleSelection } = useMint()
   const [isSelected, setIsSelected] = useState<boolean>(false)
-  const { isConnected } = useAuthentication()
-  console.log({ selections })
+  const { isConnected } = useConnection()
+
   const select = (character: IMintable) => {
     const foundInSelectionState =
       selections?.filter((s) => s.name === character.name).length !== 0

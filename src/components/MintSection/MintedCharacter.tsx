@@ -1,6 +1,6 @@
 import { ACESSORIES, CHARACTERS } from "./sprites"
 import { Link } from 'react-router-dom'
-import { useMint } from "./MintProvider"
+import { useMint } from "../../providers/MintProvider"
 
 const OpenSeaLink = () => {
   const { openseaAddress } = useMint()

@@ -9,7 +9,7 @@ export const UnorderedList = styled.ul`
   list-style: none;
 `
 
-export const LineItem = styled.li`
+export const ListItem = styled.li`
   margin: ${SPACING.primary} 0;
   font-size: ${SIZES.paragraph};
   line-height: 1.6rem;

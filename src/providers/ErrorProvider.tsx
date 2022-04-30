@@ -1,13 +1,16 @@
 import { MoralisContextValue, useMoralis } from 'react-moralis'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 
 interface IErrorContext {
   error: string
+  triggerError: (message: string) => void
   setError: (message: string) => void
 }
 
 const defaultErrorContext: IErrorContext = {
   error: '',
+  triggerError: () => {},
   setError: () => {},
 }
 
@@ -15,6 +18,7 @@ const ErrorContext = createContext(defaultErrorContext)
 
 const ErrorProvider = ({ children }: IProps) => {
   const [error, setError] = useState<string>('')
+  const toastId = useRef('')
   const {
     userError,
     authError,
@@ -22,25 +26,37 @@ const ErrorProvider = ({ children }: IProps) => {
     web3EnableError,
   }: MoralisContextValue = useMoralis()
 
-  useEffect(() => {
-    if (isWeb3EnableLoading) {
-      setError('')
+  const triggerError = (message: string) => {
+    if (!message) return
+    setError(message)
+    if (!toast.isActive(toastId.current)) {
+      toast.error(message, {
+        toastId: message,
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     }
+
+  }
+
+  useEffect(() => {
     if (web3EnableError) {
-      setError('There was an error enabling web3')
+      triggerError('There was an error enabling web3')
     }
     if (userError) {
-      setError('A user error occurred')
+      triggerError('A user error occurred')
     }
     if (authError) {
-      setError('There was an error authenticating')
-    }
-    if (!!error) {
-      setError(error)
+      triggerError('There was an error authenticating')
     }
   }, [error, userError, authError, web3EnableError, isWeb3EnableLoading])
   return (
-    <ErrorContext.Provider value={{ error, setError }}>
+    <ErrorContext.Provider value={{ error, setError, triggerError }}>
       {children}
     </ErrorContext.Provider>
   )

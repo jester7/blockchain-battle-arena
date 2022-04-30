@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from 'react'
-// import { useMoralis } from 'react-moralis'
-import { useAuthentication, useError, useLoading } from '../../providers'
-import type { IMintable } from './sprites'
-
+import { useMoralis } from 'react-moralis'
+import { useConnection, useError, useLoading } from '.'
+import type { IMintable } from '../components/MintSection/sprites'
+import ContractInterface from '../game/util/BattleArenaNFT.json'
 interface IMintContext {
   minting: boolean
   openseaAddress: string
@@ -24,14 +24,14 @@ const defaultMintContext: IMintContext = {
 const MintContext = createContext(defaultMintContext)
 
 const MintProvider = ({ children }: IProps) => {
-  const { setError } = useError()
+  const { triggerError } = useError()
   const { startLoading, stopLoading } = useLoading()
   const [minting, setMinting] = useState<boolean>(false)
   const [minted, setMinted] = useState<boolean>(false)
   const [selections, setSelections] = useState<IMintable[]>([])
   const [openseaAddress, setOpenseaAddress] = useState<string>('')
-  const { isConnected } = useAuthentication()
-  // const { Moralis } = useMoralis()
+  const { isConnected } = useConnection()
+  const { Moralis } = useMoralis()
 
   const handleSelection = (selection: IMintable) => {
     if (isConnected) {
@@ -49,26 +49,40 @@ const MintProvider = ({ children }: IProps) => {
       }
     }
   }
+  const NFT_CONTRACT = '0xaF39928783ae90B0893D2D09E492729590DfE9E1'
+  const handleMint = async (selections: IMintable[]): Promise<void> => {
+    try {
+      if (isConnected) {
+        if (selections.length === 0) {
+          triggerError("You haven't selected anything to mint")
+          return
+        } else {
+          const ethers = Moralis.web3Library
+          triggerError('')
+          startLoading('minting nft...')
+          setMinting(true)
 
-  const handleMint = (selections: IMintable[]): void => {
-    if (isConnected) {
-      if (selections.length === 0) {
-        setError("You haven't selected anything to mint")
-        return
-      } else {
-        // const ethers = Moralis.web3Library
-        setError('')
-        startLoading('minting nft...')
+          const contract = new ethers.Contract(
+            NFT_CONTRACT,
+            ContractInterface.abi,
+            ethers.getDefaultProvider()
+          )
+
+          const tx = await contract.minCharacter()
+          const receipt = await tx.wait()
+          console.log({ receipt })
+          stopLoading()
+        }
         setMinting(true)
-        ///
-        stopLoading()
+        const mintAddress = ''
+        const tokenId = 0
+        const nftAddress = `https://testnets.opensea.io/assets/${mintAddress}/${tokenId}`
+        setOpenseaAddress(nftAddress)
+        setMinted(true)
       }
-      setMinting(true)
-      const mintAddress = ''
-      const tokenId = 0
-      const nftAddress = `https://testnets.opensea.io/assets/${mintAddress}/${tokenId}`
-      setOpenseaAddress(nftAddress)
-      setMinted(true)
+    } catch (err: any) {
+      console.error(err?.message)
+      triggerError('There was an error minting your nft.')
     }
   }
 
