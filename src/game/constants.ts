@@ -11,6 +11,7 @@ export const TAG_OPPONENT = "opponent";
 export const TAG_PLAYER = "mechtag";
 export const TAG_FLOOR = "floor";
 export const TAG_ARENA_BOUNDARY = "wall";
+export const TAG_PLATFORM = "platform";
 export const TAG_PROJECTILE = "projectile";
 
 export const MAX_PLAYERS = 2;

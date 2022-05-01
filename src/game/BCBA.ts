@@ -1,36 +1,23 @@
 import { KaboomCtx } from "kaboom";
 // import mergeImages from "./util/mergeImages";
 
-import sprite_bg from "./sprites/background.jpg";
-import sprite_explosion from "./sprites/explosion.png";
-import sprite_character1 from "./sprites/character_idea_1.png";
-import sprite_char1 from "./sprites/char1-small.png";
-import sprite_char2 from "./sprites/char2-small.png";
-import sprite_char3 from "./sprites/char3-small.png";
-
-import sprite_missile from "./sprites/missile.png";
-import sprite_laser_ball from "./sprites/laser-ball.png";
-
-import sound_shot from "./sounds/146730__leszek-szary__shoot.wav";
-import sound_laser from "./sounds/151022__bubaproducer__laser-shot-silenced.wav";
-import sound_clang from "./sounds/351372__wilhellboy__lightringingclang.mp3";
-import sound_explosion1 from "./sounds/136765__mitchelk__explode001.wav";
-import sound_countdown from "./sounds/472853__nakamurasensei__countdown-to-fight.wav";
-import sound_cheers from "./sounds/575563__keerotic__cheers.wav";
-import sound_shield from "./sounds/425412__kurlyjoe__wub-2.wav";
 
 import kaboom from "kaboom";
 
 import * as C from "./constants";
-import Player, { PlayerDirection } from "./Player";
-import MechPlayer from "./MechPlayer";
-import LoadMechSpriteSheet from "./LoadMechSpriteSheet";
+import Player, { PlayerDirection } from "./player/Player";
+import MechPlayer from "./player/MechPlayer";
+import AssetManager from "./util/AssetManager";
+import TitleScene from "./scenes/TitleScene";
+import BattleArenaScene from "./scenes/BattleArenaScene";
 
 export default class BCBA {
   private static instance: BCBA | undefined = undefined;
 
   private DEBUG: boolean;
-  private k: any;
+  protected k: any;
+  private _characterChoices: IGameCharacter;
+  private _currentScene: string = "stage1";
   private players: MechPlayer[] = new Array<MechPlayer>(C.MAX_PLAYERS);
   private sprites: ISpriteHash = {};
 
@@ -65,49 +52,56 @@ export default class BCBA {
       canvas: canvasRef.current,
       width: C.GAME_AREA_WIDTH,
       height: C.GAME_AREA_HEIGHT,
-      background: [46, 115, 145],
+      background: [46, 115, 145], // RGB
+      crisp: false,
     });
 
+    AssetManager.setContext(k);
+
     BCBA.instance = new BCBA(k, characterChoices, debug);
+    BCBA.initScenes();
+
     canvasRef.current.focus();
+    //SceneManager.go("title");
 
     return BCBA.instance as BCBA;
   }
 
-  private constructor(
-    kaboomCtx: KaboomCtx,
-    characterChoices: IGameCharacter,
-    debug: boolean = false
-  ) {
+  private constructor(kaboomCtx: KaboomCtx, characterChoices: IGameCharacter, debug: boolean = false) {
     this.DEBUG = debug;
     this.k = kaboomCtx;
-    this.loadSprites();
-    this.loadSoundFX();
-    this.initSprites();
-    this.initScenes();
-    this.initPlayers(characterChoices);
-    this.k.play("countdown", { speed: 1 });
+    this.loadAssets();
+    this._characterChoices = characterChoices;
+
+    // this.initPlayers(characterChoices);
+    
+    //this.k.play("countdown", { speed: 1 });
+    
     // TODO need to be sure sprites have finished loading and merging before calling this
-    this.updateHealthInfo();
+    //this.updateHealthInfo();
 
     this.initKeyboardEvents();
-    this.initArenaBoundaries();
+    //this.initArenaBoundaries();
     this.initCollisions();
 
-    console.log("player1 pos ", this.player(1).obj.pos);
-    console.log(
-      "player1 xpos - player2 xpos ",
-      this.player(1).obj.pos.x -
-        (this.player(1).obj.pos.x - this.player(2).obj.pos.x) / 2
-    );
 
-    console.log("dist ", this.player(1).obj.pos.dist(this.player(2).obj.pos));
-    console.log("camScale ", this.k.camScale());
-    console.log("camPos ", this.k.camPos());
+    /** CAM CHECK */
+    // console.log("player1 pos ", this.player(1).obj.pos);
+    // console.log(
+    //   "player1 xpos - player2 xpos ",
+    //   this.player(1).obj.pos.x -
+    //     (this.player(1).obj.pos.x - this.player(2).obj.pos.x) / 2
+    // );
+
+    // console.log("dist ", this.player(1).obj.pos.dist(this.player(2).obj.pos));
+    // console.log("camScale ", this.k.camScale());
+    // console.log("camPos ", this.k.camPos());
+    /** end CAM CHECK */
+
 
     // this.k.camPos(C.GAME_AREA_WIDTH / 2, C.GAME_AREA_HEIGHT / 2);
 
-    this.initOpponentAI();
+    //this.initOpponentAI();
     //this.k.wait(1, () => {
     //this.updateText("FIGHT!", this.k.pos(390,150));
     //});
@@ -117,59 +111,20 @@ export default class BCBA {
     if (this.DEBUG) this.k.debug.log(message);
   }
 
-  private initScenes() {
-    this.k.scene("lose", () => {
-      this.k.add([this.k.sprite("bg1", { scale: 0.5 }), this.k.pos(0, 0)]);
-      this.k.add([this.k.text("You Lost", { size: 150 }), this.k.pos(30, 30)]);
-      this.k.add([
-        this.k.text("Go back in the browser or reload the page to play again", {
-          size: 35,
-        }),
-        this.k.pos(25, 150),
-      ]);
-    });
+  private static async initScenes() {
+    //SceneManager.init(BCBA.getInstance().k);
 
-    this.k.scene("winner", () => {
-      this.k.play("cheers", { volume: 0.4, speed: 1 });
+    //const titleScene = new TitleScene("title", this.k);
+    //titleScene.go();
+    const battleScene1 = await new BattleArenaScene("stage1", BCBA.getInstance().k);
+    battleScene1.go();
 
-      this.k.add([this.k.sprite("bg1", { scale: 0.5 }), this.k.pos(0, 0)]);
-      this.k.add([this.k.text("You Won!", { size: 150 }), this.k.pos(30, 30)]);
-      this.k.add([
-        this.k.text("Go back in the browser or reload the page to play again", {
-          size: 35,
-        }),
-        this.k.pos(25, 150),
-      ]);
-    });
   }
 
-  private loadSprites() {
-    this.log("loading sprites...");
-    this.k.loadSprite("bg1", sprite_bg);
-    LoadMechSpriteSheet(this.k);
-    this.k.loadSprite("char1", sprite_char1);
-    this.k.loadSprite("char2", sprite_char2);
-    this.k.loadSprite("char3", sprite_char3);
-
-    // this.k.loadSprite("mech_fighter_red", sprite_mech_red);
-    // this.k.loadSprite("mech_fighter_blue", sprite_mech_blue);
-    this.k.loadSprite("missile", sprite_missile);
-    this.k.loadSprite("laser_ball", sprite_laser_ball);
-
-    this.k.loadSprite("explosion", sprite_explosion);
-    this.k.loadSprite("character1", sprite_character1);
+  private loadAssets() {
+    AssetManager.loadAll();
   }
 
-  private loadSoundFX() {
-    this.k.loadSound("shoot1", sound_shot);
-    this.k.loadSound("shoot2", sound_laser);
-
-    this.k.loadSound("clang", sound_clang);
-    this.k.loadSound("explosion1", sound_explosion1);
-    this.k.loadSound("countdown", sound_countdown);
-    this.k.loadSound("cheers", sound_cheers);
-    this.k.loadSound("shield", sound_shield);
-  }
 
   private initKeyboardEvents() {
     this.log("adding keyboard event handlers...");
@@ -211,34 +166,17 @@ export default class BCBA {
     });
   }
 
-  private addSprite(spriteName: string, scale: number = 1) {
-    this.sprites[spriteName] = this.k.add([
-      this.k.sprite(spriteName),
-      this.k.scale(scale),
-    ]);
-
-    this.log("(added " + spriteName + " sprite)");
-  }
-
-  private async initSprites() {
-    this.log("adding sprites to game context...");
-
-    this.addSprite("bg1", 0.5);
-    //let merged = await mergeImages([sprite_character1_head, sprite_mech_red]);
-    //this.k.loadSprite("merged_red", merged);
-  }
-
-  private initPlayers(charChoices: IGameCharacter) {
+  public initPlayers() {
     console.log("initPlayers");
-    console.log(charChoices);
+    //console.log(charChoices);
     this.setPlayer(
       1,
       new MechPlayer(
         this.k,
         "Player 1",
-        charChoices.characterNum,
-        charChoices.mechColor,
-        charChoices.gunName,
+        this._characterChoices.characterNum,
+        this._characterChoices.mechColor,
+        this._characterChoices.gunName,
         PlayerDirection.RIGHT,
         C.TAG_MAIN_PLAYER,
         [C.TAG_PLAYER],
@@ -246,7 +184,7 @@ export default class BCBA {
         400
       )
     );
-    const player2MechColor = charChoices.mechColor === "red" ? "blue" : "red";
+    const player2MechColor = this._characterChoices.mechColor === "red" ? "blue" : "red";
     const player2Num = Math.floor(Math.random() * 3) + 1;
     this.setPlayer(
       2,
@@ -268,17 +206,18 @@ export default class BCBA {
     this.player(1).setOpponent(this.player(2));
     this.player(2).setOpponent(this.player(1));
 
+    //TODO finish CameraController class and get rid of this section
     this.player(1).obj.onUpdate(() => {
-      if (
-        this.player(1).obj.pos.y > 80 &&
-        this.player(2).obj.pos.y > 80 &&
-        this.player(1).obj.pos.y < C.GAME_AREA_HEIGHT &&
-        this.player(2).obj.pos.y < C.GAME_AREA_HEIGHT &&
-        this.player(1).obj.pos.x > 245 &&
-        this.player(2).obj.pos.x > 245 &&
-        this.player(1).obj.pos.x < C.GAME_AREA_WIDTH - 145 &&
-        this.player(2).obj.pos.x < C.GAME_AREA_WIDTH - 145
-      ) {
+      // if (
+      //   this.player(1).obj.pos.y > 80 &&
+      //   this.player(2).obj.pos.y > 80 &&
+      //   this.player(1).obj.pos.y < C.GAME_AREA_HEIGHT &&
+      //   this.player(2).obj.pos.y < C.GAME_AREA_HEIGHT &&
+      //   this.player(1).obj.pos.x > 245 &&
+      //   this.player(2).obj.pos.x > 245 &&
+      //   this.player(1).obj.pos.x < C.GAME_AREA_WIDTH - 145 &&
+      //   this.player(2).obj.pos.x < C.GAME_AREA_WIDTH - 145
+      // ) {
         const dx =
           this.player(1).obj.pos.x -
           (this.player(1).obj.pos.x - this.player(2).obj.pos.x) / 2;
@@ -291,57 +230,30 @@ export default class BCBA {
         this.k.camScale((dx / C.GAME_AREA_WIDTH) * 3);
         // this.k.camPos(this.player(1).obj.pos.x-(this.player(1).obj.pos.x - this.player(2).obj.pos.x)/2,
         // this.player(1).obj.pos.y-(this.player(1).obj.pos.y - this.player(2).obj.pos.y)/2);
-      }
-      if (this.player(1).obj.pos.y > C.GAME_AREA_HEIGHT * 2) {
-        this.k.go("lose");
-      }
+      // }
+      // if (this.player(1).obj.pos.y > C.GAME_AREA_HEIGHT * 2) {
+      //   this.k.go("lose");
+      // }
     });
 
-    this.player(2).obj.onUpdate(() => {
-      if (this.player(2).obj.pos.y > C.GAME_AREA_HEIGHT * 2) {
-        this.k.go("winner");
-      }
-    });
+    // this.player(2).obj.onUpdate(() => {
+    //   if (this.player(2).obj.pos.y > C.GAME_AREA_HEIGHT * 2) {
+    //     this.k.go("winner");
+    //   }
+    // });
 
-    //this.player(2).setFacingDirection(PlayerDirection.RIGHT);
   }
 
-  private initArenaBoundaries() {
-    const floor = this.k.add([
-      this.k.rect(1682 / 2, 0),
-      this.k.pos(452 / 2, 1122 / 2),
-      this.k.color(0, 255, 0),
-      this.k.solid(),
-      this.k.area(),
-      C.TAG_FLOOR,
-    ]);
-
-    const wallLeft = this.k.add([
-      this.k.rect(0, this.k.height() * 1.5),
-      this.k.pos(0, 0),
-      this.k.color(0, 255, 0),
-      this.k.solid(),
-      this.k.area(),
-      C.TAG_ARENA_BOUNDARY,
-    ]);
-
-    const wallRight = this.k.add([
-      this.k.rect(0, this.k.height() * 1.5),
-      this.k.pos(2560 / 2, 0),
-      this.k.color(0, 255, 0),
-      this.k.solid(),
-      this.k.area(),
-      C.TAG_ARENA_BOUNDARY,
-    ]);
-  }
 
   public initCollisions() {
-    this.player(2).obj.on("death", () => {
-      this.k.destroy(this.player(2).obj);
-      this.k.destroy(this.player(2).innerObj);
+    if (this._currentScene === "title") return;
 
-      this.youWin();
-    });
+    // this.player(2).obj.on("death", () => {
+    //   this.k.destroy(this.player(2).obj);
+    //   this.k.destroy(this.player(2).innerObj);
+
+    //   this.youWin();
+    // });
   }
 
   public youWin() {
@@ -401,6 +313,7 @@ export default class BCBA {
   }
 
   public updateHealthInfo() {
+    if (this._currentScene === "title") return;
     if (this.lastPlayer1Health !== undefined)
       this.k.destroy(this.lastPlayer1Health);
     if (this.lastPlayer2Health !== undefined)
@@ -420,5 +333,13 @@ export default class BCBA {
       this.k.fixed(),
       this.k.pos(900, 15),
     ]);
+  }
+
+  public setCurrentScene(scene: string) {
+    this._currentScene = scene;
+  }
+
+  public go(scene: string, args?: any) {
+    this.k.go(scene, args);
   }
 }

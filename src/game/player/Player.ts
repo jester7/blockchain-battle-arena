@@ -1,6 +1,6 @@
 import { Collision, GameObj, KaboomCtx, Tag, Vec2 } from "kaboom";
-import BCBA from "./BCBA";
-import * as C from "./constants";
+import BCBA from "../BCBA";
+import * as C from "../constants";
 
 export enum PlayerDirection {
   LEFT,
@@ -41,10 +41,6 @@ export default abstract class Player {
     this._mainTag = mainTag;
     this.onUpdate(() => {
       this.checkFacingDirection();
-      //this.k.camPos(this.obj.pos.scale(this.obj.pos.dist(this._opponent?.pos)));
-      //if (this.isFacingRight()){this.k.camPos(this.obj.pos.sub(100,0));}
-     // if (this.isFacingLeft()){this.k.camPos(this.obj.pos.add(100,0));}
-
     });
 
   }
@@ -55,25 +51,16 @@ export default abstract class Player {
 
 
   private addCharacterSprite(spriteNum: number) {
-    let spriteName = "char1";
-    switch (spriteNum) {
-      case 1:
-        spriteName = "char1";
-        break;
-      case 2:
-        spriteName = "char2";
-        break;
-      case 3:
-        spriteName = "char3";
-        break;
-    }
-    const flip = this._facing === PlayerDirection.LEFT;
+    let spriteName = "char" + spriteNum;
+    
+    const flip = this._facing === PlayerDirection.LEFT; // if facing LEFT add the sprites already flipped
 
+    // here instead of spriteName, for NFTs we do kaboom.loadSprite with data uri and then add
     return this.k.add([
       this.k.sprite(spriteName, {flipX: flip} ),
-      this.k.z(1),
+      this.k.z(1), // set a lower z index so that the character image is behind the mech suit
       this.k.pos(),
-      this.k.follow(this.obj),
+      this.k.follow(this.obj), // attaches the character sprite to mech suit, can attach multiple sprites such as accessories
       this.k.scale(0.20),
       this.k.rotate(0),
     ]);
@@ -115,6 +102,8 @@ export default abstract class Player {
         ),
         this.k.cleanup(),
         this.k.scale(0.06),
+        this.k.origin("center"),
+        this._projectileSpriteName === "laser_ball" ? this.rotate() : "",
         C.TAG_PROJECTILE,
         projectileTag,
       ]);
@@ -134,9 +123,38 @@ export default abstract class Player {
         this.addExplosion(p.pos);
         this.k.shake(5);
       });
+
+      // blow up the projectile if it collides with a platform
+      this.k.onCollide(projectileTag, C.TAG_PLATFORM, (p: any, o: any) => {
+        this.k.destroy(p);
+        this.k.play("explosion1", { volume: 0.4, speed: 2.0 });
+        this.addExplosion(p.pos);
+        this.k.shake(2);
+      });
+
+      // blow up the projectile if it collides with another projectile
+      this.k.onCollide(C.TAG_PROJECTILE, C.TAG_PROJECTILE, (p: any, o: any) => {
+        this.k.destroy(p);
+        //this.k.destroy(o);
+        this.k.play("explosion1", { volume: 0.4, speed: 2.0 });
+        this.addExplosion(p.pos); //TODO known issue - explosion is not centered, triple explosion
+        this.k.shake(1);
+      });
       
 
     }
+  }
+
+  private rotate(): any {
+    let ctx = this.k;
+    let facingLeft = this.isFacingLeft();
+    return {
+      id: "projectile_rotation",
+      update() {
+        this.angle = ctx.time() * 300 * (facingLeft ? -1 : 1);
+        //this.pos.x = this.width / 2;
+      },
+    };
   }
 
   public abstract playShotSound(): void;
@@ -147,8 +165,8 @@ export default abstract class Player {
       this.k.z(12),
       this.k.scale(0.15),
       this.isFacingRight()
-        ? this.k.pos(p.add(10, -15))
-        : this.k.pos(p.add(-20, -15)),
+        ? this.k.pos(p.add(5, -15))
+        : this.k.pos(p.add(-30, -15)),
       this.k.lifespan(0.5, { fade: 0.5 }),
     ]);
   }

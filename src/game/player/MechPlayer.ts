@@ -1,7 +1,6 @@
 import Player, { PlayerDirection } from "./Player";
-import * as C from "./constants";
-import { GameObj, KaboomCtx, Vec3 } from "kaboom";
-import BCBA from "./BCBA";
+import * as C from "../constants";
+import { GameObj, KaboomCtx } from "kaboom";
 
 export default class MechPlayer extends Player {
   private _gun: string;
@@ -33,7 +32,7 @@ export default class MechPlayer extends Player {
       k.rotate(0),
       k.health(C.MAX_HEALTH),
       k.z(10),
-      mainTag,
+      mainTag, // tags are used to check collisions and distinguish between own projectiles and opponent's projectiles
       ...tags,
       
     ]);
@@ -43,60 +42,58 @@ export default class MechPlayer extends Player {
     this._gun = gun;
 
     this.onCollide(C.TAG_PLAYER, () => {
-      //k.shake(1);
-      //k.play("clang", { volume: 0.05, speed: 2 });
+      k.shake(1);
+      k.play("clang", { volume: 0.05, speed: 2 });
     });
 
     if (useAI) {
-      console.log(obj);
-      //obj.enterState("jump");
-      //console.log(k.state("idle", [ "idle", "move", "jump", "attack", "shield"]));
       this.initAI(obj);
+
+      console.log(obj);
+      obj.enterState("move");
     }
     
   }
 
+  /**
+   * TODO fine tune timings and transitions, move into separate AI class
+   * @param obj 
+   */
   private initAI(obj:GameObj) {
     obj.onStateEnter("idle", async () => {
-      console.log("IDLE");
-
       await this.k.wait(0.5);
       obj.enterState(this.getRandomState());
     });
 
     obj.onStateEnter("move", async () => {
-      console.log("moving...");
-
-      await this.k.wait(0.3);
+      await this.k.wait(1);
       obj.enterState(this.getRandomState());
     });
 
     obj.onStateUpdate("move", async () => {
       if (!this._opponent?.obj.exists()) return;
-      if (this._opponent.obj.pos.dist(this.obj.pos) < 200) return;
-
+      if (this._opponent.obj.pos.dist(this.obj.pos) < 100) return;
+        
       const dir = this._opponent.obj.pos.sub(this.obj.pos).unit();
       this.obj.move(dir.scale(C.DEFAULT_PLAYER_SPEED-200));
-      await this.k.wait(0.3);
-
+      await this.k.wait(1);
     });
 
     obj.onStateEnter("jump", async () => {
-      console.log("jump");
+      if (!this._opponent?.obj.exists()) return;
       this.jump();
-      await this.k.wait(0.2);
-      obj.enterState(this.getRandomState());
+      obj.enterState("move"); // jump then start moving towards opponent
     });
 
     obj.onStateEnter("attack", async () => {
       this.shoot();
-      await this.k.wait(0.2);
+      await this.k.wait(1); // wait to prevent rapid fire by AI
       obj.enterState(this.getRandomState());
     });
 
-    obj.onStateEnter("shield", async () => {
+    obj.onStateEnter("shield", async () => { //TODO separate shield into activate and release states
       this.startBlocking();
-      await this.k.wait(1);
+      await this.k.wait(1.5);
       this.stopBlocking();
       obj.enterState(this.getRandomState());
     });
