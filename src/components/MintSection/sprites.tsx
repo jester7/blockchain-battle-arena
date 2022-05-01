@@ -29,7 +29,6 @@ export const CHARACTERS: ICharacter[] = [
   {
     name: 'character2',
     type: 'character',
-
     index: 2,
     image: Character2Bg,
     imageUrl:
@@ -38,7 +37,6 @@ export const CHARACTERS: ICharacter[] = [
   {
     name: 'character3',
     type: 'character',
-
     index: 3,
     image: Character3Bg,
     imageUrl:
@@ -50,7 +48,6 @@ export const ACESSORIES: IAcessory[] = [
   {
     name: 'cigarette',
     type: 'acessory',
-
     index: 1,
     image: Cigarette,
     imageUrl:

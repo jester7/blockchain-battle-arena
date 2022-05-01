@@ -18,6 +18,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "typeRoots": ["node_modules/@types", "*.d.ts"]
   },
-  "include": ["src/**/*", "*.d.ts"],
+  "include": ["src/**/*", "*.d.ts", "config/**/*.ts", "scripts/**/*.ts"],
   "exclude": ["contracts", "scripts", "node_modules"]
 }
