@@ -21,7 +21,7 @@ export const GameView = () => {
         {
           characterNum: characterNum,
           mechColor: mech,
-          gunName: gun,
+          gunName: "smallgun", // for testing laser ball rotation
         },
         false
       )
