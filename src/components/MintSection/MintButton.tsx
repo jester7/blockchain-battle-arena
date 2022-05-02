@@ -13,7 +13,7 @@ export const MintButton = () => {
   const { triggerConfirmModal } = useMint()
   return (
     <MintButtonContainer>
-      <FlashingButton onClick={triggerConfirmModal}>Mint</FlashingButton>
+      <FlashingButton onClick={() => triggerConfirmModal(true)}>Mint</FlashingButton>
     </MintButtonContainer>
   )
 }

@@ -32,7 +32,7 @@ export interface BBGameObjectInterface extends utils.Interface {
     "balanceOf(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "mintGameObject(string,string,string,string,string)": FunctionFragment;
+    "mintGameObject(string,string,string,string)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
@@ -83,7 +83,7 @@ export interface BBGameObjectInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "mintGameObject",
-    values: [string, string, string, string, string]
+    values: [string, string, string, string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -302,8 +302,7 @@ export interface BBGameObject extends BaseContract {
       name: string,
       desc: string,
       url: string,
-      acessoryName: string,
-      acessoryUrl: string,
+      objectType: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -389,8 +388,7 @@ export interface BBGameObject extends BaseContract {
     name: string,
     desc: string,
     url: string,
-    acessoryName: string,
-    acessoryUrl: string,
+    objectType: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -470,8 +468,7 @@ export interface BBGameObject extends BaseContract {
       name: string,
       desc: string,
       url: string,
-      acessoryName: string,
-      acessoryUrl: string,
+      objectType: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -600,8 +597,7 @@ export interface BBGameObject extends BaseContract {
       name: string,
       desc: string,
       url: string,
-      acessoryName: string,
-      acessoryUrl: string,
+      objectType: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -691,8 +687,7 @@ export interface BBGameObject extends BaseContract {
       name: string,
       desc: string,
       url: string,
-      acessoryName: string,
-      acessoryUrl: string,
+      objectType: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

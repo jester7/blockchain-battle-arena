@@ -63,7 +63,7 @@ export const MintConfirmModal = () => {
         <ConfirmText>Confirm Mint</ConfirmText>
         <ButtonContainer>
           <Button onClick={mintGameObject}>ok</Button>
-          <CancelButton onClick={triggerConfirmModal}>cancel</CancelButton>
+          <CancelButton onClick={() => triggerConfirmModal(false)}>cancel</CancelButton>
         </ButtonContainer>
       </ConfirmContainer>
     </Modal>

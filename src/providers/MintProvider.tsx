@@ -6,36 +6,30 @@ import type { IMintable } from '../components/MintSection/sprites'
 
 interface IMintContext {
   minting: boolean
-  openseaAddress: string
   minted: boolean
-  selections: (IMintable | null)[]
+  selection: Nullable<IMintable>
   handleSelection: (selection: IMintable) => void
   handleMint: () => void
   confirmModalOpen: boolean
-  triggerConfirmModal: any
+  triggerConfirmModal: (val: boolean) => void
   mintGameObject: () => void
 }
 
 const defaultMintContext: IMintContext = {
   minting: false,
-  openseaAddress: '',
   minted: false,
-  selections: [null, null],
+  selection: null,
   handleSelection: (selection: IMintable) => {},
   handleMint: () => {},
   confirmModalOpen: false,
-  triggerConfirmModal: () => {},
+  triggerConfirmModal: (val: boolean) => {},
   mintGameObject: () => {},
 }
 
 const MintContext = createContext(defaultMintContext)
 
 const MintProvider = ({ children }: IProps) => {
-  const [openseaAddress, setOpenseaAddress] = useState<string>('')
-  const [selections, setSelections] = useState<(IMintable | null)[]>([
-    null,
-    null,
-  ])
+  const [selection, setSelection] = useState<Nullable<IMintable>>()
   const [confirmModalOpen, setConfirmModal] = useState(false)
   const [minting, setMinting] = useState<boolean>(false)
   const [minted, setMinted] = useState<boolean>(false)
@@ -46,82 +40,64 @@ const MintProvider = ({ children }: IProps) => {
 
   const handleSelection = (gameObject: IMintable) => {
     if (isConnected) {
-      if (gameObject.type === 'character') {
-        const same = gameObject.name === selections[0]?.name
-        const selectionsToSet = [same ? null : gameObject, selections[1]]
-        setSelections(selectionsToSet)
-      } else if (gameObject.type === 'acessory') {
-        const same = gameObject.name === selections[1]?.name
-        const selectionsToSet = [selections[0], same ? null : gameObject]
-        setSelections(selectionsToSet)
-      } else {
-        triggerError('unknown game object type')
-      }
+      setSelection(gameObject)
+    } else {
+      setSelection(null)
     }
   }
 
-  const triggerConfirmModal = () => {
-    setConfirmModal(!confirmModalOpen)
+  const triggerConfirmModal = (val: boolean) => {
+    setConfirmModal(val)
   }
 
   const handleMint = () => {
-    const hasSelection = selections.length !== 0
-    if (!hasSelection) {
+    if (!selection) {
       triggerError('You must make a selection')
+      setSelection(null)
       return
+    } else {
+      triggerConfirmModal(true)
     }
-    triggerConfirmModal()
-    mintGameObject()
   }
 
   const mintGameObject = async (): Promise<void> => {
     try {
-      triggerConfirmModal()
-      if (isConnected) {
-        if (!selections[0] || !selections[1]) {
-          triggerError("You haven't selected anything to mint")
-          return
-        } else {
-          startLoading('minting nft...')
-          setMinting(true)
-          const provider = await Moralis.enableWeb3()
-          const ethers = Moralis.web3Library
+      startLoading('minting nft...')
+      setMinting(true)
 
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_GAME_CONTRACT || '',
-            ContractInterface.abi,
-            provider.getSigner()
-          )
+      const provider = await Moralis.enableWeb3()
+      const ethers = Moralis.web3Library
 
-          const tx = await contract.mintGameObject(
-            selections[0].name,
-            selections[0].description,
-            selections[0].url,
-            selections[1].name,
-            selections[1].url
-          )
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_GAME_CONTRACT || '',
+        ContractInterface.abi,
+        provider.getSigner()
+      )
 
-          const receipt = await tx.wait()
-          setMinted(true)
+      const tx = await contract.mintGameObject(
+        selection?.name,
+        selection?.description,
+        selection?.url,
+        selection?.type,
+      )
 
-          const { transactionHash, token_id } = receipt
-          console.log({ receipt })
+      const receipt = await tx.wait()
+      console.log({ receipt })
+      setMinted(true)
+      setSelection(null)
+      stopLoading()
+      triggerSuccess(
+        `Minted!\nhash:${tx.hash}`
+      )
 
-          const nftAddress = `https://testnets.opensea.io/assets/${transactionHash}/${token_id}`
-          setOpenseaAddress(nftAddress)
-
-          setSelections([])
-          stopLoading()
-          triggerSuccess(
-            `Minted! ${tx.hash}\nPlease wait a few min for the tx to settle`
-          )
-        }
-      }
+      // const nftAddress = `https://testnets.opensea.io/assets/${transactionHash}/${token_id}`
+      // setOpenseaAddress(nftAddress)
     } catch (err: any) {
       console.error(err)
+      triggerConfirmModal(false)
       triggerError('There was an error minting your nft.')
       stopLoading()
-      setSelections([])
+      setSelection(null)
     }
   }
 
@@ -129,10 +105,9 @@ const MintProvider = ({ children }: IProps) => {
     <MintContext.Provider
       value={{
         minting,
-        openseaAddress,
         minted,
         handleMint,
-        selections,
+        selection,
         handleSelection,
         confirmModalOpen,
         triggerConfirmModal,

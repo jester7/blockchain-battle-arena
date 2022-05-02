@@ -38,6 +38,7 @@ const config: HardhatUserConfig = {
     rinkeby: {
       url: ALCHEMY_RINKEBY_URL,
       accounts: [RINKEBY_PRIVK],
+      gas: 'auto'
     },
   },
   // etherscan: {

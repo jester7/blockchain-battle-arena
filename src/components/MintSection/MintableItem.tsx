@@ -52,11 +52,10 @@ const SelectedCheck = styled((props) => <div {...props} />)`
 `
 
 export const GameItem = (gameObject: IMintable) => {
-  const { selections, handleSelection } = useMint()
+  const { selection, handleSelection } = useMint()
   const { isConnected } = useConnection()
 
-  const isSelected =
-    selections.findIndex((s) => s?.name === gameObject.name) !== -1
+  const isSelected = selection?.name === gameObject.name
 
   return (
     <ItemWrapper
