@@ -3,13 +3,18 @@ import { useLoading } from './LoadingProvider'
 import { useMoralisWeb3Api } from 'react-moralis'
 import { useState, useContext, createContext, useEffect } from 'react'
 import { useToast } from './ToastProvider'
-import type { INft } from '../providers/types.d'
+import type { IPlayer, IRawGameObject } from './types'
 
 interface IGameContext {
   playerNfts: any[]
   fetchNfts: () => any
-  selectedNft: Nullable<INft>
-  handleSelection: (nft: INft) => void
+  selectedCharacter: Nullable<IRawGameObject>
+  selectedAcessory: Nullable<IRawGameObject>
+  selectedWeapon: Nullable<IRawGameObject>
+  setSelectedCharacter: (char: IRawGameObject) => void
+  setSelectedAcessory: (ass: IRawGameObject) => void
+  setSelectedWeapon: (weap: IRawGameObject) => void
+  player: Nullable<IPlayer>
   readyToLaunch: boolean
   launchGame: () => void
 }
@@ -17,28 +22,38 @@ interface IGameContext {
 const defaultGameContext: IGameContext = {
   playerNfts: [],
   fetchNfts: () => {},
-  selectedNft: null,
-  handleSelection: (nft: INft) => {},
+  selectedCharacter: null,
+  selectedAcessory: null,
+  selectedWeapon: null,
+  setSelectedCharacter: (char: any) => {},
+  setSelectedAcessory: (char: any) => {},
+  setSelectedWeapon: (char: any) => {},
   readyToLaunch: false,
   launchGame: () => {},
+  player: null,
 }
 
 const GameContext = createContext(defaultGameContext)
 
 const GameProvider = ({ children }: IProps) => {
+  const { accountDisplayName } = useConnection()
   const [readyToLaunch, setReadyToLaunch] = useState<boolean>(false)
-  const [selectedNft, setSelectedNft] = useState<Nullable<INft>>(null)
+  const [selectedCharacter, setSelectedCharacter] = useState<IRawGameObject>()
+  const [selectedAcessory, setSelectedAcessory] = useState<IRawGameObject>()
+  const [selectedWeapon, setSelectedWeapon] = useState<IRawGameObject>()
+  const [player, setPlayer] = useState<IPlayer>()
   const [playerNfts, setPlayerNfts] = useState<any[]>([])
   const { startLoading, stopLoading } = useLoading()
   const { isConnected, account } = useConnection()
   const { triggerError } = useToast()
   const web3Api = useMoralisWeb3Api()
 
-  const normalizeResponse = (result: any[]) => {
+  const normalizeResponse = (result: any[]): IRawGameObject[] => {
     return result?.map((item) => {
       const openseaAddress = `https://testnets.opensea.io/assets/${item.token_hash}/${item.token_id}`
 
       const metadata = JSON.parse(item.metadata)
+
       return {
         tokenId: item.token_id,
         contractType: item.contract_type,
@@ -84,22 +99,26 @@ const GameProvider = ({ children }: IProps) => {
     }
   }
 
-  const handleSelection = (nft: INft) => {
-    setSelectedNft(nft)
-  }
-
   useEffect(() => {
-    const hasSelected = Object.values(selectedNft || {}).length !== 0
-    if (hasSelected) {
+    const hasSelectedItems =
+      !!selectedCharacter && !!selectedAcessory && !!selectedWeapon
+
+    if (hasSelectedItems) {
+      setPlayer({
+        displayName: accountDisplayName || 'Anonymous',
+        character: selectedCharacter,
+        acessory: selectedAcessory,
+        weapon: selectedWeapon,
+      })
       setReadyToLaunch(true)
       return
     }
     setReadyToLaunch(false)
-  }, [selectedNft])
+  }, [selectedCharacter, selectedAcessory, selectedWeapon, accountDisplayName])
 
   useEffect(() => {
     if (isConnected) {
-      fetchNfts()
+      // fetchNfts()
     }
   }, [isConnected]) // eslint-disable-line
 
@@ -108,10 +127,15 @@ const GameProvider = ({ children }: IProps) => {
       value={{
         playerNfts,
         fetchNfts,
-        selectedNft,
-        handleSelection,
+        selectedCharacter,
+        selectedWeapon,
+        selectedAcessory,
+        setSelectedCharacter,
+        setSelectedAcessory,
+        setSelectedWeapon,
         readyToLaunch,
         launchGame,
+        player,
       }}
     >
       {children}

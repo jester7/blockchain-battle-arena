@@ -1,4 +1,4 @@
-import { ACESSORIES, CHARACTERS } from "./sprites"
+import { DEFAULT_ACESSORIES, DEFAULT_CHARACTERS } from "../../sprites"
 import { Link } from 'react-router-dom'
 
 const OpenSeaLink = () => {
@@ -17,10 +17,10 @@ const OpenSeaLink = () => {
 export const MintedCharacter = () => {
   // get index from mint
   const charIdx = 1
-  const characterImageUrl = `url('${CHARACTERS[charIdx]}')` // TODO: get image a better way
+  const characterImageUrl = `url('${DEFAULT_CHARACTERS[charIdx]}')` // TODO: get image a better way
   // get index from minted acessory
   const accIdx = 1
-  const acessoryImageUrl = `url('${ACESSORIES[accIdx]}')`
+  const acessoryImageUrl = `url('${DEFAULT_ACESSORIES[accIdx]}')`
   return (
     <div
       className='minted character'

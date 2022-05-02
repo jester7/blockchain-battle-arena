@@ -1,8 +1,29 @@
-export interface INft {
-  name: string
-  token_id: string
-  metadata: string
-  token_uri: string
+export interface IPlayer {
+  displayName: string
+  character: Nullable<IRawGameObject>
+  acessory: Nullable<IRawGameObject>
+  weapon: Nullable<IRawGameObject>
+}
+export interface IGameObject {
+  objectName: string
+  objectType: string
+  objectImageUrl: string
+}
+
+export interface IRawGameObject {
+  tokenId?: string
+  contractType?: string
+  contractName?: string
+  tokenAddress?: string
+  tokenOwner?: string
+  amount?: string
+  symbol?: string
+  tokenUri?: string
+  objectName?: string
+  objectDesc?: string
+  objectImageUrl?: string
+  objectType?: string
+  openseaAddress?: string
 }
 
 export interface IMoralisResult {
@@ -20,4 +41,3 @@ export interface IMoralisResult {
   token_id?: string
   token_uri?: string
 }
-

@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react'
 import { useConnection, useToast, useLoading } from '.'
 import { useMoralis } from 'react-moralis'
 import ContractInterface from './BBGameObject.json'
-import type { IMintable } from '../components/MintSection/sprites'
+import type { IMintable } from '../sprites'
 
 interface IMintContext {
   minting: boolean
@@ -75,10 +75,10 @@ const MintProvider = ({ children }: IProps) => {
       )
 
       const tx = await contract.mintGameObject(
-        selection?.name,
-        selection?.description,
-        selection?.url,
-        selection?.type
+        selection?.objectName,
+        selection?.objectDesc,
+        selection?.objectImageUrl,
+        selection?.objectType
       )
 
       const receipt = await tx.wait()

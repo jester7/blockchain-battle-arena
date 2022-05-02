@@ -1,4 +1,4 @@
-import { IMintable } from './sprites'
+import { IMintable } from '../../sprites'
 import { GameItem } from './MintableItem'
 import styled from 'styled-components'
 

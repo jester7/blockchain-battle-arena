@@ -56,7 +56,7 @@ export default class BCBA {
 
   public static init(
     canvasRef: any,
-    characterChoices: IGameCharacter,
+    characterChoices: any,
     debug: boolean = false
   ): BCBA {
     const k = kaboom({
@@ -76,7 +76,7 @@ export default class BCBA {
 
   private constructor(
     kaboomCtx: KaboomCtx,
-    characterChoices: IGameCharacter,
+    characterChoices: any,
     debug: boolean = false
   ) {
     this.DEBUG = debug;
@@ -228,7 +228,7 @@ export default class BCBA {
     //this.k.loadSprite("merged_red", merged);
   }
 
-  private initPlayers(charChoices: IGameCharacter) {
+  private initPlayers(charChoices: any) {
     console.log("initPlayers");
     console.log(charChoices);
     this.setPlayer(

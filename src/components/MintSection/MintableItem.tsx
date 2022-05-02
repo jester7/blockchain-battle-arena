@@ -1,7 +1,7 @@
 import { useConnection } from '../../providers'
 import { useMint } from '../../providers/MintProvider'
 import styled from 'styled-components'
-import type { IMintable } from './sprites'
+import type { IMintable } from '../../sprites'
 
 const ItemWrapper = styled((props) => <div {...props} />)`
   position: relative;
@@ -55,7 +55,7 @@ export const GameItem = (gameObject: IMintable) => {
   const { selection, handleSelection } = useMint()
   const { isConnected } = useConnection()
 
-  const isSelected = selection?.name === gameObject.name
+  const isSelected = selection?.objectName === gameObject.objectName
 
   return (
     <ItemWrapper
@@ -64,7 +64,7 @@ export const GameItem = (gameObject: IMintable) => {
     >
       <SelectedCheck $selected={isSelected} />
       <Overlay $isConnected={isConnected} selected={isSelected} />
-      <ItemGraphic $image={gameObject.url} />
+      <ItemGraphic $image={gameObject.objectImageUrl} />
     </ItemWrapper>
   )
 }

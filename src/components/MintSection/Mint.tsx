@@ -1,4 +1,4 @@
-import { CHARACTERS, ACESSORIES } from './sprites'
+import { DEFAULT_CHARACTERS, DEFAULT_ACESSORIES } from '../../sprites'
 import { HeaderText } from '../shared/HeaderText'
 import { ItemsGrid } from './ItemsGrid'
 import { MintButton } from './MintButton'
@@ -27,7 +27,7 @@ export const Mint = () => {
               ? "Click on a character you'd like to mint. Minting is free and only costs gas payable with fake ETH on the Rinkeby testnet."
               : 'Please connect your wallet to select an nft'}
           </Paragraph>
-          <ItemsGrid items={CHARACTERS} />
+          <ItemsGrid items={DEFAULT_CHARACTERS} />
           <HeaderText>
             {isConnected ? 'Select an accessory' : 'Acessories'}
           </HeaderText>
@@ -36,7 +36,7 @@ export const Mint = () => {
               ? "Click on an accessory you'd like to mint."
               : 'Please connect your wallet to choose an acessory to mint'}
           </Paragraph>
-          <ItemsGrid items={ACESSORIES} />
+          <ItemsGrid items={DEFAULT_ACESSORIES} />
           {isConnected ? <MintButton /> : null}
         </MintSection>
       </>
