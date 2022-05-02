@@ -8,7 +8,7 @@ interface IMintContext {
   minting: boolean
   openseaAddress: string
   minted: boolean
-  selections: IMintable[]
+  selections: (IMintable | null)[]
   handleSelection: (selection: IMintable) => void
   handleMint: () => void
   confirmModalOpen: boolean
@@ -20,7 +20,7 @@ const defaultMintContext: IMintContext = {
   minting: false,
   openseaAddress: '',
   minted: false,
-  selections: [],
+  selections: [null, null],
   handleSelection: (selection: IMintable) => {},
   handleMint: () => {},
   confirmModalOpen: false,
@@ -32,9 +32,10 @@ const MintContext = createContext(defaultMintContext)
 
 const MintProvider = ({ children }: IProps) => {
   const [openseaAddress, setOpenseaAddress] = useState<string>('')
-  const [selections, setSelections] = useState<IMintable[]>([])
-  const [selectedCharacter, setSelectedCharacter] = useState({})
-  const [selectedAcessory, setSelectedAcessory] = useState({})
+  const [selections, setSelections] = useState<(IMintable | null)[]>([
+    null,
+    null,
+  ])
   const [confirmModalOpen, setConfirmModal] = useState(false)
   const [minting, setMinting] = useState<boolean>(false)
   const [minted, setMinted] = useState<boolean>(false)
@@ -46,9 +47,13 @@ const MintProvider = ({ children }: IProps) => {
   const handleSelection = (gameObject: IMintable) => {
     if (isConnected) {
       if (gameObject.type === 'character') {
-        setSelectedCharacter(gameObject)
+        const same = gameObject.name === selections[0]?.name
+        const selectionsToSet = [same ? null : gameObject, selections[1]]
+        setSelections(selectionsToSet)
       } else if (gameObject.type === 'acessory') {
-        setSelectedAcessory(gameObject)
+        const same = gameObject.name === selections[1]?.name
+        const selectionsToSet = [selections[0], same ? null : gameObject]
+        setSelections(selectionsToSet)
       } else {
         triggerError('unknown game object type')
       }
@@ -73,25 +78,10 @@ const MintProvider = ({ children }: IProps) => {
     try {
       triggerConfirmModal()
       if (isConnected) {
-        console.log({ selections })
-        if (selections.length === 0) {
+        if (!selections[0] || !selections[1]) {
           triggerError("You haven't selected anything to mint")
           return
         } else {
-          triggerError('')
-
-          const character = selections?.filter(
-            (obj) => obj.type === 'character'
-          )
-
-          const acessory = selections?.filter((obj) => obj.type === 'acessory')
-
-          if (character.length !== 1 || acessory.length !== 1) {
-            triggerError('Select one character and one acessory')
-            stopLoading()
-            return
-          }
-
           startLoading('minting nft...')
           setMinting(true)
           const provider = await Moralis.enableWeb3()
@@ -104,11 +94,11 @@ const MintProvider = ({ children }: IProps) => {
           )
 
           const tx = await contract.mintGameObject(
-            character[0].name,
-            character[0].description,
-            character[0].url,
-            acessory[0].name,
-            acessory[0].url
+            selections[0].name,
+            selections[0].description,
+            selections[0].url,
+            selections[1].name,
+            selections[1].url
           )
 
           const receipt = await tx.wait()

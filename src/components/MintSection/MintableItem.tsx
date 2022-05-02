@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { useConnection } from '../../providers'
 import { useMint } from '../../providers/MintProvider'
+import styled from 'styled-components'
 import type { IMintable } from './sprites'
 
 const ItemWrapper = styled((props) => <div {...props} />)`
@@ -53,16 +52,17 @@ const SelectedCheck = styled((props) => <div {...props} />)`
 `
 
 export const GameItem = (gameObject: IMintable) => {
-  const { handleSelection } = useMint()
-  const [isSelected, setIsSelected] = useState<Nullable<boolean>>(null)
+  const { selections, handleSelection } = useMint()
   const { isConnected } = useConnection()
 
-  const select = (gameObject: IMintable) => {
-    handleSelection(gameObject)
-    setIsSelected(!isSelected)
-  }
+  const isSelected =
+    selections.findIndex((s) => s?.name === gameObject.name) !== -1
+
   return (
-    <ItemWrapper $selected={isSelected} onClick={() => select(gameObject)}>
+    <ItemWrapper
+      $selected={isSelected}
+      onClick={() => handleSelection(gameObject)}
+    >
       <SelectedCheck $selected={isSelected} />
       <Overlay $isConnected={isConnected} selected={isSelected} />
       <ItemGraphic $image={gameObject.url} />

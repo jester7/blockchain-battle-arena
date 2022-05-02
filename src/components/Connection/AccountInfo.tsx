@@ -19,7 +19,7 @@ const Yellow = styled.span`
 
 
 export const AccountInfo = () => {
-  const { accountDisplayName, isConnected } = useConnection()
+  const { accountDisplayName } = useConnection()
   const { readyToLaunch, launchGame } = useGame()
   return (
     <AccountContainer>
