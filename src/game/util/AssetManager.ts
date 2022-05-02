@@ -1,5 +1,6 @@
 import mech_sprites from "../sprites/all-mechs-medium.png";
-import bg_stage_1_base from "../sprites/background_base_layer.jpg";
+import bg_stage_1_base from "../sprites/background_base_layer_tall.jpg";
+import bg_stage_1_arch from "../sprites/arch_way.png";
 import base_platform from "../sprites/base_platform.png";
 import platform from "../sprites/platform.png";
 import bg_title from "../../home-background.jpg";
@@ -77,6 +78,7 @@ export default class AssetManager {
         },
     });
     AssetManager.add("bg1", bg_stage_1_base);
+    AssetManager.add("bg1_arch", bg_stage_1_arch);
     AssetManager.add("bg1_platform", base_platform);
     AssetManager.add("bg1_platform_small", platform);
 
