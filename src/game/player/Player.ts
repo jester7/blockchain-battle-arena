@@ -1,4 +1,5 @@
 import { Collision, GameObj, KaboomCtx, Tag, Vec2 } from "kaboom";
+import BCBA from "../BCBA";
 import * as C from "../constants";
 import InputSource from "./input/InputSource";
 
@@ -18,6 +19,8 @@ export default abstract class Player {
   protected _isBlocking: boolean = false;
   protected _mainTag: string;
 
+  protected _roundWinCount: number = 0;
+
   public constructor(
     k: KaboomCtx,
     playerObj: GameObj,
@@ -25,7 +28,9 @@ export default abstract class Player {
     spriteName: string,
     facing: PlayerDirection = PlayerDirection.RIGHT,
     mainTag: string,
-    inputSource: InputSource
+    inputSource: InputSource,
+    protected startPosX: number,
+    protected startPosY: number
   ) {
     this.k = k;
     this.obj = playerObj;
@@ -131,4 +136,25 @@ export default abstract class Player {
   }
 
   public abstract stopBlocking(): void;
+
+  public incRoundWinCount(): void {
+    this._roundWinCount++;
+  }
+
+  public getRoundWinCount(): number {
+    return this._roundWinCount;
+  }
+
+  public resetPlayer(): void {
+    //this._roundWinCount = 0;
+    this.obj.setHP(C.MAX_HEALTH);
+    BCBA.getInstance().pause();
+    try {
+      this.obj.enterState("idle");
+    } catch (e) {
+    }
+    this.obj.pos = this.k.vec2(this.startPosX, this.startPosY);
+  }
+
+
 }

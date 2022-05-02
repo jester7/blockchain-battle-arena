@@ -36,12 +36,12 @@ export default class MechPlayer extends Player {
       states,
       k.rotate(0),
       k.health(C.MAX_HEALTH),
-      k.z(10),
+      k.z(12),
       mainTag, // tags are used to check collisions and distinguish between own projectiles and opponent's projectiles
       ...tags,
     ]);
 
-    super(k, obj, name, mechSprite, facing, mainTag, inputSource);
+    super(k, obj, name, mechSprite, facing, mainTag, inputSource, startPosX, startPosY);
     this.innerObj = this.addCharacterSprite(spriteNum);
     this._projectileSpriteName = projectileSprite;
     this._gun = gun;
@@ -68,7 +68,7 @@ export default class MechPlayer extends Player {
     // here instead of spriteName, for NFTs we do kaboom.loadSprite with data uri and then add
     return this.k.add([
       this.k.sprite(spriteName, { flipX: flip }),
-      this.k.z(1), // set a lower z index so that the character image is behind the mech suit
+      this.k.z(10), // set a lower z index so that the character image is behind the mech suit
       this.k.pos(),
       this.k.follow(this.obj), // attaches the character sprite to mech suit, can attach multiple sprites such as accessories
       this.k.scale(0.5),
@@ -131,12 +131,10 @@ export default class MechPlayer extends Player {
       ]);
 
       this.playShotSound();
-      //console.log(this._opponent?.getMainTag() + " " + projectileTag);
       this.k.onCollide(
         projectileTag,
         this._opponent?.getMainTag() as string,
         (p: any, o: any) => {
-          //console.log("onCollide: ", projectileTag, this._opponent?.getMainTag(), p, o);
           this.k.destroy(p);
           this.k.play("explosion1", { volume: 0.4, speed: 2.0 });
           const damage = this._opponent!.isBlocking()
@@ -144,7 +142,6 @@ export default class MechPlayer extends Player {
             : C.DEFAULT_PROJECTILE_DAMAGE;
           o.hurt(damage);
           BCBA.getInstance().updateHealthInfo();
-          console.log(p.pos);
           this.addExplosion(p.pos);
           this.k.shake(5);
         }
@@ -183,7 +180,7 @@ export default class MechPlayer extends Player {
   public addExplosion(p: Vec2) {
     this.k.add([
       this.k.sprite("explosion"),
-      this.k.z(12),
+      this.k.z(20),
       this.k.scale(0.33),
       this.isFacingRight()
         ? this.k.pos(p.add(10, -40))

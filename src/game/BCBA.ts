@@ -10,7 +10,11 @@ import GameScene from "./scenes/GameScene";
 import CameraController from "./util/CameraController";
 import MechAIPlayer from "./player/MechAIPlayer";
 import KeyboardInputSource from "./player/input/KeyboardInputSource";
+import GamePadInputSource from "./player/input/GamePadInputSource";
 
+/**
+ * Main Blockchain Battle Arena singleton class, call init() first
+ */
 export default class BCBA {
   private static instance: BCBA | undefined;
 
@@ -19,7 +23,9 @@ export default class BCBA {
   private _characterChoices: IGameCharacter;
   private _scenes: { [name: string]: GameScene } = {};
   private _currentScene: GameScene | undefined;
+  private _currentRound: number = 1;
   private players: MechPlayer[] = new Array<MechPlayer>(C.MAX_PLAYERS);
+  private _playerName: string;
   private _cameraController: any;
 
   private isZooming = false;
@@ -33,9 +39,9 @@ export default class BCBA {
     throw new Error("getInstance failed. Run init() first.");
   }
 
-  // helper method to get the inner context object
+  // helper method to get the game context object
   public getContext(): KaboomCtx {
-    return this._ctx; // return the inner kaboom context
+    return this._ctx;
   }
 
   // static auxiliary method for getContext()
@@ -51,8 +57,13 @@ export default class BCBA {
     this.players[n - 1] = player;
   }
 
+  /**
+   * Run initialization tasks for the game and return
+   * the game instance after completion.
+   */
   public static init(
     canvasRef: any,
+    name: string,
     characterChoices: IGameCharacter,
     debug: boolean = false
   ): BCBA {
@@ -67,32 +78,34 @@ export default class BCBA {
 
     AssetManager.setContext(k);
 
-    BCBA.instance = new BCBA(k, characterChoices, debug);
-    BCBA.initScenes();
-
+    BCBA.instance = new BCBA(k, characterChoices, name, debug);
+    BCBA.initScenes(k);
+    
     canvasRef.current.focus();
 
+    new GamePadInputSource(); // testing gamepad support
+    
+    k.onLoad(async () => {
+        BCBA.getInstance().setCurrentScene("title");
+    });
+    
     return BCBA.instance as BCBA;
   }
 
   private constructor(
     kaboomCtx: KaboomCtx,
     characterChoices: IGameCharacter,
+    name: string,
     debug: boolean = false
   ) {
     this.DEBUG = debug;
     this._ctx = kaboomCtx;
     this.loadAssets();
     this._characterChoices = characterChoices;
+    this._playerName = name;
 
-    // this.initPlayers(characterChoices);
-    //this._ctx.play("countdown", { speed: 1 });
-
-    // TODO need to be sure sprites have finished loading and merging before calling this
-    //this.updateHealthInfo();
-
-    this.initKeyboardEvents();
     this.initCollisions();
+    this.initKeyboardEvents();
   }
 
   /**
@@ -110,12 +123,11 @@ export default class BCBA {
     if (this.DEBUG) this._ctx.debug.log(message);
   }
 
-  private static async initScenes() {
-    BCBA.getInstance().addScene(new TitleScene("title", BCBA.getInstanceCtx()));
+  private static initScenes(kCtx: KaboomCtx) {
+    BCBA.getInstance().addScene(new TitleScene("title", kCtx));
     BCBA.getInstance().addScene(
-      new BattleArenaScene("stage1", BCBA.getInstanceCtx())
+      new BattleArenaScene("stage1", kCtx)
     );
-    BCBA.getInstance().setCurrentScene("stage1");
   }
 
   private loadAssets() {
@@ -124,20 +136,20 @@ export default class BCBA {
 
   public initPlayers() {
     console.log("initPlayers");
-    //console.log(charChoices);
+    this.pause(); // pause input and AI moves until intro sequence is complete
     this.setPlayer(
       1,
       new MechPlayer(
         this._ctx,
-        "Player 1",
+        this._playerName,
         this._characterChoices.characterNum,
         this._characterChoices.mechColor,
         this._characterChoices.gunName,
         PlayerDirection.RIGHT,
         C.TAG_MAIN_PLAYER,
         [C.TAG_PLAYER],
-        800,
-        1600,
+        950,
+        1620,
         new KeyboardInputSource(this._ctx, 1)
       )
     );
@@ -155,8 +167,8 @@ export default class BCBA {
         PlayerDirection.LEFT,
         C.TAG_OPPONENT,
         [C.TAG_PLAYER],
-        1800, //800
-        1600
+        1900, //800
+        1620
       )
     );
 
@@ -263,6 +275,27 @@ export default class BCBA {
     if (this.lastPlayer2Health !== undefined)
       this._ctx.destroy(this.lastPlayer2Health);
 
+    if (this.player(1).hp() <= 0) {
+      this.player(2).incRoundWinCount();
+      if (this.player(2).getRoundWinCount() >= 2) {
+        (this._currentScene as BattleArenaScene).showMatchLost();
+        return;
+      }
+      this.resetPlayers();
+      (this._currentScene as BattleArenaScene).showRoundLost(this._currentRound);
+    }
+
+    if (this.player(2).hp() <= 0) {
+      this.player(1).incRoundWinCount();
+      if (this.player(1).getRoundWinCount() >= 2) {
+        (this._currentScene as BattleArenaScene).showMatchWon();
+        return;
+      }
+
+      this.resetPlayers();
+      (this._currentScene as BattleArenaScene).showRoundWon(this._currentRound);
+    }
+
     this.lastPlayer1Health = this._ctx.add([
       this._ctx.text(this.player(1).name + ": " + this.player(1).hp(), {
         size: 34,
@@ -275,7 +308,7 @@ export default class BCBA {
         size: 34,
       }),
       this._ctx.fixed(),
-      this._ctx.pos(900, 15),
+      this._ctx.pos(1600, 15),
     ]);
   }
 
@@ -285,7 +318,7 @@ export default class BCBA {
 
   public setCurrentScene(sceneName: string, args?: any) {
     this._currentScene = this._scenes[sceneName];
-    this._ctx.go(sceneName, args);
+    this._currentScene.go(args);
   }
 
   public isPaused() {
@@ -298,5 +331,19 @@ export default class BCBA {
 
   public resume() {
     this._paused = false;
+  }
+
+  public setRound(round: number) {
+    this._currentRound = round;
+  }
+
+  public goToNextRound() {
+    this._currentRound++;
+  }
+
+  private resetPlayers() {
+    this.players.forEach(player => {
+      player.resetPlayer();
+    });
   }
 }

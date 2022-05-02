@@ -1,4 +1,5 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
+import BCBA from "../BCBA";
 import * as C from "../constants";
 
 export interface IObjectPos {
@@ -39,6 +40,13 @@ export default class CameraController {
         let maxs: IObjectPos = {x:0, y:0};
        
         this._trackObjects.forEach(obj => {
+
+            if (obj.pos.y > 3000) {
+                obj.setHP(0);
+                BCBA.getInstance().updateHealthInfo();
+                return;
+            }
+
             if (obj.pos.x < mins.x) {
                 mins.x = obj.pos.x;
             }
