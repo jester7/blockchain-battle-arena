@@ -63,6 +63,7 @@ export default class AssetManager {
     AssetManager.add(name, data, AssetType.SOUND, options);
   }
 
+  // adds all assets to the hashmap
   public static addAll(): void {
     AssetManager.add("mech", mech_sprites, AssetType.SPRITE, {
         sliceX: 8, // 8 total mech sprites
@@ -101,6 +102,7 @@ export default class AssetManager {
     AssetManager.addSound("shield", sound_shield);
   }
 
+  // loops through all the assets in the hashmap and loads them into the game context
   public static loadAll(): void {
     for (let key in AssetManager._assets) {
       if (AssetManager._assets[key].type === AssetType.SPRITE) {
@@ -117,27 +119,3 @@ export default class AssetManager {
 }
 
 AssetManager.addAll();
-
-
-// this.log("loading sprites...");
-    // this.k.loadSprite("bg1", sprite_bg);
-    // this.k.loadSprite("logo", logo);
-    // LoadMechSpriteSheet(this.k);
-    // this.k.loadSprite("char1", sprite_char1);
-    // this.k.loadSprite("char2", sprite_char2);
-    // this.k.loadSprite("char3", sprite_char3);
-
-    // this.k.loadSprite("missile", sprite_missile);
-    // this.k.loadSprite("laser_ball", sprite_laser_ball);
-
-    // this.k.loadSprite("explosion", sprite_explosion);
-    // this.k.loadSprite("character1", sprite_character1);
-
-    // this.k.loadSound("shoot1", sound_shot);
-    // this.k.loadSound("shoot2", sound_laser);
-
-    // this.k.loadSound("clang", sound_clang);
-    // this.k.loadSound("explosion1", sound_explosion1);
-    // this.k.loadSound("countdown", sound_countdown);
-    // this.k.loadSound("cheers", sound_cheers);
-    // this.k.loadSound("shield", sound_shield);
