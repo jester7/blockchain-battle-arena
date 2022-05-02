@@ -3,11 +3,26 @@ import { SectionContainer } from '../components/shared/SectionContainer'
 import { SubHeading } from '../components/shared/SubHeading'
 import { Paragraph } from '../components/shared/Paragraph'
 import { UnorderedList, ListItem } from '../components/shared/Lists'
-import { useGame } from '../providers'
+import { useConnection, useGame } from '../providers'
+import { useEffect } from 'react'
 
 export const LaunchView = () => {
   const { playerNfts } = useGame()
+  const { isConnected } = useConnection()
   console.log({ playerNfts })
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        if (true) {
+
+        }
+      } catch (e) {
+        console.error(e)
+      }
+    })()
+  },[])
+
   return (
     <MainLayout>
       <>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useConnection } from '../../providers'
 import { useMint } from '../../providers/MintProvider'
@@ -24,7 +24,8 @@ const ItemGraphic = styled((props) => <div {...props} />)`
 `
 
 const Overlay = styled((props) => <div {...props} />)`
-  display: ${props => (!props.$selected && props.$isConnected) ? 'block' : 'none' };
+  display: ${(props) =>
+    !props.$selected && props.$isConnected ? 'block' : 'none'};
   position: absolute;
   border-radius: 1rem;
   width: 200px;
@@ -52,23 +53,14 @@ const SelectedCheck = styled((props) => <div {...props} />)`
 `
 
 export const GameItem = (gameObject: IMintable) => {
-  const { selections, handleSelection } = useMint()
-  const [isSelected, setIsSelected] = useState<boolean>(false)
+  const { handleSelection } = useMint()
+  const [isSelected, setIsSelected] = useState<Nullable<boolean>>(null)
   const { isConnected } = useConnection()
 
   const select = (gameObject: IMintable) => {
-    const foundInSelectionState =
-      selections?.filter((s) => s.name === gameObject.name).length !== 0
-    if (foundInSelectionState && isSelected) {
-      setIsSelected(false)
-      handleSelection(gameObject)
-      return
-    } else {
-      setIsSelected(true)
-      handleSelection(gameObject)
-    }
+    handleSelection(gameObject)
+    setIsSelected(!isSelected)
   }
-
   return (
     <ItemWrapper $selected={isSelected} onClick={() => select(gameObject)}>
       <SelectedCheck $selected={isSelected} />
