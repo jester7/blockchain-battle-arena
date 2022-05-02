@@ -16,25 +16,15 @@ const ItemWrapper = styled((props) => <div {...props} />)`
 const ItemGraphic = styled((props) => <div {...props} />)`
   position: relative;
   border-radius: 1rem;
-  background-image: url('${(props) => props.image}');
+  background-image: url('${(props) => props.$image}');
   background-repeat: no-repeat;
   background-size: cover;
   width: 200px;
   height: 200px;
 `
 
-interface IOverlayProps {
-  isConnected: boolean
-  selected: boolean
-}
-
-const overlayForConnected = ({ isConnected, selected }: IOverlayProps) => {
-  const enable = !selected && isConnected
-  return enable ? 'block' : 'none'
-}
-
 const Overlay = styled((props) => <div {...props} />)`
-  display: ${overlayForConnected};
+  display: ${props => (!props.$selected && props.$isConnected) ? 'block' : 'none' };
   position: absolute;
   border-radius: 1rem;
   width: 200px;
@@ -47,7 +37,7 @@ const Overlay = styled((props) => <div {...props} />)`
 `
 
 const SelectedCheck = styled((props) => <div {...props} />)`
-  display: ${(props) => (props.selected ? 'block' : 'none')};
+  display: ${(props) => (props.$selected ? 'block' : 'none')};
   &:before {
     position: absolute;
     content: '✓';
@@ -57,33 +47,33 @@ const SelectedCheck = styled((props) => <div {...props} />)`
     height: 100px;
     top: -20px;
     left: 10px;
-    z-index: 30;
+    z-index: 3;
   }
 `
 
-export const GameItem = (character: IMintable) => {
+export const GameItem = (gameObject: IMintable) => {
   const { selections, handleSelection } = useMint()
   const [isSelected, setIsSelected] = useState<boolean>(false)
   const { isConnected } = useConnection()
 
-  const select = (character: IMintable) => {
+  const select = (gameObject: IMintable) => {
     const foundInSelectionState =
-      selections?.filter((s) => s.name === character.name).length !== 0
+      selections?.filter((s) => s.name === gameObject.name).length !== 0
     if (foundInSelectionState && isSelected) {
       setIsSelected(false)
-      handleSelection(character)
+      handleSelection(gameObject)
       return
     } else {
       setIsSelected(true)
-      handleSelection(character)
+      handleSelection(gameObject)
     }
   }
 
   return (
-    <ItemWrapper selected={isSelected} onClick={() => select(character)}>
-      <SelectedCheck selected={isSelected} />
-      <Overlay isConnected={isConnected} selected={isSelected} />
-      <ItemGraphic image={character.image} />
+    <ItemWrapper $selected={isSelected} onClick={() => select(gameObject)}>
+      <SelectedCheck $selected={isSelected} />
+      <Overlay $isConnected={isConnected} selected={isSelected} />
+      <ItemGraphic $image={gameObject.url} />
     </ItemWrapper>
   )
 }

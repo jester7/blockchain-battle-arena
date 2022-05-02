@@ -1,7 +1,7 @@
 import { useState, useContext, createContext } from 'react'
-import { useMoralis, useMoralisWeb3Api } from 'react-moralis'
+import { useMoralisWeb3Api } from 'react-moralis'
 import { useConnection } from './ConnectionProvider'
-import { useError } from './ErrorProvider'
+import { useToast } from './ToastProvider'
 import { useLoading } from './LoadingProvider'
 
 interface IGameContext {
@@ -32,11 +32,10 @@ const defaultGameContext: IGameContext = {
 const GameContext = createContext(defaultGameContext)
 
 const GameProvider = ({ children }: IProps) => {
-  const { isConnected } = useConnection()
+  const { isConnected, account } = useConnection()
   const [selectedNft, setSelectedNft] = useState<Nullable<INft>>(null)
   const { startLoading, stopLoading } = useLoading()
-  const { triggerError, setError } = useError()
-  const { account } = useMoralis()
+  const { triggerError } = useToast()
   const web3Api = useMoralisWeb3Api()
   const [playerNfts, setPlayerNfts] = useState<INft[]>([])
 
@@ -46,11 +45,9 @@ const GameProvider = ({ children }: IProps) => {
   const launchGame = () => {
     fetchNfts()
   }
-
   const fetchNfts = async () => {
     try {
       if (isConnected) {
-        setError('')
         startLoading('fetching nfts')
         const { result } = await web3Api.account.getNFTs({
           chain: 'rinkeby',
@@ -67,6 +64,7 @@ const GameProvider = ({ children }: IProps) => {
           const { name, token_id } = nft
           return name && token_id
         })
+        console.log({ nfts })
         setPlayerNfts(displayableNfts)
         stopLoading()
       } else {

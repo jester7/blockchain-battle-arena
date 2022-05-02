@@ -27,6 +27,7 @@ export const FlashingButton = styled(props => <button {...props}/>)`
   box-shadow: none;
   padding: ${SPACING.primary};
   margin: ${SPACING.small};
+  width: 100%;
   animation: ${pulsate} 2.5s ease-in-out infinite;
   &:hover {
     color: ${COLORS.redPink};

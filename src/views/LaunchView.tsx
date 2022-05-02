@@ -7,7 +7,7 @@ import { useGame } from '../providers'
 
 export const LaunchView = () => {
   const { playerNfts } = useGame()
-
+  console.log({ playerNfts })
   return (
     <MainLayout>
       <>

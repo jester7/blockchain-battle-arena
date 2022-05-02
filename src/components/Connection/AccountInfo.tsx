@@ -24,7 +24,7 @@ export const AccountInfo = () => {
   return (
     <AccountContainer>
       {readyToLaunch ? (
-        <FlashingButton onClick={launchGame}>Launch</FlashingButton>
+        <FlashingButton onClick={launchGame}>Launch Game</FlashingButton>
       ) : (
         <AccountText>
           Connected as <Yellow>{accountDisplayName}</Yellow>

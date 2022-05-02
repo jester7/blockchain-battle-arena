@@ -8,6 +8,7 @@ import styled from 'styled-components'
 const Section = styled(SectionContainer)`
   margin-top: ${SPACING.small};
   margin-right: ${SPACING.primary};
+  max-height: 80px;
 `
 
 const Navbar = styled.div`

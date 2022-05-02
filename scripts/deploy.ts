@@ -1,10 +1,10 @@
 import fs from 'fs-extra'
-import { ethers } from 'hardhat'
+import hre from 'hardhat'
 
 ;(async () => {
   try {
-    const nftContractFactory = await ethers.getContractFactory(
-      'GameObject'
+    const nftContractFactory = await hre.ethers.getContractFactory(
+      'BBGameObject'
     )
     const nftContract = await nftContractFactory.deploy()
     await nftContract.deployed()

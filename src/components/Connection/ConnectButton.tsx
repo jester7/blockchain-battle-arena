@@ -16,7 +16,7 @@ export const ConnectButton = () => {
   const connectWallet = async () => {
     try {
       setLoading(true)
-      await authenticate()
+      await authenticate({ signingMessage: 'Blockchain Battle Arena' })
       setLoading(false)
     } catch (e) {
       console.log('connect error')

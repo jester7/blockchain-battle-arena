@@ -1,23 +1,20 @@
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { MoralisContextValue, useMoralis } from 'react-moralis'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-interface IErrorContext {
-  error: string
+interface IToastContext {
   triggerError: (message: string) => void
-  setError: (message: string) => void
+  triggerSuccess: (message: string) => void
 }
 
-const defaultErrorContext: IErrorContext = {
-  error: '',
+const defaultErrorContext: IToastContext = {
   triggerError: () => {},
-  setError: () => {},
+  triggerSuccess: () => {},
 }
 
-const ErrorContext = createContext(defaultErrorContext)
+const ToastContext = createContext(defaultErrorContext)
 
-const ErrorProvider = ({ children }: IProps) => {
-  const [error, setError] = useState<string>('')
+const ToastProvider = ({ children }: IProps) => {
   const toastId = useRef('')
   const {
     userError,
@@ -28,12 +25,11 @@ const ErrorProvider = ({ children }: IProps) => {
 
   const triggerError = (message: string) => {
     if (!message) return
-    setError(message)
     if (!toast.isActive(toastId.current)) {
       toast.error(message, {
         toastId: message,
         position: 'top-center',
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -41,7 +37,22 @@ const ErrorProvider = ({ children }: IProps) => {
         progress: undefined,
       })
     }
+  }
 
+  const triggerSuccess = (message: string) => {
+    if (!message) return
+    if (!toast.isActive(toastId.current)) {
+      toast.success(message, {
+        toastId: message,
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
+    }
   }
 
   useEffect(() => {
@@ -54,14 +65,14 @@ const ErrorProvider = ({ children }: IProps) => {
     if (authError) {
       triggerError('There was an error authenticating')
     }
-  }, [error, userError, authError, web3EnableError, isWeb3EnableLoading])
+  }, [userError, authError, web3EnableError, isWeb3EnableLoading])
   return (
-    <ErrorContext.Provider value={{ error, setError, triggerError }}>
+    <ToastContext.Provider value={{ triggerSuccess, triggerError }}>
       {children}
-    </ErrorContext.Provider>
+    </ToastContext.Provider>
   )
 }
 
-const useError = () => useContext(ErrorContext)
+const useToast = () => useContext(ToastContext)
 
-export { ErrorProvider, useError }
+export { ToastProvider, useToast }

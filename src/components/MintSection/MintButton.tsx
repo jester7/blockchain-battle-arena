@@ -10,10 +10,10 @@ const MintButtonContainer = styled.div`
 `
 
 export const MintButton = () => {
-  const { handleMint } = useMint()
+  const { triggerConfirmModal } = useMint()
   return (
     <MintButtonContainer>
-      <FlashingButton onClick={handleMint}>Mint</FlashingButton>
+      <FlashingButton onClick={triggerConfirmModal}>Mint</FlashingButton>
     </MintButtonContainer>
   )
 }

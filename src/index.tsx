@@ -6,7 +6,7 @@ import {
   ConnectionProvider,
   LoadingProvider,
   NetworkProvider,
-  ErrorProvider,
+  ToastProvider,
   GameProvider
 } from './providers'
 
@@ -29,11 +29,11 @@ root.render(
       <ConnectionProvider>
         <NetworkProvider>
           <LoadingProvider>
-            <ErrorProvider>
+            <ToastProvider>
               <GameProvider>
                 <App />
               </GameProvider>
-            </ErrorProvider>
+            </ToastProvider>
           </LoadingProvider>
         </NetworkProvider>
       </ConnectionProvider>
