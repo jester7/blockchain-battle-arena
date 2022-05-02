@@ -18,10 +18,11 @@ export const GameView = () => {
     setGameInstance(
       BCBA.init(
         canvasRef,
+        "rimraf.eth",
         {
           characterNum: characterNum,
           mechColor: mech,
-          gunName: "smallgun", // for testing laser ball rotation
+          gunName: gun,
         },
         false
       )
