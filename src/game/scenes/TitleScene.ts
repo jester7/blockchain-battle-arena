@@ -1,24 +1,32 @@
+import BCBA from "../BCBA";
 import GameScene from "./GameScene";
 
 export default class TitleScene extends GameScene {
-  protected init(): void {
-    this._ctx.scene(this._name, () => {
-      console.log("TitleScene.init!!!!");
-      this._ctx.add([
-        this._ctx.sprite("title-bg"),
-        this._ctx.scale(0.5),
-        this._ctx.pos(0, 0),
-      ]);
+  protected initScene(): void {
+    this._ctx.add([this._ctx.sprite("title-bg"), this._ctx.scale(1)]);
 
-      this._ctx.add([
-        this._ctx.sprite("logo"),
-        this._ctx.scale(0.75),
+    this._ctx.add([
+      this._ctx.sprite("logo"),
+      this._ctx.scale(1),
+      this._ctx.origin("center"),
+      this._ctx.z(2),
+      this._ctx.pos(this._ctx.center().x, 300),
+      this.animate(),
+    ]);
+    this._ctx.add([
+        this._ctx.text(
+          "Press SPACE to start",
+          {
+            size: 60,
+          }
+        ),
         this._ctx.origin("center"),
-        this._ctx.pos(0, 200),
-        this.animate(),
-      ]);
+      this._ctx.z(2),
+      this._ctx.pos(this._ctx.center().x, this._ctx.center().y + 100),
+    ]);
 
-      //this._ctx.text("TitleScene");
+    this._ctx.onKeyPress("space", () => {
+      BCBA.getInstance().setCurrentScene("stage1", {roundNum:1});
     });
   }
 
@@ -27,8 +35,7 @@ export default class TitleScene extends GameScene {
     return {
       id: "title-animate",
       update() {
-        this.scale = Math.abs(Math.sin(ctx.time()) * 0.05) + 0.75;
-        this.pos.x = this.width / 2;
+        this.scale = Math.abs(Math.sin(ctx.time()) * 0.1) + 0.9;
       },
     };
   }
