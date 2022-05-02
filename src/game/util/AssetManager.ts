@@ -11,6 +11,16 @@ import sprite_char2 from "../sprites/char2-small.png";
 import sprite_char3 from "../sprites/char3-small.png";
 import logo from "../sprites/bcba-logo.png";
 
+import countdown_1 from "../sprites/text/countdown_1.png";
+import countdown_2 from "../sprites/text/countdown_2.png";
+import countdown_3 from "../sprites/text/countdown_3.png";
+import defeat from "../sprites/text/defeat.png";
+import fight from "../sprites/text/fight.png";
+import victory from "../sprites/text/victory.png";
+import round1 from "../sprites/text/lettering_round1.png";
+import round2 from "../sprites/text/lettering_round2.png";
+import round3 from "../sprites/text/lettering_round3.png";
+
 import sprite_missile from "../sprites/missile.png";
 import sprite_laser_ball from "../sprites/laser-ball-2.png";
 
@@ -84,6 +94,15 @@ export default class AssetManager {
     AssetManager.add("bg1_platform_small", platform);
 
     AssetManager.add("title-bg", bg_title);
+    AssetManager.add("countdown_1", countdown_1);
+    AssetManager.add("countdown_2", countdown_2);
+    AssetManager.add("countdown_3", countdown_3);
+    AssetManager.add("defeat", defeat);
+    AssetManager.add("fight", fight);
+    AssetManager.add("victory", victory);
+    AssetManager.add("round1", round1);
+    AssetManager.add("round2", round2);
+    AssetManager.add("round3", round3);
 
     AssetManager.add("explosion", sprite_explosion);
     AssetManager.add("character1", sprite_character1);
