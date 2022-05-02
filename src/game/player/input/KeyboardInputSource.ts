@@ -22,30 +22,31 @@ export default class KeyboardInputSource extends InputSource {
 
   public initHandlers() {
     this._ctx.onKeyPress(keys.CONTROL, () => {
-      this._gameInstance.player(this._player).shoot();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).shoot();
     });
 
     this._ctx.onKeyPress(keys.SHIFT, () => {
-      this._gameInstance.player(this._player).startBlocking();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).startBlocking();
     });
 
     this._ctx.onKeyRelease(keys.SHIFT, () => {
-      this._gameInstance.player(this._player).stopBlocking();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).stopBlocking();
     });
 
     this._ctx.onKeyDown("left", () => {
-      this._gameInstance.player(this._player).moveLeft();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).moveLeft();
     });
 
     this._ctx.onKeyRelease(["left", "right"], () => {
-      this._gameInstance.player(this._player).upright();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).upright();
     });
 
     this._ctx.onKeyDown("right", () => {
-      this._gameInstance.player(this._player).moveRight();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).moveRight();
     });
 
     this._ctx.onKeyPress("space", () => {
+      if (BCBA.getInstance().isPaused()) return;
       if (this._gameInstance.player(this._player).isGrounded()) {
         this._gameInstance.player(this._player).jump();
       } else {
