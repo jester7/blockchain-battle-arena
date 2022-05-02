@@ -78,7 +78,7 @@ const MintProvider = ({ children }: IProps) => {
         selection?.name,
         selection?.description,
         selection?.url,
-        selection?.type,
+        selection?.type
       )
 
       const receipt = await tx.wait()
@@ -89,9 +89,6 @@ const MintProvider = ({ children }: IProps) => {
       triggerSuccess(
         `Minted!\nhash:${tx.hash}`
       )
-
-      // const nftAddress = `https://testnets.opensea.io/assets/${transactionHash}/${token_id}`
-      // setOpenseaAddress(nftAddress)
     } catch (err: any) {
       console.error(err)
       triggerConfirmModal(false)

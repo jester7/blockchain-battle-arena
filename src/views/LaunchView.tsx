@@ -4,22 +4,54 @@ import { SubHeading } from '../components/shared/SubHeading'
 import { Paragraph } from '../components/shared/Paragraph'
 import { UnorderedList, ListItem } from '../components/shared/Lists'
 import { useGame } from '../providers'
-import { useEffect } from 'react'
+import styled from 'styled-components'
+
+const ItemGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+`
+
+const ObjectWrapper = styled((props) => <div {...props} />)`
+  position: relative;
+  cursor: pointer;
+  border-radius: 1rem;
+  margin: 1rem;
+  width: 200px;
+  height: 200px;
+`
+const ObjectGraphic = styled((props) => <div {...props} />)`
+  position: relative;
+  border-radius: 1rem;
+  background-image: url('${(props) => props.$image}');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+`
+
+
+const renderCharacters = (nfts: any[]) => {
+  const filteredCharacters = nfts?.filter(n => n.objectType === 'character')
+  return (
+    <>
+      <SubHeading>Choose a Mech</SubHeading>
+      <ItemGrid>
+        {filteredCharacters.length !== 0 ? (<>
+          {filteredCharacters.map((char, i) => {
+            return (
+              <ObjectWrapper key={i}>
+                <ObjectGraphic $image={char.objectImageUrl} />
+              </ObjectWrapper>
+            )
+          })}
+        </>) : <p>No playable NFTs found</p>}
+      </ItemGrid>
+    </>
+  )
+}
 
 export const LaunchView = () => {
   const { playerNfts } = useGame()
-
-  useEffect(() => {
-    ;(async () => {
-      try {
-        if (true) {
-
-        }
-      } catch (e) {
-        console.error(e)
-      }
-    })()
-  },[])
 
   return (
     <MainLayout>
@@ -34,31 +66,7 @@ export const LaunchView = () => {
           </UnorderedList>
           <SubHeading>Choose one of your NFTs for battle</SubHeading>
           <Paragraph>Click on a character to pick it.</Paragraph>
-          {playerNfts?.map((nft, i) => (
-            <pre key={i}>{JSON.stringify(nft, null, 2)}</pre>
-          ))}
-          <SubHeading>Choose a Mech</SubHeading>
-          {/* <p></p>
-          <div className='nft-container mechs'>
-            <div
-              className={
-                'nft-item accessory-image ' + (mech === 'red' ? 'chosen' : '')
-              }
-              id='mech-fighter-red'
-              onClick={() => {
-                setMech('red')
-              }}
-            ></div>
-            <div
-              className={
-                'nft-item accessory-image ' + (mech === 'blue' ? 'chosen' : '')
-              }
-              id='mech-fighter-blue'
-              onClick={() => {
-                setMech('blue')
-              }}
-            ></div>
-          </div> */}
+          {playerNfts && renderCharacters(playerNfts)}
           <SubHeading>Choose a Gun</SubHeading>
           {/* <div className='nft-container guns'>
             <div

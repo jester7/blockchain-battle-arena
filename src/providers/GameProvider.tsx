@@ -3,6 +3,7 @@ import { useLoading } from './LoadingProvider'
 import { useMoralisWeb3Api } from 'react-moralis'
 import { useState, useContext, createContext, useEffect } from 'react'
 import { useToast } from './ToastProvider'
+import type { INft } from '../providers/types.d'
 
 interface IGameContext {
   playerNfts: any[]
@@ -11,13 +12,6 @@ interface IGameContext {
   handleSelection: (nft: INft) => void
   readyToLaunch: boolean
   launchGame: () => void
-}
-
-interface INft {
-  name: string
-  token_id: string
-  metadata: string
-  token_uri: string
 }
 
 const defaultGameContext: IGameContext = {
@@ -34,37 +28,49 @@ const GameContext = createContext(defaultGameContext)
 const GameProvider = ({ children }: IProps) => {
   const [readyToLaunch, setReadyToLaunch] = useState<boolean>(false)
   const [selectedNft, setSelectedNft] = useState<Nullable<INft>>(null)
-  const [playerNfts, setPlayerNfts] = useState<INft[]>([])
+  const [playerNfts, setPlayerNfts] = useState<any[]>([])
   const { startLoading, stopLoading } = useLoading()
   const { isConnected, account } = useConnection()
   const { triggerError } = useToast()
   const web3Api = useMoralisWeb3Api()
 
+  const normalizeResponse = (result: any[]) => {
+    return result?.map((item) => {
+      const openseaAddress = `https://testnets.opensea.io/assets/${item.token_hash}/${item.token_id}`
+
+      const metadata = JSON.parse(item.metadata)
+      return {
+        tokenId: item.token_id,
+        contractType: item.contract_type,
+        contractName: item.name,
+        tokenAddress: item.token_address,
+        tokenOwner: item.owner_of,
+        amount: item.amount,
+        symbol: item.symbol,
+        tokenUri: item.token_uri,
+        objectName: metadata.name,
+        objecetDesc: metadata.description,
+        objectImageUrl: metadata.url,
+        objectType: metadata.object_type,
+        openseaAddress,
+      }
+    })
+  }
+
   const fetchNfts = async () => {
     try {
-      if (isConnected) {
-        startLoading('fetching nfts')
-        const { result } = await web3Api.account.getNFTs({
+      startLoading('fetching nfts')
+      const { result }: any =
+        (await web3Api.account.getNFTs({
           chain: 'rinkeby',
           address: account || '',
-        })
-        const nfts: INft[] =
-          result?.map((nft) => ({
-            name: nft.name || '',
-            metadata: '',
-            token_id: '',
-            token_uri: '',
-          })) || []
-        const displayableNfts = nfts?.filter((nft) => {
-          const { name, token_id } = nft
-          return name && token_id
-        })
-        console.log({ nfts })
-        setPlayerNfts(displayableNfts)
-        stopLoading()
-      } else {
-        triggerError('You need to connect your wallet first')
-      }
+          token_addresses: [process.env.REACT_APP_GAME_CONTRACT || ''],
+        })) || []
+      const nftData = normalizeResponse(result)
+      console.log({ result })
+      console.log({ nftData })
+      setPlayerNfts(nftData)
+      stopLoading()
     } catch (e) {
       console.error(e)
       triggerError('There was an error fetching your nfts!')
@@ -90,6 +96,12 @@ const GameProvider = ({ children }: IProps) => {
     }
     setReadyToLaunch(false)
   }, [selectedNft])
+
+  useEffect(() => {
+    if (isConnected) {
+      fetchNfts()
+    }
+  }, [isConnected]) // eslint-disable-line
 
   return (
     <GameContext.Provider
