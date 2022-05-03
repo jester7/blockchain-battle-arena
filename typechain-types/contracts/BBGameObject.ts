@@ -176,7 +176,7 @@ export interface BBGameObjectInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "MintedObject(address)": EventFragment;
+    "MintedObject(address,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "UpdatedObject(address)": EventFragment;
@@ -216,8 +216,12 @@ export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
 export interface MintedObjectEventObject {
   arg0: string;
+  arg1: BigNumber;
 }
-export type MintedObjectEvent = TypedEvent<[string], MintedObjectEventObject>;
+export type MintedObjectEvent = TypedEvent<
+  [string, BigNumber],
+  MintedObjectEventObject
+>;
 
 export type MintedObjectEventFilter = TypedEventFilter<MintedObjectEvent>;
 
@@ -301,7 +305,7 @@ export interface BBGameObject extends BaseContract {
     mintGameObject(
       name: string,
       desc: string,
-      url: string,
+      image: string,
       objectType: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -387,7 +391,7 @@ export interface BBGameObject extends BaseContract {
   mintGameObject(
     name: string,
     desc: string,
-    url: string,
+    image: string,
     objectType: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -467,7 +471,7 @@ export interface BBGameObject extends BaseContract {
     mintGameObject(
       name: string,
       desc: string,
-      url: string,
+      image: string,
       objectType: string,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -546,8 +550,11 @@ export interface BBGameObject extends BaseContract {
       approved?: null
     ): ApprovalForAllEventFilter;
 
-    "MintedObject(address)"(arg0?: null): MintedObjectEventFilter;
-    MintedObject(arg0?: null): MintedObjectEventFilter;
+    "MintedObject(address,uint256)"(
+      arg0?: null,
+      arg1?: null
+    ): MintedObjectEventFilter;
+    MintedObject(arg0?: null, arg1?: null): MintedObjectEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -596,7 +603,7 @@ export interface BBGameObject extends BaseContract {
     mintGameObject(
       name: string,
       desc: string,
-      url: string,
+      image: string,
       objectType: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -686,7 +693,7 @@ export interface BBGameObject extends BaseContract {
     mintGameObject(
       name: string,
       desc: string,
-      url: string,
+      image: string,
       objectType: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

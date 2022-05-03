@@ -1,4 +1,3 @@
-import React from 'react'
 import Modal from 'react-modal'
 import { useMint } from '../../providers/MintProvider'
 import { COLORS, FONTS } from '../../styles'
@@ -16,6 +15,18 @@ const modalStyles = {
     borderRadius: '1rem',
   },
 }
+
+const StyledModal = styled((props) => <Modal {...props} />)`
+  position: relative;
+  z-index: 10000;
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+    background: 'rgba(0,0,0, 0.1)',
+    borderRadius: '1rem',
+`
 
 const ConfirmContainer = styled(SectionContainer)`
   margin: 2.8rem 0.5rem 1rem;
@@ -53,9 +64,8 @@ export const MintConfirmModal = () => {
   const { confirmModalOpen, triggerConfirmModal, mintGameObject } = useMint()
 
   return (
-    <Modal
+    <StyledModal
       isOpen={confirmModalOpen}
-      style={modalStyles}
       contentLabel="Confirm Mint"
       ariaHideApp={false}
     >
@@ -63,9 +73,11 @@ export const MintConfirmModal = () => {
         <ConfirmText>Confirm Mint</ConfirmText>
         <ButtonContainer>
           <Button onClick={mintGameObject}>ok</Button>
-          <CancelButton onClick={() => triggerConfirmModal(false)}>cancel</CancelButton>
+          <CancelButton onClick={() => triggerConfirmModal(false)}>
+            cancel
+          </CancelButton>
         </ButtonContainer>
       </ConfirmContainer>
-    </Modal>
+    </StyledModal>
   )
 }

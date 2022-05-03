@@ -2,10 +2,11 @@ import { useEffect, useRef } from 'react'
 import { useGame } from '../providers'
 import BCBA from '../game/BCBA'
 
-import '../game/Game.css'
 import { SectionContainer } from '../components/shared/SectionContainer'
 import { HeaderText } from '../components/shared/HeaderText'
 import { IPlayer } from '../providers/types'
+
+import '../game/Game.css'
 
 export const GameView = () => {
   const { readyToLaunch, player } = useGame()

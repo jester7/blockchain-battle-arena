@@ -1,8 +1,10 @@
 export interface IPlayer {
   displayName: string
-  character: Nullable<IRawGameObject>
-  acessory: Nullable<IRawGameObject>
-  weapon: Nullable<IRawGameObject>
+  character: IRawGameObject
+  acessory: IRawGameObject
+  weapon: IRawGameObject
+  // weapon: string // big|small
+  // mechSuitColor: string // red|blue
 }
 export interface IGameObject {
   objectName: string

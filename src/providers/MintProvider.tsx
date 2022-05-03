@@ -13,6 +13,7 @@ interface IMintContext {
   confirmModalOpen: boolean
   triggerConfirmModal: (val: boolean) => void
   mintGameObject: () => void
+  openseaAddress: string
 }
 
 const defaultMintContext: IMintContext = {
@@ -24,12 +25,14 @@ const defaultMintContext: IMintContext = {
   confirmModalOpen: false,
   triggerConfirmModal: (val: boolean) => {},
   mintGameObject: () => {},
+  openseaAddress: ''
 }
 
 const MintContext = createContext(defaultMintContext)
 
 const MintProvider = ({ children }: IProps) => {
   const [selection, setSelection] = useState<Nullable<IMintable>>()
+  const [openseaAddress, setOpenseaAddress] = useState<string>('')
   const [confirmModalOpen, setConfirmModal] = useState(false)
   const [minting, setMinting] = useState<boolean>(false)
   const [minted, setMinted] = useState<boolean>(false)
@@ -59,7 +62,6 @@ const MintProvider = ({ children }: IProps) => {
       triggerConfirmModal(true)
     }
   }
-
   const mintGameObject = async (): Promise<void> => {
     try {
       startLoading('minting nft...')
@@ -82,12 +84,18 @@ const MintProvider = ({ children }: IProps) => {
       )
 
       const receipt = await tx.wait()
+      const tokenId = receipt.events[1].args[1]
       console.log({ receipt })
+
+      const openseaAddress = `https://testnets.opensea.io/assets/${receipt.transactionHash}/${tokenId}`
+      console.log({ openseaAddress })
+      setOpenseaAddress(openseaAddress)
       setMinted(true)
       setSelection(null)
       stopLoading()
+      triggerConfirmModal(false)
       triggerSuccess(
-        `Minted!\nhash:${tx.hash}`
+        `Minted!\nView on Opensea!\n${openseaAddress}`
       )
     } catch (err: any) {
       console.error(err)
@@ -109,6 +117,7 @@ const MintProvider = ({ children }: IProps) => {
         confirmModalOpen,
         triggerConfirmModal,
         mintGameObject,
+        openseaAddress,
       }}
     >
       {children}

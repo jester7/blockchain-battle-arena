@@ -46,14 +46,14 @@ const ConnectionProvider = ({ children }: IProps) => {
     const shouldEnableWeb3 = isAuthenticated && !isWeb3Enabled && !account
 
     if (shouldEnableWeb3) {
-      enableWeb3()
+      // enableWeb3()
     }
   }, [isAuthenticated, isWeb3Enabled]) // eslint-disable-line
 
   useEffect(() => {
     const isCompletelyConnected: boolean = isAuthenticated && isWeb3Enabled
-    const displayName = _formatDisplayName()
     if (isCompletelyConnected) {
+      const displayName = _formatDisplayName()
       setIsConnected(true)
       setAccountDisplayName(displayName)
     } else {

@@ -44,13 +44,16 @@ const ToastProvider = ({ children }: IProps) => {
     if (!toast.isActive(toastId.current)) {
       toast.success(message, {
         toastId: message,
-        position: 'top-center',
-        autoClose: 3000,
+        position: 'top-left',
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+        style: {
+          minWidth: '50%'
+        }
       })
     }
   }

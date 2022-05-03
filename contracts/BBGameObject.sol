@@ -10,7 +10,7 @@ contract BBGameObject is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
 
-    event MintedObject(address);
+    event MintedObject(address, uint256);
     event UpdatedObject(address);
 
     constructor() ERC721('Battle Arena Game Objects', 'BBGO') {}
@@ -18,21 +18,21 @@ contract BBGameObject is ERC721URIStorage, Ownable {
     function mintGameObject(
         string calldata name,
         string calldata desc,
-        string calldata url,
+        string calldata image,
         string calldata objectType
     ) external {
         uint256 id = _tokenIdCounter.current();
-        string memory uri = createGameObject(name, desc, url, objectType);
+        string memory uri = createGameObject(name, desc, image, objectType);
         _safeMint(msg.sender, id);
         _setTokenURI(id, uri);
         _tokenIdCounter.increment();
-        emit MintedObject(msg.sender);
+        emit MintedObject(msg.sender, id);
     }
 
     function createGameObject(
         string calldata name,
         string calldata desc,
-        string calldata url,
+        string calldata image,
         string calldata objectType
     ) internal pure returns (string memory) {
         string memory json = Base64.encode(
@@ -43,8 +43,8 @@ contract BBGameObject is ERC721URIStorage, Ownable {
                         name,
                         '", "description": "',
                         desc,
-                        '","url": "',
-                        url,
+                        '","image": "',
+                        image,
                         '","object_type": "',
                         objectType,
                         '"}'
