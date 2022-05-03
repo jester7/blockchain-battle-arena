@@ -5,6 +5,7 @@ import BCBA from '../game/BCBA'
 import '../game/Game.css'
 import { SectionContainer } from '../components/shared/SectionContainer'
 import { HeaderText } from '../components/shared/HeaderText'
+import { IPlayer } from '../providers/types'
 
 export const GameView = () => {
   const { readyToLaunch, player } = useGame()
@@ -14,7 +15,7 @@ export const GameView = () => {
     if (readyToLaunch) {
       BCBA.init(
         canvasRef,
-        player,
+        player as IPlayer,
         false
       )
     }

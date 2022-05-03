@@ -11,6 +11,7 @@ import CameraController from "./util/CameraController";
 import MechAIPlayer from "./player/MechAIPlayer";
 import KeyboardInputSource from "./player/input/KeyboardInputSource";
 import GamePadInputSource from "./player/input/GamePadInputSource";
+import { IPlayer } from "../providers/types";
 
 /**
  * Main Blockchain Battle Arena singleton class, call init() first
@@ -20,12 +21,11 @@ export default class BCBA {
 
   private DEBUG: boolean;
   private _ctx: any;
-  private _characterChoices: IGameCharacter;
+  private _playerOptions: IPlayer;
   private _scenes: { [name: string]: GameScene } = {};
   private _currentScene: GameScene | undefined;
   private _currentRound: number = 1;
   private players: MechPlayer[] = new Array<MechPlayer>(C.MAX_PLAYERS);
-  private _playerName: string;
   private _cameraController: any;
 
   private isZooming = false;
@@ -63,7 +63,7 @@ export default class BCBA {
    */
   public static init(
     canvasRef: any,
-    characterChoices: any,
+    player: IPlayer,
     debug: boolean = false
   ): BCBA {
     const k = kaboom({
@@ -77,7 +77,7 @@ export default class BCBA {
 
     AssetManager.setContext(k);
 
-    BCBA.instance = new BCBA(k, characterChoices, name, debug);
+    BCBA.instance = new BCBA(k, player, debug);
     BCBA.initScenes(k);
     
     canvasRef.current.focus();
@@ -93,14 +93,13 @@ export default class BCBA {
 
   private constructor(
     kaboomCtx: KaboomCtx,
-    characterChoices: any,
+    player: IPlayer,
     debug: boolean = false
   ) {
     this.DEBUG = debug;
     this._ctx = kaboomCtx;
     this.loadAssets();
-    this._characterChoices = characterChoices;
-    this._playerName = name;
+    this._playerOptions = player;
 
     this.initCollisions();
     this.initKeyboardEvents();
@@ -139,10 +138,10 @@ export default class BCBA {
       1,
       new MechPlayer(
         this._ctx,
-        this._playerName,
-        this._characterChoices.characterNum,
-        this._characterChoices.mechColor,
-        this._characterChoices.gunName,
+        this._playerOptions.displayName,
+        1,
+        "red",
+        "biggun",
         PlayerDirection.RIGHT,
         C.TAG_MAIN_PLAYER,
         [C.TAG_PLAYER],
@@ -151,8 +150,8 @@ export default class BCBA {
         new KeyboardInputSource(this._ctx, 1)
       )
     );
-    const player2MechColor =
-      this._characterChoices.mechColor === "red" ? "blue" : "red";
+    const player2MechColor = "blue";
+      //this._playerOptions.mechColor === "red" ? "blue" : "red";
     const player2Num = Math.floor(Math.random() * 3) + 1;
     this.setPlayer(
       2,
