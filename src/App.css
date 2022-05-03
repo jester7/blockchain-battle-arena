@@ -837,3 +837,10 @@ a:hover {
     background-position: 0% 50%;
   }
 }
+
+#root span.key-name {
+  font-family: good-times, sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  color: var(--color-red-medium);
+}

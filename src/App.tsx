@@ -6,7 +6,7 @@ import {
 import { AboutView } from './views/AboutView'
 import { HomeView } from './views/HomeView'
 import { LaunchView } from './views/LaunchView'
-import { MintView } from './views/MintView'
+// import { MintView } from './views/MintView'
 import { NotFoundView } from './views/NotFoundView'
 import { GameView } from './views/GameView'
 
@@ -21,7 +21,7 @@ function App() {
           <Routes>
             <Route path='/' element={<HomeView />} />
             <Route path='/about' element={<AboutView />} />
-            <Route path='/mint' element={<MintView />} />
+            {/* <Route path='/mint' element={<MintView />} /> */}
             <Route path='/launch-game' element={<LaunchView />} />
             <Route path='/game' element={<GameView />} />{' '}
             <Route path='*' element={<NotFoundView />} />

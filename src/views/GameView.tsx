@@ -18,7 +18,7 @@ export const GameView = () => {
     setGameInstance(
       BCBA.init(
         canvasRef,
-        "rimraf.eth",
+        "Player 1",
         {
           characterNum: characterNum,
           mechColor: mech,
