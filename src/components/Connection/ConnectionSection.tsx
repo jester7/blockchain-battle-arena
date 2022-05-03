@@ -1,12 +1,14 @@
 import { AccountInfo } from './AccountInfo'
 import { ConnectButton } from './ConnectButton'
-import { useAuthentication } from '../../providers'
+import { SectionContainer } from '../shared/SectionContainer'
+import { useConnection } from '../../providers'
+
 
 export const ConnectionSection = () => {
-  const { isConnected } = useAuthentication()
+  const { isConnected } = useConnection()
   return (
-    <div className='section action-container'>
+    <SectionContainer>
       {isConnected ? <AccountInfo /> : <ConnectButton />}
-    </div>
+    </SectionContainer>
   )
 }

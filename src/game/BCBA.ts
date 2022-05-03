@@ -63,8 +63,7 @@ export default class BCBA {
    */
   public static init(
     canvasRef: any,
-    name: string,
-    characterChoices: IGameCharacter,
+    characterChoices: any,
     debug: boolean = false
   ): BCBA {
     const k = kaboom({
@@ -94,8 +93,7 @@ export default class BCBA {
 
   private constructor(
     kaboomCtx: KaboomCtx,
-    characterChoices: IGameCharacter,
-    name: string,
+    characterChoices: any,
     debug: boolean = false
   ) {
     this.DEBUG = debug;

@@ -16,8 +16,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "suppressImplicitAnyIndexErrors": true,
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types", "*.d.ts"]
   },
-  "include": ["src/**/*", "*.d.ts"],
-  "exclude": ["contracts", "scripts"]
+  "include": ["src/**/*", "*.d.ts", "config/**/*.ts", "scripts/**/*.ts"],
+  "exclude": ["contracts", "scripts", "node_modules"]
 }
