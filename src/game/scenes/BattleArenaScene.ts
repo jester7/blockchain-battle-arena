@@ -7,6 +7,10 @@ export default class BattleArenaScene extends GameScene {
     const {roundNum} = args;
     this.initSprites();
     //this.initArenaBoundaries();
+    this._ctx.onKeyPress("f", () => {
+      // toggle fullscreen
+      this._ctx.fullscreen(!this._ctx.isFullscreen());
+    });
     BCBA.getInstance().initPlayers();
     BCBA.getInstance().updateHealthInfo();
     this.startRound(roundNum);
