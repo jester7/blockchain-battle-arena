@@ -9,7 +9,7 @@ export const AboutView = () => {
           <span className='bcba'>Blockchain Battle Arena</span> is a battle game for your NFT characters. It was developed by the following team:
         </p>
         <ul>
-          <li>CYUBEART &emdash; <span>Art</span></li>
+          <li>CYUBEART</li>
           <li>Jovan Jester</li>
           <li>Rimraf.eth</li>
         </ul>
