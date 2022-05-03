@@ -27,7 +27,11 @@ export default class CameraController {
         if (scale < 0.75) scale = 0.75;
         //console.log("deltax", deltaX);
         //this._ctx.camPos(deltaX/2 + C.GAME_AREA_WIDTH/2, -deltaY+C.GAME_AREA_HEIGHT);
-        this._ctx.camPos(this._trackObjects[0].pos.lerp(this._trackObjects[1].pos,0.5));
+        let pos = this._trackObjects[0].pos; //  this._trackObjects[0].pos.lerp(this._trackObjects[1].pos,0.5);
+        let y = (pos.y > (C.GAME_AREA_HEIGHT - 100) ? C.GAME_AREA_HEIGHT - 100 : pos.y);
+        let x = (pos.x > (C.GAME_AREA_WIDTH - 300) ? C.GAME_AREA_WIDTH - 300 : pos.x);
+        //console.log(this._trackObjects[0].pos.y);
+        this._ctx.camPos(this._ctx.vec2(x - deltaX/2 +800, y - deltaY/2+1000));
         this._ctx.camScale(1);
     }
 

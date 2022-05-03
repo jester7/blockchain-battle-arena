@@ -148,7 +148,7 @@ export default class BCBA {
         PlayerDirection.RIGHT,
         C.TAG_MAIN_PLAYER,
         [C.TAG_PLAYER],
-        950,
+        400,
         1620,
         new KeyboardInputSource(this._ctx, 1)
       )
@@ -167,7 +167,7 @@ export default class BCBA {
         PlayerDirection.LEFT,
         C.TAG_OPPONENT,
         [C.TAG_PLAYER],
-        1900, //800
+        1400, //800
         1620
       )
     );

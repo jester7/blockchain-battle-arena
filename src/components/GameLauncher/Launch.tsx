@@ -1,4 +1,4 @@
-import { ProgressLoader } from '../shared'
+// import { ProgressLoader } from '../shared'
 import { useEffect } from 'react'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { useNavigate } from 'react-router-dom'
@@ -23,10 +23,10 @@ export const Launch = () => {
       <div className='home section'>
         <h3>Keyboard Controls</h3>
         <ul>
-          <li>Move with left and right arrow keys</li>
-          <li>Jump with the space bar</li>
-          <li>Shoot with either control key</li>
-          <li>Activate shield with either shift key</li>
+          <li>Move with <span className="key-name">left</span> and <span className="key-name">right</span> arrow keys</li>
+          <li>Jump with the <span className="key-name">space bar</span></li>
+          <li>Shoot with either <span className="key-name">control</span> key</li>
+          <li>Activate shield with either <span className="key-name">shift</span> key</li>
         </ul>
 
         <h3>Choose one of your NFTs for battle</h3>
@@ -108,7 +108,7 @@ export const Launch = () => {
       {/* <ActionAreaMain message={""} label={"Start Game"} disableButton={false} isLoading={false} loadingLabel={""} action={() => { launchGame(); }} /> */}
       <>
         <div className='section action-container'>
-          <ProgressLoader />
+          {/* <ProgressLoader /> */}
           <span className={true ? 'hidden' : 'action-message'}>
             Make your selection above then click the button to play.
           </span>

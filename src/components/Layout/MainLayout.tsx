@@ -12,7 +12,7 @@ export const MainLayout = ({ children }: IProps) => {
           <ErrorDisplay />
           <NavigationSection />
           {children}
-          <ConnectionFooter />
+          {/* <ConnectionFooter /> */}
         </>
       </main>
     </>

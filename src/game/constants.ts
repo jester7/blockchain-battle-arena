@@ -16,7 +16,7 @@ export const TAG_PLATFORM = "platform";
 export const TAG_PROJECTILE = "projectile";
 
 export const MAX_PLAYERS = 2;
-export const DEFAULT_PROJECTILE_SPEED = 800;
+export const DEFAULT_PROJECTILE_SPEED = 1000;
 export const PLAYER_JUMP_FORCE = 1700;
 export const PLAYER_AIR_JUMP_FORCE = 800;
 

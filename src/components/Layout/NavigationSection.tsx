@@ -10,11 +10,11 @@ export default function NavigationSection() {
           </Link>
         </li>
         {/* <Link className="button" to="/me">My Profile</Link> */}
-        <li>
+        {/* <li>
           <Link className='button' to='/mint'>
             Mint
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link className='button' to='/launch-game'>
             Launch Game
