@@ -7,7 +7,7 @@ import bg_planet from "../sprites/bg/bg_planet.png";
 import base_platform from "../sprites/base_platform.png";
 import platform from "../sprites/platform.png";
 import platform_medium from "../sprites/platform_medium.png";
-import bg_title from "../../home-background.jpg";
+import bg_title from "../../assets/home-background.jpg";
 import sprite_explosion from "../sprites/explosion.png";
 import sprite_character1 from "../sprites/character_idea_1.png";
 import sprite_char1 from "../sprites/char1-small.png";
