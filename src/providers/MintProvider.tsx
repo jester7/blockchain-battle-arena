@@ -10,8 +10,8 @@ interface IMintContext {
   selection: Nullable<IRawGameObject>
   handleSelection: (selection: IRawGameObject) => void
   handleMint: () => void
-  confirmModalOpen: boolean
-  triggerConfirmModal: (val: boolean) => void
+  confirmMint: boolean
+  triggerConfirmMint: (val: boolean) => void
   mintGameObject: () => void
   openseaAddress: string
 }
@@ -22,8 +22,8 @@ const defaultMintContext: IMintContext = {
   selection: null,
   handleSelection: (selection: IRawGameObject) => {},
   handleMint: () => {},
-  confirmModalOpen: false,
-  triggerConfirmModal: (val: boolean) => {},
+  confirmMint: false,
+  triggerConfirmMint: (val: boolean) => {},
   mintGameObject: () => {},
   openseaAddress: '',
 }
@@ -33,7 +33,7 @@ const MintContext = createContext(defaultMintContext)
 const MintProvider = ({ children }: IProps) => {
   const [selection, setSelection] = useState<Nullable<IRawGameObject>>()
   const [openseaAddress, setOpenseaAddress] = useState<string>('')
-  const [confirmModalOpen, setConfirmModal] = useState(false)
+  const [confirmMint, setConfirmMint] = useState(false)
   const [minting, setMinting] = useState<boolean>(false)
   const [minted, setMinted] = useState<boolean>(false)
   const { triggerError, triggerSuccess } = useToast()
@@ -49,8 +49,8 @@ const MintProvider = ({ children }: IProps) => {
     }
   }
 
-  const triggerConfirmModal = (val: boolean) => {
-    setConfirmModal(val)
+  const triggerConfirmMint = (val: boolean) => {
+    setConfirmMint(val)
   }
 
   const handleMint = () => {
@@ -59,7 +59,7 @@ const MintProvider = ({ children }: IProps) => {
       setSelection(null)
       return
     } else {
-      triggerConfirmModal(true)
+      triggerConfirmMint(true)
     }
   }
   const mintGameObject = async (): Promise<void> => {
@@ -93,11 +93,11 @@ const MintProvider = ({ children }: IProps) => {
       setMinted(true)
       setSelection(null)
       stopLoading()
-      triggerConfirmModal(false)
+      triggerConfirmMint(false)
       triggerSuccess(`Minted!\nView on Opensea!\n${openseaAddress}`)
     } catch (err: any) {
       console.error(err)
-      triggerConfirmModal(false)
+      triggerConfirmMint(false)
       triggerError('There was an error minting your nft.')
       stopLoading()
       setSelection(null)
@@ -112,8 +112,8 @@ const MintProvider = ({ children }: IProps) => {
         handleMint,
         selection,
         handleSelection,
-        confirmModalOpen,
-        triggerConfirmModal,
+        confirmMint: confirmMint,
+        triggerConfirmMint: triggerConfirmMint,
         mintGameObject,
         openseaAddress,
       }}

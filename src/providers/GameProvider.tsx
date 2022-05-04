@@ -130,7 +130,7 @@ const GameProvider = ({ children }: IProps) => {
 
   useEffect(() => {
     if (isConnected) {
-      // fetchNfts()
+      fetchNfts()
     }
   }, [isConnected]) // eslint-disable-line
 
