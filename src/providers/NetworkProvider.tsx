@@ -1,6 +1,5 @@
-import { MoralisContextValue, useMoralis } from 'react-moralis'
 import { createContext, useContext, useEffect, useState } from 'react'
-import WrappedInChains from 'wrapped-in-chains'
+import { MoralisContextValue, useMoralis } from 'react-moralis'
 
 const ALLOWED_NETWORKS = {
   1: 'Ethereum Mainnet',
@@ -28,7 +27,7 @@ const NetworkProvider = ({ children }: IProps) => {
 
   useEffect(() => {
     if (chainId) {
-      const { name } = WrappedInChains.getById(chainId)
+      const name = ALLOWED_NETWORKS[chainId]
       const isAllowed = !!ALLOWED_NETWORKS[chainId] || false
       const currentNetworkName = name || 'unknown network'
       setIsAllowedNetwork(isAllowed)

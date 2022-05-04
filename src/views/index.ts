@@ -1,0 +1,6 @@
+export { AboutView } from './AboutView'
+export { GameView } from './GameView'
+export { HomeView } from './HomeView'
+export { LaunchView } from './LaunchView'
+export { MintView } from './MintView'
+export { NotFoundView } from './NotFoundView'

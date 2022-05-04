@@ -1,32 +1,26 @@
-import { useEffect, useRef, useState } from 'react'
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { HeaderText, SectionContainer } from '../components/shared'
+import { useEffect, useRef } from 'react'
+import { useGame } from '../providers'
 import BCBA from '../game/BCBA'
+import type { IPlayer } from '../providers/types'
 
 import '../game/Game.css'
 
 export const GameView = () => {
-  const [gameInstance, setGameInstance] = useState<BCBA>()
+  const { readyToLaunch, player } = useGame()
   const canvasRef: any = useRef(null)
 
-  const [characterNum, setCharacterNum] = useLocalStorage('characterNum', 1)
-  const [mech, setMech] = useLocalStorage('mech', 'red')
-  const [gun, setGun] = useLocalStorage('gun', 'biggun')
-
   useEffect(() => {
-    console.log('Game...')
+    if (readyToLaunch) {
+      BCBA.init(canvasRef, player as IPlayer, false)
+    }
+  }, [readyToLaunch, player])
 
-    setGameInstance(
-      BCBA.init(
-        canvasRef,
-        {
-          characterNum: characterNum,
-          mechColor: mech,
-          gunName: gun,
-        },
-        false
-      )
-    )
-  }, [characterNum, mech, gun])
-
-  return <canvas id='game-canvas' ref={canvasRef}></canvas>
+  return !readyToLaunch ? (
+    <SectionContainer>
+      <HeaderText>Please Select a character before playing!</HeaderText>
+    </SectionContainer>
+  ) : (
+    <canvas id="game-canvas" ref={canvasRef}></canvas>
+  )
 }

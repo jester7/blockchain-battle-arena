@@ -1,31 +1,39 @@
-import { MainLayout } from '../components/Layout/MainLayout'
+import { MainLayout } from '../components/Layout'
+import {
+  HeaderText,
+  ListItem,
+  Paragraph,
+  SectionContainer,
+  SubHeading,
+  UnorderedList,
+} from '../components/shared'
 
 export const AboutView = () => {
   return (
     <MainLayout>
-      <div className='home section visible'>
-        <h1 className='main-heading'>About</h1>
-        <ul>
-          <li>StrictlyKappa</li>
-          <li>Jovan Jester</li>
-        </ul>
-        <p>
-          <span className='bcba'>Blockchain Battle Arena </span>
-          is a battle game for your NFT characters.
-        </p>
-        <h3>Tech Stack</h3>
-
-        <ul>
-          <li>React/TypeScript</li>
-          <li>Kaboom game engine</li>
-          <li>Solidity on Rinkeby</li>
-        </ul>
-        <h3>Coming Soon</h3>
-        <ul>
-          <li>Multiplayer</li>
-          <li>Use your NFTs on the Ethereum mainnet</li>
-        </ul>
-      </div>
+      <SectionContainer>
+        <HeaderText>About</HeaderText>
+        <Paragraph>
+          Blockchain Battle Arena is a battle game for your NFT characters.
+        </Paragraph>
+        <SubHeading>Contributors</SubHeading>
+        <UnorderedList>
+          <ListItem>StrictlyKappa</ListItem>
+          <ListItem>Jovan Jester</ListItem>
+          <ListItem>Rimraf</ListItem>
+        </UnorderedList>
+        <SubHeading>Tech Stack</SubHeading>
+        <UnorderedList>
+          <ListItem>React/TypeScript</ListItem>
+          <ListItem>Kaboom game engine</ListItem>
+          <ListItem>Solidity on Rinkeby</ListItem>
+        </UnorderedList>
+        <SubHeading>Coming Soon</SubHeading>
+        <UnorderedList>
+          <ListItem>Multiplayer</ListItem>
+          <ListItem>Use your NFTs on the Ethereum mainnet</ListItem>
+        </UnorderedList>
+      </SectionContainer>
     </MainLayout>
   )
 }

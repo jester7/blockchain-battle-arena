@@ -1,31 +1,38 @@
-import { useState } from 'react'
+import { FlashingButton, ProgressLoader } from '../shared'
+import { useConnection, useToast } from '../../providers'
 import { useMoralis } from 'react-moralis'
-import { useAuthentication } from '../../providers'
-import { ActionButton, ActionHeading, ProgressLoader } from '../shared'
+import { useState } from 'react'
 
 export const ConnectButton = () => {
   const [loading, setLoading] = useState<boolean>(false)
+  const { isConnecting } = useConnection()
   const { authenticate } = useMoralis()
-  const { isConnected } = useAuthentication()
+  const { triggerError } = useToast()
 
   const renderLoadingBar = () => {
     return <ProgressLoader />
   }
 
   const connectWallet = async () => {
-    setLoading(true)
-    await authenticate()
-    setLoading(false)
+    try {
+      setLoading(true)
+      await authenticate({ signingMessage: 'Blockchain Battle Arena' })
+      setLoading(false)
+    } catch (e) {
+      console.log('connect error')
+      triggerError('Therre was an issue connecting wallet')
+    }
   }
 
   if (loading) {
     return renderLoadingBar()
   }
 
-  return !isConnected ? (
-    <div>
-      <ActionHeading text='Connect your wallet' />
-      <ActionButton disabled={loading} text='Connect' onClick={connectWallet} />
-    </div>
-  ) : null
+  return isConnecting ? (
+    <ProgressLoader />
+  ) : (
+    <FlashingButton disabled={loading} onClick={connectWallet}>
+      Connect Wallet
+    </FlashingButton>
+  )
 }
