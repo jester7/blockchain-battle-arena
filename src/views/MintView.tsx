@@ -1,4 +1,4 @@
-import { MainLayout } from '../components/Layout/MainLayout'
+import { MainLayout } from '../components/Layout'
 import { Mint } from '../components/MintSection/Mint'
 
 export const MintView = () => {

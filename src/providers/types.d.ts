@@ -1,8 +1,9 @@
 export interface IPlayer {
-  displayName: string
-  character: IRawGameObject
-  acessory: IRawGameObject
-  weapon: IRawGameObject
+  displayName?: string
+  character?: IRawGameObject
+  acessory?: IRawGameObject
+  weapon?: string
+  mechSuitColor?: string
   // weapon: string // big|small
   // mechSuitColor: string // red|blue
 }

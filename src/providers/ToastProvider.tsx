@@ -52,8 +52,8 @@ const ToastProvider = ({ children }: IProps) => {
         draggable: true,
         progress: undefined,
         style: {
-          minWidth: '50%'
-        }
+          minWidth: '50%',
+        },
       })
     }
   }

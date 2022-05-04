@@ -1,4 +1,4 @@
-import { DEFAULT_ACESSORIES, DEFAULT_CHARACTERS } from "../../sprites"
+import { DEFAULT_ACESSORIES, DEFAULT_CHARACTERS } from "../shared/gameObjects"
 import { Link } from 'react-router-dom'
 
 const OpenSeaLink = () => {

@@ -1,9 +1,12 @@
-import { MainLayout } from '../components/Layout/MainLayout'
-import { HeaderText } from '../components/shared/HeaderText'
-import { SectionContainer } from '../components/shared/SectionContainer'
-import { UnorderedList, ListItem } from '../components/shared/Lists'
-import { SubHeading } from '../components/shared/SubHeading'
-import { Paragraph } from '../components/shared/Paragraph'
+import { MainLayout } from '../components/Layout'
+import {
+  HeaderText,
+  ListItem,
+  Paragraph,
+  SectionContainer,
+  SubHeading,
+  UnorderedList,
+} from '../components/shared'
 
 export const AboutView = () => {
   return (

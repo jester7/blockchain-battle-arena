@@ -1,7 +1,6 @@
+import { FlashingButton, Paragraph } from '../shared'
 import { useConnection, useGame } from '../../providers'
 import styled from 'styled-components'
-import { Paragraph } from '../shared/Paragraph'
-import { FlashingButton } from '../shared/FlashingButton'
 
 const AccountContainer = styled.div`
   display: flex;
@@ -17,10 +16,10 @@ const Yellow = styled.span`
   color: yellow;
 `
 
-
 export const AccountInfo = () => {
-  const { accountDisplayName } = useConnection()
   const { readyToLaunch, launchGame } = useGame()
+  const { accountDisplayName } = useConnection()
+
   return (
     <AccountContainer>
       {readyToLaunch ? (

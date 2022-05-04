@@ -11,8 +11,8 @@ import {
   GameProvider,
 } from './providers'
 
-import 'normalize.css'
 import 'react-toastify/dist/ReactToastify.css'
+import 'normalize.css'
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 

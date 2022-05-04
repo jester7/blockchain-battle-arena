@@ -1,24 +1,20 @@
-import { DEFAULT_CHARACTERS, DEFAULT_ACESSORIES } from '../../sprites'
-import { HeaderText } from '../shared/HeaderText'
 import { ItemsGrid } from './ItemsGrid'
 import { MintButton } from './MintButton'
-import { MintProvider } from '../../providers/MintProvider'
-import { Paragraph } from '../shared/Paragraph'
-import { SectionContainer } from '../shared/SectionContainer'
-import styled from 'styled-components'
-import { useConnection } from '../../providers'
-import { MintConfirmModal } from './MintConfirmModal'
-
-const MintSection = styled(SectionContainer)`
-`
+import { MintProvider, useConnection } from '../../providers'
+import {
+  DEFAULT_ACESSORIES,
+  DEFAULT_CHARACTERS,
+  HeaderText,
+  Paragraph,
+  SectionContainer,
+} from '../shared'
 
 export const Mint = () => {
   const { isConnected } = useConnection()
   return (
     <MintProvider>
       <>
-        <MintConfirmModal />
-        <MintSection>
+        <SectionContainer>
           <HeaderText>
             {isConnected ? 'Select a Character' : 'Characters'}
           </HeaderText>
@@ -38,7 +34,7 @@ export const Mint = () => {
           </Paragraph>
           <ItemsGrid items={DEFAULT_ACESSORIES} />
           {isConnected ? <MintButton /> : null}
-        </MintSection>
+        </SectionContainer>
       </>
     </MintProvider>
   )

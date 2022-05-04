@@ -1,14 +1,9 @@
-import { IMintable } from '../../sprites'
 import { GameItem } from './MintableItem'
-import styled from 'styled-components'
-
-const ItemGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-`
+import { ItemGrid } from '../shared'
+import type { IRawGameObject } from '../../providers/types'
 
 interface IItemsProps {
-  items: IMintable[]
+  items: IRawGameObject[]
 }
 
 export const ItemsGrid = ({ items }: IItemsProps) => {

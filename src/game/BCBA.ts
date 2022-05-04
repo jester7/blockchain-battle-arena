@@ -21,7 +21,7 @@ export default class BCBA {
 
   private DEBUG: boolean;
   private _ctx: any;
-  private _playerOptions: IPlayer;
+  private _playerOptions: any;
   private _scenes: { [name: string]: GameScene } = {};
   private _currentScene: GameScene | undefined;
   private _currentRound: number = 1;
@@ -49,7 +49,7 @@ export default class BCBA {
     return BCBA.getInstance().getContext();
   }
 
-  public player(n: number): Player { 
+  public player(n: number): Player {
     return this.players[n - 1]; // array is zero indexed so subtract 1
   }
 
@@ -79,15 +79,15 @@ export default class BCBA {
 
     BCBA.instance = new BCBA(k, player, debug);
     BCBA.initScenes(k);
-    
+
     canvasRef.current.focus();
 
     new GamePadInputSource(); // testing gamepad support
-    
+
     k.onLoad(async () => {
         BCBA.getInstance().setCurrentScene("title");
     });
-    
+
     return BCBA.instance as BCBA;
   }
 

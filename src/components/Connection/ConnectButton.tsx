@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import { FlashingButton, ProgressLoader } from '../shared'
+import { useConnection, useToast } from '../../providers'
 import { useMoralis } from 'react-moralis'
-import { useConnection } from '../../providers'
-import { ProgressLoader } from '../shared'
-import { FlashingButton } from '../shared/FlashingButton'
+import { useState } from 'react'
 
 export const ConnectButton = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  const { authenticate } = useMoralis()
   const { isConnecting } = useConnection()
+  const { authenticate } = useMoralis()
+  const { triggerError } = useToast()
 
   const renderLoadingBar = () => {
     return <ProgressLoader />
@@ -20,6 +20,7 @@ export const ConnectButton = () => {
       setLoading(false)
     } catch (e) {
       console.log('connect error')
+      triggerError('Therre was an issue connecting wallet')
     }
   }
 

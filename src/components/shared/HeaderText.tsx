@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { COLORS, SIZES, FONTS } from '../../styles'
+import styled from 'styled-components'
 
 export const HeaderText = styled.h1`
   all: revert;

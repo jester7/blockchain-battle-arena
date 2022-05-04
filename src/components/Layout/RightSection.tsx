@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { SPACING } from '../../styles'
+import styled from 'styled-components'
 
 const Container = styled.div`
   display: grid;

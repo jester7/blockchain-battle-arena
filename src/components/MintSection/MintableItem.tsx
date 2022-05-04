@@ -1,69 +1,43 @@
-import { useConnection } from '../../providers'
-import { useMint } from '../../providers/MintProvider'
-import styled from 'styled-components'
-import type { IMintable } from '../../sprites'
+import { useMint, useConnection } from '../../providers'
+import type { IRawGameObject } from '../../providers/types'
+import {
+  ItemWrapper,
+  ItemGraphic,
+  ItemOverlay,
+  ItemSelectedCheck,
+} from '../shared'
+import { useState } from 'react'
 
-const ItemWrapper = styled((props) => <div {...props} />)`
-  position: relative;
-  cursor: pointer;
-  border-radius: 1rem;
-  margin: 1rem;
-  width: 200px;
-  height: 200px;
-`
-
-const ItemGraphic = styled((props) => <div {...props} />)`
-  position: relative;
-  border-radius: 1rem;
-  background-image: url('${(props) => props.$image}');
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 200px;
-  height: 200px;
-`
-
-const Overlay = styled((props) => <div {...props} />)`
-  display: ${(props) =>
-    !props.$selected && props.$isConnected ? 'block' : 'none'};
-  position: absolute;
-  border-radius: 1rem;
-  width: 200px;
-  height: 200px;
-  z-index: 1;
-  &:hover {
-    background-color: rgba(255, 153, 36, 0.5);
-    transition: background-color 0.5s;
-  }
-`
-
-const SelectedCheck = styled((props) => <div {...props} />)`
-  display: ${(props) => (props.$selected ? 'block' : 'none')};
-  &:before {
-    position: absolute;
-    content: '✓';
-    color: green;
-    font-size: 5rem;
-    width: 100px;
-    height: 100px;
-    top: -20px;
-    left: 10px;
-    z-index: 3;
-  }
-`
-
-export const GameItem = (gameObject: IMintable) => {
+export const GameItem = (gameObject: IRawGameObject) => {
+  const [isSelected, setIsSelected] = useState<boolean>(false)
   const { selection, handleSelection } = useMint()
   const { isConnected } = useConnection()
 
-  const isSelected = selection?.objectName === gameObject.objectName
+  const handleSelect = (mechSuit: IRawGameObject) => {
+    handleSelection(mechSuit)
+    const sameSelected = selection?.objectName === gameObject.objectName
+    if (isSelected === null) {
+      setIsSelected(true)
+      return
+    }
+    if (isSelected && sameSelected) {
+      setIsSelected(false)
+      return
+    }
+
+    if (!isSelected) {
+      setIsSelected(true)
+      return
+    }
+  }
 
   return (
     <ItemWrapper
       $selected={isSelected}
-      onClick={() => handleSelection(gameObject)}
+      onClick={() => handleSelect(gameObject)}
     >
-      <SelectedCheck $selected={isSelected} />
-      <Overlay $isConnected={isConnected} selected={isSelected} />
+      <ItemSelectedCheck $selected={isSelected} />
+      <ItemOverlay $isConnected={isConnected} selected={isSelected} />
       <ItemGraphic $image={gameObject.objectImageUrl} />
     </ItemWrapper>
   )

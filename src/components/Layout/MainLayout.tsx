@@ -1,11 +1,11 @@
-import { ConnectionFooter } from '../Connection'
+import { ConnectionSection } from '../Connection'
+import { FullScreenLoader } from '../shared/FullScreenLoader'
 import { LeftSection } from './LeftSection'
 import { NavbarSection } from './NavbarSection'
 import { RightSection } from './RightSection'
-import styled from 'styled-components'
 import { ToastContainer } from 'react-toastify'
-import { FullScreenLoader } from '../shared/FullScreenLoader'
 import { useLoading } from '../../providers'
+import styled from 'styled-components'
 
 const MainContainer = styled.div`
   display: grid;
@@ -30,7 +30,7 @@ export const MainLayout = ({ children }: IProps) => {
           <>
             <NavbarSection />
             {children}
-            <ConnectionFooter />
+            <ConnectionSection />
           </>
         </RightSection>
       </MainContainer>

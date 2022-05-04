@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { COLORS, FONTS, SPACING } from '../../styles'
+import styled from 'styled-components'
 
 export const SubHeading = styled.h3`
   revert: all;

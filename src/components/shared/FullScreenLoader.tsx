@@ -1,6 +1,6 @@
-import styled, { keyframes } from 'styled-components'
-import { useLoading } from '../../providers'
 import { COLORS } from '../../styles'
+import { useLoading } from '../../providers'
+import styled, { keyframes } from 'styled-components'
 
 const spin = keyframes`
 	from {transform:rotate(0deg);}
@@ -43,9 +43,8 @@ const LoadDescription = styled.h1`
   top: 48%;
   z-index: 9999;
   font-size: 3rem;
-  color: ${COLORS.blueDark}
+  color: ${COLORS.blueDark};
 `
-
 
 export const FullScreenLoader = () => {
   const { loadingMessage } = useLoading()

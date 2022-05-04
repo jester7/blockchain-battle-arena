@@ -1,14 +1,14 @@
 import { createContext, useContext, useState } from 'react'
+import { IRawGameObject } from './types'
 import { useConnection, useToast, useLoading } from '.'
 import { useMoralis } from 'react-moralis'
 import ContractInterface from './BBGameObject.json'
-import type { IMintable } from '../sprites'
 
 interface IMintContext {
   minting: boolean
   minted: boolean
-  selection: Nullable<IMintable>
-  handleSelection: (selection: IMintable) => void
+  selection: Nullable<IRawGameObject>
+  handleSelection: (selection: IRawGameObject) => void
   handleMint: () => void
   confirmModalOpen: boolean
   triggerConfirmModal: (val: boolean) => void
@@ -20,18 +20,18 @@ const defaultMintContext: IMintContext = {
   minting: false,
   minted: false,
   selection: null,
-  handleSelection: (selection: IMintable) => {},
+  handleSelection: (selection: IRawGameObject) => {},
   handleMint: () => {},
   confirmModalOpen: false,
   triggerConfirmModal: (val: boolean) => {},
   mintGameObject: () => {},
-  openseaAddress: ''
+  openseaAddress: '',
 }
 
 const MintContext = createContext(defaultMintContext)
 
 const MintProvider = ({ children }: IProps) => {
-  const [selection, setSelection] = useState<Nullable<IMintable>>()
+  const [selection, setSelection] = useState<Nullable<IRawGameObject>>()
   const [openseaAddress, setOpenseaAddress] = useState<string>('')
   const [confirmModalOpen, setConfirmModal] = useState(false)
   const [minting, setMinting] = useState<boolean>(false)
@@ -41,7 +41,7 @@ const MintProvider = ({ children }: IProps) => {
   const { isConnected } = useConnection()
   const { Moralis } = useMoralis()
 
-  const handleSelection = (gameObject: IMintable) => {
+  const handleSelection = (gameObject: IRawGameObject) => {
     if (isConnected) {
       setSelection(gameObject)
     } else {
@@ -94,9 +94,7 @@ const MintProvider = ({ children }: IProps) => {
       setSelection(null)
       stopLoading()
       triggerConfirmModal(false)
-      triggerSuccess(
-        `Minted!\nView on Opensea!\n${openseaAddress}`
-      )
+      triggerSuccess(`Minted!\nView on Opensea!\n${openseaAddress}`)
     } catch (err: any) {
       console.error(err)
       triggerConfirmModal(false)

@@ -1,7 +1,7 @@
 import { COLORS, FONTS, SPACING } from '../../styles'
 import { ImGithub } from 'react-icons/im'
 import { Link, useLocation } from 'react-router-dom'
-import { SectionContainer } from '../shared/SectionContainer'
+import { SectionContainer } from '../shared'
 import OpenSea from '../../icons/icon-opensea.png'
 import styled from 'styled-components'
 
@@ -63,7 +63,7 @@ const NavItem = ({ text, path }: INavItem) => {
 
 const OpenSeaLink = () => {
   return (
-    <a href='https://testnets.opensea.io/collection/blockchain-battle-arena-v2'>
+    <a href="https://testnets.opensea.io/collection/blockchain-battle-arena-v2">
       <OpenSeaIcon />
     </a>
   )
@@ -71,7 +71,7 @@ const OpenSeaLink = () => {
 
 const GithubLink = () => {
   return (
-    <a href='https://github.com/jester7/blockchain-battle-arena'>
+    <a href="https://github.com/jester7/blockchain-battle-arena">
       <Github />
     </a>
   )
@@ -81,10 +81,10 @@ export const NavbarSection = () => {
   return (
     <Section>
       <Navbar>
-        <NavItem text='Home' path='/' />
-        <NavItem text='Mint' path='/mint' />
-        <NavItem text='Launch Game' path='/launch-game' />
-        <NavItem text='About' path='/about' />
+        <NavItem text="Home" path="/" />
+        <NavItem text="Mint" path="/mint" />
+        <NavItem text="Launch Game" path="/launch-game" />
+        <NavItem text="About" path="/about" />
         <GithubLink />
         <OpenSeaLink />
       </Navbar>

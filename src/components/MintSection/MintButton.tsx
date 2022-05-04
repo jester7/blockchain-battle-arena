@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { FlashingButton } from '../shared/FlashingButton'
-import { useMint } from '../../providers/MintProvider'
+import { FlashingButton } from '../shared'
+import { useMint } from '../../providers'
 
 const MintButtonContainer = styled.div`
   display: flex;
@@ -10,10 +10,10 @@ const MintButtonContainer = styled.div`
 `
 
 export const MintButton = () => {
-  const { triggerConfirmModal } = useMint()
+  const { handleMint } = useMint()
   return (
     <MintButtonContainer>
-      <FlashingButton onClick={() => triggerConfirmModal(true)}>Mint</FlashingButton>
+      <FlashingButton onClick={() => handleMint()}>Mint</FlashingButton>
     </MintButtonContainer>
   )
 }

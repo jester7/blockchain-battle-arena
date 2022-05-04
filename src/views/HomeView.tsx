@@ -1,11 +1,14 @@
-import { MainLayout } from '../components/Layout/MainLayout'
-import styled from 'styled-components'
 import { FONTS, SPACING } from '../styles'
-import { SectionContainer } from '../components/shared/SectionContainer'
-import { Paragraph } from '../components/shared/Paragraph'
-import { HeaderText } from '../components/shared/HeaderText'
-import { SubHeading } from '../components/shared/SubHeading'
-import { UnorderedList, ListItem } from '../components/shared/Lists'
+import { MainLayout } from '../components/Layout'
+import styled from 'styled-components'
+import {
+  HeaderText,
+  ListItem,
+  Paragraph,
+  SectionContainer,
+  SubHeading,
+  UnorderedList,
+} from '../components/shared'
 
 const HomeSectionContainer = styled(SectionContainer)`
   text-align: left;

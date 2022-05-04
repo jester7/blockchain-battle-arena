@@ -1,1 +1,1 @@
-export { ConnectionSection as ConnectionFooter } from './ConnectionSection'
+export { ConnectionSection } from './ConnectionSection'

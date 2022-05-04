@@ -1,8 +1,8 @@
-// switched on lastIndex
-import type { IRawGameObject } from './providers/types'
-
-export type IMintable = IRawGameObject
-
+import IconGunBig from '../../assets/icon_gun_big.png'
+import IconGunSmall from '../../assets/icon_gun_small.png'
+import MechFigherBlue from '../../assets/mech_fighter_blue.png'
+import MechFigherRed from '../../assets/mech_fighter_red.png'
+import type { IRawGameObject } from '../../providers/types'
 
 export const DEFAULT_CHARACTERS: IRawGameObject[] = [
   {
@@ -52,8 +52,32 @@ export const DEFAULT_ACESSORIES: IRawGameObject[] = [
   },
 ]
 
-export const DEFAULT_WEAPONS = []
+export const DEFAULT_WEAPONS = [
+  {
+    objectName: 'big',
+    objectType: 'weapon',
+    objectDesc: 'a big heavy gun',
+    objectImageUrl: IconGunBig,
+  },
+  {
+    objectName: 'small',
+    objectType: 'weapon',
+    objectDesc: 'a small but powerful gun',
+    objectImageUrl: IconGunSmall,
+  },
+]
 
-
-
-// for sure mint 
+export const DEFAULT_MECH_SUITS = [
+  {
+    objectName: 'red-suit',
+    objectType: 'suit',
+    objectDesc: 'Red Mech Suit',
+    objectImageUrl: MechFigherRed,
+  },
+  {
+    objectName: 'blue-suit',
+    objectType: 'suit',
+    objectDesc: 'Blue Mech Suit',
+    objectImageUrl: MechFigherBlue,
+  },
+]

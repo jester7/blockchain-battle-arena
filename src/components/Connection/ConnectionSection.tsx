@@ -3,7 +3,6 @@ import { ConnectButton } from './ConnectButton'
 import { SectionContainer } from '../shared/SectionContainer'
 import { useConnection } from '../../providers'
 
-
 export const ConnectionSection = () => {
   const { isConnected } = useConnection()
   return (

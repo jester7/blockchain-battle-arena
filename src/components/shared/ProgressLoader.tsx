@@ -1,6 +1,7 @@
-import styled, { keyframes } from "styled-components"
-import { COLORS } from "../../styles"
-import { Paragraph } from "./Paragraph"
+import styled, { keyframes } from 'styled-components'
+import { COLORS } from '../../styles'
+import { Paragraph } from './Paragraph'
+
 const anim = keyframes`
   0% {
     background-position: 0% 50%;
@@ -35,5 +36,7 @@ const LoadText = styled(Paragraph)`
 `
 
 export const ProgressLoader = () => (
-  <LoadingIndicator><LoadText>Connecting...</LoadText></LoadingIndicator>
+  <LoadingIndicator>
+    <LoadText>Connecting...</LoadText>
+  </LoadingIndicator>
 )

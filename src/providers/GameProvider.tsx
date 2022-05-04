@@ -10,10 +10,12 @@ interface IGameContext {
   fetchNfts: () => any
   selectedCharacter: Nullable<IRawGameObject>
   selectedAcessory: Nullable<IRawGameObject>
-  selectedWeapon: Nullable<IRawGameObject>
+  selectedWeapon: string
+  selectedMechSuitColor: string
   setSelectedCharacter: (char: IRawGameObject) => void
   setSelectedAcessory: (ass: IRawGameObject) => void
-  setSelectedWeapon: (weap: IRawGameObject) => void
+  setSelectedWeapon: (weap: string) => void
+  setSelectedMechSuit: (color: string) => void
   player: Nullable<IPlayer>
   readyToLaunch: boolean
   launchGame: () => void
@@ -24,10 +26,12 @@ const defaultGameContext: IGameContext = {
   fetchNfts: () => {},
   selectedCharacter: null,
   selectedAcessory: null,
-  selectedWeapon: null,
+  selectedWeapon: '',
+  selectedMechSuitColor: '',
+  setSelectedMechSuit: (color: string) => {},
   setSelectedCharacter: (char: any) => {},
   setSelectedAcessory: (char: any) => {},
-  setSelectedWeapon: (char: any) => {},
+  setSelectedWeapon: (weap: string) => {},
   readyToLaunch: false,
   launchGame: () => {},
   player: null,
@@ -40,7 +44,8 @@ const GameProvider = ({ children }: IProps) => {
   const [readyToLaunch, setReadyToLaunch] = useState<boolean>(false)
   const [selectedCharacter, setSelectedCharacter] = useState<IRawGameObject>()
   const [selectedAcessory, setSelectedAcessory] = useState<IRawGameObject>()
-  const [selectedWeapon, setSelectedWeapon] = useState<IRawGameObject>()
+  const [selectedWeapon, setSelectedWeapon] = useState<string>('')
+  const [selectedMechSuit, setSelectedMechSuit] = useState<string>('')
   const [player, setPlayer] = useState<IPlayer>()
   const [playerNfts, setPlayerNfts] = useState<any[]>([])
   const { startLoading, stopLoading } = useLoading()
@@ -109,16 +114,23 @@ const GameProvider = ({ children }: IProps) => {
         character: selectedCharacter,
         acessory: selectedAcessory,
         weapon: selectedWeapon,
+        mechSuitColor: selectedMechSuit,
       })
       setReadyToLaunch(true)
       return
     }
     setReadyToLaunch(false)
-  }, [selectedCharacter, selectedAcessory, selectedWeapon, accountDisplayName])
+  }, [
+    selectedCharacter,
+    selectedAcessory,
+    selectedWeapon,
+    accountDisplayName,
+    selectedMechSuit,
+  ])
 
   useEffect(() => {
     if (isConnected) {
-      fetchNfts()
+      // fetchNfts()
     }
   }, [isConnected]) // eslint-disable-line
 
@@ -130,6 +142,8 @@ const GameProvider = ({ children }: IProps) => {
         selectedCharacter,
         selectedWeapon,
         selectedAcessory,
+        selectedMechSuitColor: selectedMechSuit,
+        setSelectedMechSuit: setSelectedMechSuit,
         setSelectedCharacter,
         setSelectedAcessory,
         setSelectedWeapon,
