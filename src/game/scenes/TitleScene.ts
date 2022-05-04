@@ -43,6 +43,19 @@ export default class TitleScene extends GameScene {
     this._ctx.pos(this._ctx.center().x, this._ctx.center().y + 200),
   ]);
 
+  this._ctx.add([
+    this._ctx.text(
+      "Press the BACK button in your browser to leave the game",
+      {
+        size: 40,
+      }
+    ),
+    this._ctx.origin("center"),
+  this._ctx.z(2),
+  this._ctx.pos(this._ctx.center().x, this._ctx.center().y + 300),
+]);
+
+
     this._ctx.onKeyPress("space", () => {
       BCBA.getInstance().setCurrentScene("stage1", {roundNum:1});
     });

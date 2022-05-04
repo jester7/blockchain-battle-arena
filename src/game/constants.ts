@@ -5,6 +5,8 @@ export const WORLD_WIDTH = 5000;
 export const WORLD_HEIGHT = 2956;
 export const CANVAS_BG_COLOR = [46, 115, 145];
 
+export const TAG_BG = "background";
+
 export const DEFAULT_PLAYER_SPEED = 700;
 export const PLAYER_TILT_ANGLE = 3;
 

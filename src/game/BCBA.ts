@@ -51,6 +51,15 @@ export default class BCBA {
     return BCBA.getInstance().getContext();
   }
 
+  public static terminate(): void {
+    if (BCBA.instance === undefined)
+      throw new Error("No instance running to terminate. Run init() first.");
+    this.getInstanceCtx().destroyAll(C.TAG_BG);
+    this.getInstanceCtx().destroyAll(C.TAG_PLAYER);
+    this.getInstanceCtx().destroyAll(C.TAG_PROJECTILE);
+    this.getInstanceCtx().destroyAll(C.TAG_PLATFORM);
+  }
+
   public player(n: number): Player { 
     return this.players[n - 1]; // array is zero indexed so subtract 1
   }
@@ -117,6 +126,10 @@ export default class BCBA {
 
   private loadAssets() {
     AssetManager.loadAll();
+  }
+
+  private initAnimationLoops() {
+
   }
 
   public initPlayers() {

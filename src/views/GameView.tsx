@@ -14,6 +14,10 @@ export const GameView = () => {
     if (readyToLaunch) {
       BCBA.init(canvasRef, player as IPlayer, false)
     }
+
+    return () => {
+        BCBA.terminate();
+    }
   }, [readyToLaunch, player])
 
   return !readyToLaunch ? (

@@ -195,12 +195,14 @@ this._ctx.add([
       this._ctx.sprite("bg1_planet"),
       // this._ctx.pos(-1000, -776),
       this._ctx.scale(1),
+      C.TAG_BG
     ]);
 
     this._ctx.add([
       this._ctx.sprite("bg1_honeycomb"),
       // this._ctx.pos(-1000, -776),
       this._ctx.scale(1),
+      C.TAG_BG
     ]);
 
     this._ctx.add([
@@ -208,6 +210,7 @@ this._ctx.add([
       //this._ctx.origin("center"),
       this._ctx.pos(596, 843),
       this._ctx.scale(1),
+      C.TAG_BG
     ]);
 
     this._ctx.add([
