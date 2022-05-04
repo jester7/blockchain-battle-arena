@@ -1,8 +1,12 @@
 import mech_sprites from "../sprites/all-mechs-medium.png";
-import bg_stage_1_base from "../sprites/background_planet.jpg";
-import bg_stage_1_arch from "../sprites/arch_way_2.png";
+import bg_space from "../sprites/bg/bg_space.jpg";
+import bg_arch from "../sprites/bg/arch_way_2.png";
+import bg_honeycomb from "../sprites/bg/bg_honeycomb.png";
+import bg_planet from "../sprites/bg/bg_planet.png";
+
 import base_platform from "../sprites/base_platform.png";
 import platform from "../sprites/platform.png";
+import platform_medium from "../sprites/platform_medium.png";
 import bg_title from "../../home-background.jpg";
 import sprite_explosion from "../sprites/explosion.png";
 import sprite_character1 from "../sprites/character_idea_1.png";
@@ -88,10 +92,14 @@ export default class AssetManager {
             "mech-red-biggun-shield": 7,
         },
     });
-    AssetManager.add("bg1", bg_stage_1_base);
-    AssetManager.add("bg1_arch", bg_stage_1_arch);
+    AssetManager.add("bg1", bg_space);
+    AssetManager.add("bg1_arch", bg_arch);
+    AssetManager.add("bg1_honeycomb", bg_honeycomb);
+    AssetManager.add("bg1_planet", bg_planet);
+    
     AssetManager.add("bg1_platform", base_platform);
     AssetManager.add("bg1_platform_small", platform);
+    AssetManager.add("bg1_platform_medium", platform_medium);
 
     AssetManager.add("title-bg", bg_title);
     AssetManager.add("countdown_1", countdown_1);
