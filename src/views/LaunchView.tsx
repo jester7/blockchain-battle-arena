@@ -14,7 +14,9 @@ import {
 
 export const LaunchView = () => {
   const { playerNfts, readyToLaunch } = useGame()
-
+  const filteredCharacters = playerNfts?.filter(
+    (n) => n.objectType === 'character'
+  )
   return (
     <MainLayout>
       <>
@@ -26,14 +28,13 @@ export const LaunchView = () => {
             <ListItem>Shoot with either control key</ListItem>
             <ListItem>Activate shield with either shift key</ListItem>
           </UnorderedList>
-          {playerNfts.length !== 0 ? (
+          {filteredCharacters.length !== 0 ? (
             <PlayerNFTsSelect />
           ) : (
             <DefaultPlayerSelect />
           )}
           <WeaponSelect />
           <MechSuitSelect />
-          {readyToLaunch && <FlashingButton>Launch Game!</FlashingButton>}
         </SectionContainer>
       </>
     </MainLayout>

@@ -40,7 +40,6 @@ export const PlayerNFTsSelect = () => {
   const filteredCharacters = playerNfts?.filter(
     (n) => n.objectType === 'character'
   )
-
   return (
     <>
       <SubHeading>Choose an NFT Character</SubHeading>

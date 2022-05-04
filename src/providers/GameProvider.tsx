@@ -1,10 +1,12 @@
 import { useConnection } from './ConnectionProvider'
 import { useLoading } from './LoadingProvider'
+import { useMint } from './MintProvider'
 import { useMoralisWeb3Api } from 'react-moralis'
+import { useNavigate } from 'react-router-dom'
 import { useState, useContext, createContext, useEffect } from 'react'
 import { useToast } from './ToastProvider'
 import type { IPlayer, IRawGameObject } from './types'
-
+import { DEFAULT_ACESSORIES, DEFAULT_MECH_SUITS, DEFAULT_WEAPONS } from '../components/shared'
 interface IGameContext {
   playerNfts: any[]
   fetchNfts: () => any
@@ -40,18 +42,20 @@ const defaultGameContext: IGameContext = {
 const GameContext = createContext(defaultGameContext)
 
 const GameProvider = ({ children }: IProps) => {
-  const { accountDisplayName } = useConnection()
-  const [readyToLaunch, setReadyToLaunch] = useState<boolean>(false)
   const [selectedCharacter, setSelectedCharacter] = useState<IRawGameObject>()
   const [selectedAcessory, setSelectedAcessory] = useState<IRawGameObject>()
-  const [selectedWeapon, setSelectedWeapon] = useState<string>('')
   const [selectedMechSuit, setSelectedMechSuit] = useState<string>('')
-  const [player, setPlayer] = useState<IPlayer>()
+  const [readyToLaunch, setReadyToLaunch] = useState<boolean>(false)
+  const [selectedWeapon, setSelectedWeapon] = useState<string>('')
   const [playerNfts, setPlayerNfts] = useState<any[]>([])
   const { startLoading, stopLoading } = useLoading()
   const { isConnected, account } = useConnection()
+  const [player, setPlayer] = useState<IPlayer>()
+  const { accountDisplayName } = useConnection()
   const { triggerError } = useToast()
   const web3Api = useMoralisWeb3Api()
+  const navigate = useNavigate()
+  const { minted } = useMint()
 
   const normalizeResponse = (result: any[]): IRawGameObject[] => {
     return result?.map((item) => {
@@ -102,19 +106,18 @@ const GameProvider = ({ children }: IProps) => {
       triggerError('you must select a player')
       return
     }
+    navigate('/game')
   }
 
   useEffect(() => {
-    const hasSelectedItems =
-      !!selectedCharacter && !!selectedAcessory && !!selectedWeapon
-
-    if (hasSelectedItems) {
+    const hasCharacter = !!selectedCharacter?.objectName
+    if (hasCharacter) {
       setPlayer({
         displayName: accountDisplayName || 'Anonymous',
         character: selectedCharacter,
-        acessory: selectedAcessory,
-        weapon: selectedWeapon,
-        mechSuitColor: selectedMechSuit,
+        acessory: selectedAcessory || DEFAULT_ACESSORIES[0],
+        weapon: selectedWeapon || DEFAULT_WEAPONS[0].objectName,
+        mechSuitColor: selectedMechSuit || DEFAULT_MECH_SUITS[0].objectName,
       })
       setReadyToLaunch(true)
       return
@@ -130,9 +133,9 @@ const GameProvider = ({ children }: IProps) => {
 
   useEffect(() => {
     if (isConnected) {
-      fetchNfts()
+      // fetchNfts()
     }
-  }, [isConnected]) // eslint-disable-line
+  }, [isConnected, minted]) // eslint-disable-line
 
   return (
     <GameContext.Provider
