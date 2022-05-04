@@ -1,4 +1,4 @@
-import { KaboomCtx } from "kaboom";
+import { GameObj, KaboomCtx } from "kaboom";
 import kaboom from "kaboom";
 import * as C from "./constants";
 import Player, { PlayerDirection } from "./player/Player";
@@ -30,6 +30,8 @@ export default class BCBA {
 
   private isZooming = false;
   private _paused = true;
+
+  private _pausedObj: GameObj | undefined = undefined;
 
   private lastPlayer1Health: any = undefined;
   private lastPlayer2Health: any = undefined;
@@ -71,8 +73,8 @@ export default class BCBA {
       global: false,
       debug: true,
       canvas: canvasRef.current,
-      width: C.GAME_AREA_WIDTH,
-      height: C.GAME_AREA_HEIGHT,
+      width: C.VIEWPORT_WIDTH,
+      height: C.VIEWPORT_HEIGHT,
       background: C.CANVAS_BG_COLOR,
     });
 
@@ -103,20 +105,6 @@ export default class BCBA {
     this.loadAssets();
     this._characterChoices = characterChoices;
     this._playerName = name;
-
-    this.initCollisions();
-    this.initKeyboardEvents();
-  }
-
-  /**
-   * Initialize global keyboard event handlers.
-   * Player input is initialized by the player classes themselves.
-   */
-  private initKeyboardEvents() {
-    this._ctx.onKeyPress("f", () => {
-      // toggle fullscreen
-      this._ctx.fullscreen(!this._ctx.isFullscreen());
-    });
   }
 
   public log(message: string) {
@@ -148,8 +136,8 @@ export default class BCBA {
         PlayerDirection.RIGHT,
         C.TAG_MAIN_PLAYER,
         [C.TAG_PLAYER],
-        400,
-        1620,
+        1745,
+        2274,
         new KeyboardInputSource(this._ctx, 1)
       )
     );
@@ -167,8 +155,8 @@ export default class BCBA {
         PlayerDirection.LEFT,
         C.TAG_OPPONENT,
         [C.TAG_PLAYER],
-        1400, //800
-        1620
+        3088, 
+        2274
       )
     );
 
@@ -176,7 +164,7 @@ export default class BCBA {
     // const player3Num = Math.floor(Math.random() * 3) + 1;
     // this.setPlayer(
     //   3,
-    //   new MechPlayer(
+    //   new MechAIPlayer(
     //     this._ctx,
     //     "Player 3",
     //     player3Num,
@@ -185,9 +173,8 @@ export default class BCBA {
     //     PlayerDirection.LEFT,
     //     C.TAG_OPPONENT,
     //     [C.TAG_PLAYER],
-    //     1200, //800
-    //     0,
-    //     true
+    //     2788, //800
+    //     2274,
     //   )
     // );
 
@@ -195,7 +182,7 @@ export default class BCBA {
     // const player4Num = Math.floor(Math.random() * 3) + 1;
     // this.setPlayer(
     //   4,
-    //   new MechPlayer(
+    //   new MechAIPlayer(
     //     this._ctx,
     //     "Player 4",
     //     player4Num,
@@ -204,9 +191,8 @@ export default class BCBA {
     //     PlayerDirection.LEFT,
     //     C.TAG_OPPONENT,
     //     [C.TAG_PLAYER],
-    //     1000, //800
-    //     0,
-    //     true
+    //     2500, //800
+    //     2274,
     //   )
     // );
 
@@ -218,24 +204,13 @@ export default class BCBA {
     this._cameraController = new CameraController(this._ctx, [
       this.player(1).obj,
       this.player(2).obj, // if more than 2 players, add more here
-    ]);
+      //this.player(3).obj,
+      //this.player(4).obj
+    ],
+    {x: 100, y: 100},
+    true,
+    );
 
-    // this.player(2).obj.onUpdate(() => {
-    //   if (this.player(2).obj.pos.y > C.GAME_AREA_HEIGHT * 2) {
-    //     this._ctx.go("winner");
-    //   }
-    // });
-  }
-
-  public initCollisions() {
-    if (this._currentScene?.name === "title") return;
-
-    // this.player(2).obj.on("death", () => {
-    //   this._ctx.destroy(this.player(2).obj);
-    //   this._ctx.destroy(this.player(2).innerObj);
-
-    //   this.youWin();
-    // });
   }
 
   public youWin() {
@@ -325,12 +300,30 @@ export default class BCBA {
     return this._paused;
   }
 
-  public pause() {
+  public pause(showPauseScreen: boolean = false) {
     this._paused = true;
+    //this._ctx.debug.paused = true;
+    if (showPauseScreen) {
+      this._pausedObj = this._ctx.add([
+        this._ctx.text(
+          "PAUSED",
+          {
+            size: 200,
+          }
+        ),
+        this._ctx.origin("center"),
+        this._ctx.fixed(),
+      this._ctx.z(200),
+      this._ctx.pos(this._ctx.center().x, this._ctx.center().y + 100),
+    ]);
+    }
   }
 
   public resume() {
     this._paused = false;
+    //this._ctx.debug.paused = false;
+    this._ctx.destroy(this._pausedObj);
+    this._pausedObj = undefined;
   }
 
   public setRound(round: number) {

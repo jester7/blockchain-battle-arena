@@ -50,11 +50,7 @@ export default class MechAIPlayer extends MechPlayer {
   private initAI(obj: GameObj) {
     obj.onStateEnter("idle", async () => {
       await this.k.wait(0.5);
-      if (BCBA.getInstance().isPaused()) {
-        obj.enterState("idle");
-      } else {
-        obj.enterState(this.getRandomState());
-      }
+      obj.enterState(this.getRandomState());
     });
 
     obj.onStateEnter("move", async () => {
@@ -93,6 +89,8 @@ export default class MechAIPlayer extends MechPlayer {
   }
 
   private getRandomState(): string {
+    if (BCBA.getInstance().isPaused()) return "idle";
+
     const states = ["idle", "move", "jump", "attack", "shield"];
     const state = states[Math.floor(Math.random() * states.length)];
     return state;

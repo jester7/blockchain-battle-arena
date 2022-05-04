@@ -3,6 +3,12 @@ import GameScene from "./GameScene";
 
 export default class TitleScene extends GameScene {
   protected initScene(): void {
+
+    this._ctx.onKeyPress("f", () => {
+      // toggle fullscreen
+      this._ctx.fullscreen(!this._ctx.isFullscreen());
+    });
+
     this._ctx.add([this._ctx.sprite("title-bg"), this._ctx.scale(1)]);
 
     this._ctx.add([
