@@ -3,6 +3,9 @@ import bg_space from "../sprites/bg/bg_space.jpg";
 import bg_arch from "../sprites/bg/arch_way_2.png";
 import bg_honeycomb from "../sprites/bg/bg_honeycomb.png";
 import bg_planet from "../sprites/bg/bg_planet.png";
+import shooting_star_1 from "../sprites/bg/shooting_star.png";
+import shooting_star_2 from "../sprites/bg/shooting_star_small.png";
+
 
 import base_platform from "../sprites/base_platform.png";
 import platform from "../sprites/platform.png";
@@ -27,6 +30,8 @@ import round3 from "../sprites/text/lettering_round3.png";
 
 import sprite_missile from "../sprites/missile.png";
 import sprite_laser_ball from "../sprites/laser-ball-2.png";
+import sprite_nuke from "../sprites/nuke-temp.png";
+//import power_up_1 from "../sprites/powerup_layered.gif";
 
 import sound_shot from "../sounds/146730__leszek-szary__shoot.wav";
 import sound_laser from "../sounds/151022__bubaproducer__laser-shot-silenced.wav";
@@ -96,6 +101,9 @@ export default class AssetManager {
     AssetManager.add("bg1_arch", bg_arch);
     AssetManager.add("bg1_honeycomb", bg_honeycomb);
     AssetManager.add("bg1_planet", bg_planet);
+    AssetManager.add("shooting_star_1", shooting_star_1);
+    AssetManager.add("shooting_star_2", shooting_star_2);
+
     
     AssetManager.add("bg1_platform", base_platform);
     AssetManager.add("bg1_platform_small", platform);
@@ -120,6 +128,9 @@ export default class AssetManager {
     AssetManager.add("logo", logo);
     AssetManager.add("missile", sprite_missile);
     AssetManager.add("laser_ball", sprite_laser_ball);
+    AssetManager.add("nuke", sprite_nuke);
+    //AssetManager.add("power_up_1", power_up_1);
+
     AssetManager.addSound("shoot1", sound_shot);
     AssetManager.addSound("shoot2", sound_laser);
     AssetManager.addSound("clang", sound_clang);
