@@ -6,6 +6,7 @@ export default class BattleArenaScene extends GameScene {
   protected initScene(args: any): void {
     const {roundNum} = args;
     this.initSprites();
+    this.initBgLoops();
     //this.initArenaBoundaries();
     this._ctx.onKeyPress("f", () => {
       // toggle fullscreen
@@ -21,6 +22,40 @@ export default class BattleArenaScene extends GameScene {
     BCBA.getInstance().updateHealthInfo();
     this.startRound(roundNum);
   }
+
+  private initBgLoops() {
+    this._ctx.loop(4, () => {
+      let spriteNum = Math.floor(Math.random() * 2) + 1;
+      let x = Math.floor(Math.random() * C.WORLD_WIDTH);
+      let y = Math.floor(Math.random() * C.WORLD_HEIGHT);
+      let angle = Math.floor(Math.random() * 360);
+      this._ctx.add([
+        this._ctx.sprite('shooting_star_' + spriteNum, { flipX: true }),
+        this._ctx.pos(this._ctx.vec2(x,y)),
+        this._ctx.rotate(angle),
+        this._ctx.move(angle, C.SHOOTING_STAR_SPEED),
+        this._ctx.opacity(0.6),
+        this._ctx.z(2),
+        this._ctx.scale(1),
+        this._ctx.lifespan(3.5, { fade: 0.5 }),
+      ]);
+    });
+
+    // this._ctx.loop(15, () => {
+    //   let x = Math.floor(Math.random() * C.WORLD_WIDTH);
+    //   let y = -100;
+    //   this._ctx.add([
+    //     this._ctx.sprite("power_up_1"),
+    //     this._ctx.pos(this._ctx.vec2(x,y)),
+    //     this._ctx.z(10),
+    //     this._ctx.scale(1),
+    //     this._ctx.area(),
+    //     this._ctx.body(),
+    //     C.TAG_POWER_UP,
+    //   ]);
+    // });
+  }
+
 
   private startRound(roundNum: number) {
     BCBA.getInstance().pause(); // don't allow movement during round start sequence
@@ -137,9 +172,9 @@ public showMatchLost() {
 
 
 public showMatchWon() {
-  BCBA.getInstance().pause();
+  
   this._ctx.play("cheers", { volume: 0.4, speed: 1 });
-
+  BCBA.getInstance().pause();
 this._ctx.add([
     this._ctx.sprite("victory"),
     this._ctx.scale(1),
@@ -189,12 +224,14 @@ this._ctx.add([
       this._ctx.sprite("bg1"),
       // this._ctx.pos(-1000, -776),
       this._ctx.scale(1),
+      this._ctx.z(1),
     ]);
 
     this._ctx.add([
       this._ctx.sprite("bg1_planet"),
       // this._ctx.pos(-1000, -776),
       this._ctx.scale(1),
+      this._ctx.z(3),
       C.TAG_BG
     ]);
 
@@ -202,6 +239,7 @@ this._ctx.add([
       this._ctx.sprite("bg1_honeycomb"),
       // this._ctx.pos(-1000, -776),
       this._ctx.scale(1),
+      this._ctx.z(4),
       C.TAG_BG
     ]);
 
@@ -210,6 +248,7 @@ this._ctx.add([
       //this._ctx.origin("center"),
       this._ctx.pos(596, 843),
       this._ctx.scale(1),
+      this._ctx.z(5),
       C.TAG_BG
     ]);
 
@@ -219,6 +258,7 @@ this._ctx.add([
       this._ctx.area(),
       this._ctx.solid(),
       this._ctx.scale(1),
+      this._ctx.z(5),
       C.TAG_PLATFORM,
     ]);
 
@@ -229,6 +269,7 @@ this._ctx.add([
       this._ctx.area(),
       this._ctx.solid(),
       this._ctx.scale(1),
+      this._ctx.z(5),
       C.TAG_PLATFORM,
     ]);
 
@@ -238,6 +279,7 @@ this._ctx.add([
       this._ctx.area(),
       this._ctx.solid(),
       this._ctx.scale(1),
+      this._ctx.z(5),
       C.TAG_PLATFORM,
     ]);
 
@@ -247,6 +289,7 @@ this._ctx.add([
       this._ctx.area(),
       this._ctx.solid(),
       this._ctx.scale(1),
+      this._ctx.z(5),
       C.TAG_PLATFORM,
     ]);
 
@@ -256,6 +299,7 @@ this._ctx.add([
       this._ctx.area(),
       this._ctx.solid(),
       this._ctx.scale(1),
+      this._ctx.z(5),
       C.TAG_PLATFORM,
     ]);
 
@@ -265,6 +309,7 @@ this._ctx.add([
       this._ctx.area(),
       this._ctx.solid(),
       this._ctx.scale(1),
+      this._ctx.z(5),
       C.TAG_PLATFORM,
     ]);
 
