@@ -30,7 +30,6 @@ import round3 from "../sprites/text/lettering_round3.png";
 
 import sprite_missile from "../sprites/missile.png";
 import sprite_laser_ball from "../sprites/laser-ball-2.png";
-import sprite_nuke from "../sprites/nuke-temp.png";
 //import power_up_1 from "../sprites/powerup_layered.gif";
 
 import sound_shot from "../sounds/146730__leszek-szary__shoot.wav";
@@ -128,7 +127,6 @@ export default class AssetManager {
     AssetManager.add("logo", logo);
     AssetManager.add("missile", sprite_missile);
     AssetManager.add("laser_ball", sprite_laser_ball);
-    AssetManager.add("nuke", sprite_nuke);
     //AssetManager.add("power_up_1", power_up_1);
 
     AssetManager.addSound("shoot1", sound_shot);
