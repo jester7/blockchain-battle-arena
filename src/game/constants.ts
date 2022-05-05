@@ -6,6 +6,7 @@ export const WORLD_HEIGHT = 2956;
 export const CANVAS_BG_COLOR = [46, 115, 145];
 
 export const TAG_BG = "background";
+export const TAG_POWER_UP = "powerup";
 
 export const DEFAULT_PLAYER_SPEED = 700;
 export const PLAYER_TILT_ANGLE = 3;
@@ -20,6 +21,7 @@ export const TAG_PLATFORM = "platform";
 export const TAG_PROJECTILE = "projectile";
 
 export const MAX_PLAYERS = 2;
+export const SHOOTING_STAR_SPEED = 1500;
 export const DEFAULT_PROJECTILE_SPEED = 1100;
 export const PLAYER_JUMP_FORCE = 1600;
 export const PLAYER_AIR_JUMP_FORCE = 800;
