@@ -12,6 +12,8 @@ export default abstract class Player {
   protected k: KaboomCtx;
   public obj: GameObj;
 
+  protected _inputSource: InputSource;
+
   protected _name: string;
   protected _spriteName: string;
   protected _facing: PlayerDirection;
@@ -36,6 +38,8 @@ export default abstract class Player {
     this.obj = playerObj;
     this._name = name;
     this._spriteName = spriteName;
+
+    this._inputSource = inputSource;
 
     this._facing = facing;
     this._mainTag = mainTag;
@@ -154,6 +158,10 @@ export default abstract class Player {
     } catch (e) {
     }
     this.obj.pos = this.k.vec2(this.startPosX, this.startPosY);
+  }
+
+  public getInputSource(): InputSource {
+    return this._inputSource;
   }
 
 

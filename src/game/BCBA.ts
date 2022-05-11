@@ -93,7 +93,7 @@ export default class BCBA {
 
     canvasRef.current.focus()
 
-    new GamePadInputSource() // testing gamepad support
+    //new GamePadInputSource() // testing gamepad support
 
     k.onLoad(async () => {
       BCBA.getInstance().setCurrentScene('title')
@@ -150,7 +150,7 @@ export default class BCBA {
     const player2Num = Math.floor(Math.random() * 3) + 1
     this.setPlayer(
       2,
-      new MechAIPlayer(
+      new MechPlayer(
         this._ctx,
         'Player 2',
         player2Num,
@@ -161,8 +161,14 @@ export default class BCBA {
         [C.TAG_PLAYER],
         3088,
         2274,
+        new GamePadInputSource()
       )
     )
+
+    this.player(2).onUpdate(() => {
+      const is:GamePadInputSource = this.player(2).getInputSource() as GamePadInputSource;
+      is.checkButtons();
+    });
 
     // const player3MechColor = this._characterChoices.mechColor === "red" ? "blue" : "red";
     // const player3Num = Math.floor(Math.random() * 3) + 1;
