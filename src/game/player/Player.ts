@@ -43,7 +43,7 @@ export default abstract class Player {
 
     this._facing = facing;
     this._mainTag = mainTag;
-    inputSource.initHandlers();
+    //inputSource.initHandlers(); // moved to post init in BCBA
     
     this.onUpdate(() => {
       this.checkFacingDirection();

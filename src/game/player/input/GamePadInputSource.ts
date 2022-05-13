@@ -1,5 +1,8 @@
 import BCBA from '../../BCBA';
-import InputSource from './InputSource'
+import InputSource from './InputSource';
+import * as C from "../../constants";
+import { KaboomCtx } from 'kaboom';
+
 
 export default class GamePadInputSource extends InputSource {
   private _gameInstance: BCBA;
@@ -7,8 +10,8 @@ export default class GamePadInputSource extends InputSource {
   private _isConnected: boolean;
   private _gamepad: any = undefined;
 
-  constructor(gamepadIdx: number = 0) {
-    super();
+  constructor(ctx: KaboomCtx, player: number, gamepadIdx: number = 0) {
+    super(ctx, player);
 
     this._gameInstance = BCBA.getInstance();
 
@@ -23,6 +26,8 @@ export default class GamePadInputSource extends InputSource {
     addEventListener('gamepaddisconnected', () => {
       this.onDisconnectHandler();
     });
+
+     
 
     
   }
@@ -60,36 +65,46 @@ export default class GamePadInputSource extends InputSource {
   }
 
   public initHandlers(): void {
-    const ctx = this._gameInstance.getContext();
+    //const ctx = this._gameInstance.getContext();
     //ctx.loop(0.1, () => { this.checkButtons(); });
-    
-    
-
+   
+    this._gameInstance.player(this._player).onUpdate(() => {
+      
+      this.checkButtons();
+    });
   }
 
   public checkButtons(): void {
     if (this._gamepad === undefined) return;
     if (this.isButtonPressed(this._gamepad.buttons[0])) {
-      BCBA.getInstance().isPaused() || this._gameInstance.player(2).jump();
+      //BCBA.getInstance().isPaused() || this._gameInstance.player(2).jump();
+
+
+      if (this._gameInstance.player(this._player).isGrounded()) {
+        this._gameInstance.player(this._player).jump();
+      } else {
+        this._gameInstance.player(this._player).jump(C.PLAYER_AIR_JUMP_FORCE);
+      }
+
     }
     if (this.isButtonPressed(this._gamepad.buttons[1])) {
-      BCBA.getInstance().isPaused() || this._gameInstance.player(2).shoot();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).shoot();
     }
     if (this.isButtonPressed(this._gamepad.buttons[14])) {
-      BCBA.getInstance().isPaused() || this._gameInstance.player(2).moveLeft();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).moveLeft();
     } else if (this.isButtonPressed(this._gamepad.buttons[15])) {
-      BCBA.getInstance().isPaused() || this._gameInstance.player(2).moveRight();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).moveRight();
 
     }
 
     if (this.isButtonPressed(this._gamepad.buttons[4])) {
-      BCBA.getInstance().isPaused() || this._gameInstance.player(2).startBlocking();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).startBlocking();
     } else if (this.isButtonPressed(this._gamepad.buttons[5])) {
-      BCBA.getInstance().isPaused() || this._gameInstance.player(2).startBlocking();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).startBlocking();
     }
 
     if (!this.isButtonPressed(this._gamepad.buttons[4]) && !this.isButtonPressed(this._gamepad.buttons[5])) {
-      BCBA.getInstance().isPaused() || this._gameInstance.player(2).stopBlocking();
+      BCBA.getInstance().isPaused() || this._gameInstance.player(this._player).stopBlocking();
     }
   }
 }

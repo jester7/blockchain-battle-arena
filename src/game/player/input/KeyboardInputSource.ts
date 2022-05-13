@@ -15,8 +15,8 @@ export const keys = {
 export default class KeyboardInputSource extends InputSource {
   private _gameInstance: BCBA;
 
-  public constructor(private _ctx: KaboomCtx, private _player: number) {
-    super();
+  public constructor(ctx: KaboomCtx, player: number) {
+    super(ctx, player);
     this._gameInstance = BCBA.getInstance();
   }
 

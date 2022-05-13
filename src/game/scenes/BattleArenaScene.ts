@@ -19,6 +19,8 @@ export default class BattleArenaScene extends GameScene {
     });
 
     BCBA.getInstance().initPlayers();
+    BCBA.getInstance().postInit();
+
     BCBA.getInstance().updateHealthInfo();
     this.startRound(roundNum);
   }

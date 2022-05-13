@@ -1,3 +1,5 @@
+import { KaboomCtx } from "kaboom";
+
 export enum InputEvent {
     LEFT,
     RIGHT,
@@ -7,5 +9,8 @@ export enum InputEvent {
 }
 
 export default abstract class InputSource {
+
+    constructor(protected _ctx: KaboomCtx, protected _player: number) {}
+
     public abstract initHandlers(): void;
 }
