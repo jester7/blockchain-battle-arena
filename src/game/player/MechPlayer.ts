@@ -122,7 +122,6 @@ export default class MechPlayer extends Player {
             ? -C.DEFAULT_PROJECTILE_SPEED
             : C.DEFAULT_PROJECTILE_SPEED
         ),
-        this.k.cleanup(),
         this.k.scale(0.15),
         this.k.origin("center"),
         this._projectileSpriteName === "laser_ball" ? this.rotate() : "",
