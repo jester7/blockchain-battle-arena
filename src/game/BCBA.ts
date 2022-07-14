@@ -159,8 +159,8 @@ export default class BCBA {
         [C.TAG_PLAYER],
         1745,
         2274,
-        new GamePadInputSource(this._ctx, 1),
-        //new KeyboardInputSource(this._ctx, 1)
+        //new GamePadInputSource(this._ctx, 1),
+        new KeyboardInputSource(this._ctx, 1)
       )
     );
     const player2MechColor = 'blue';
@@ -168,18 +168,18 @@ export default class BCBA {
     const player2Num = Math.floor(Math.random() * 3) + 1;
     this.setPlayer(
       2,
-      new MechPlayer(
+      new MechAIPlayer(
         this._ctx,
         'Player 2',
         player2Num,
         player2MechColor,
-        'biggun',
+        'smallgun',
         PlayerDirection.LEFT,
         C.TAG_OPPONENT,
         [C.TAG_PLAYER],
         3088,
         2274,
-        new KeyboardInputSource(this._ctx, 2)
+        //new KeyboardInputSource(this._ctx, 2)
         //new GamePadInputSource(this._ctx, 2)
       )
     );

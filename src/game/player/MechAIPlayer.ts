@@ -49,11 +49,23 @@ export default class MechAIPlayer extends MechPlayer {
    */
   private initAI(obj: GameObj) {
     obj.onStateEnter("idle", async () => {
-      await this.k.wait(0.5);
-      obj.enterState(this.getRandomState());
-    });
+      if (this.obj.pos.y > (C.WORLD_HEIGHT-100)) {
+        this.obj.enterState("jump");
+        await this.k.wait(0.5);
+        return;
+      } else {
+        await this.k.wait(0.5);
+        obj.enterState(this.getRandomState());
+  
+      }
+          });
 
     obj.onStateEnter("move", async () => {
+      console.log("y pos", this.obj.pos);
+      if (this.obj.pos.y > (C.WORLD_HEIGHT-100)) {
+        //this.obj.enterState("jump");
+        return;
+      }
       await this.k.wait(1);
       obj.enterState(this.getRandomState());
     });
@@ -69,8 +81,18 @@ export default class MechAIPlayer extends MechPlayer {
 
     obj.onStateEnter("jump", async () => {
       if (!this._opponent?.obj.exists()) return;
-      this.jump();
-      obj.enterState("move"); // jump then start moving towards opponent
+      if (this.obj.pos.y < 0) { // TODO too much recursion!
+        //this.obj.enterState("idle");
+        return;
+      } else if (this.obj.pos.y > (C.WORLD_HEIGHT-100)) {
+        this.jump();
+        await this.k.wait(0.5);
+      } else {
+        this.jump();
+      obj.enterState("move");
+      }
+      // this.jump();
+      // obj.enterState("move"); // jump then start moving towards opponent
     });
 
     obj.onStateEnter("attack", async () => {
